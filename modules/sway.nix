@@ -9,6 +9,8 @@
       enable = true;
       wayland = true;
     };
+    # Set swaywm as default
+    displayManager.defaultSession = "sway";
     # Enable plasma for the applications
     desktopManager.plasma5.enable = true;
   };
