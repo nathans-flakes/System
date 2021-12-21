@@ -49,9 +49,22 @@
           ./applications/syncthing.nix
           ({ pkgs, ... }: {
             ## Boot, drivers, and host name
-            # Use the systemd-boot EFI boot loader.
-            boot.loader.systemd-boot.enable = true;
-            boot.loader.efi.canTouchEfiVariables = true;
+            # Use grub
+            boot.loader = {
+              grub = {
+                enable = true;
+                version = 2;
+                efiSupport = true;
+                # Go efi only
+                device = "nodev";
+                # Use os-prober
+                useOSProber = true;
+              };
+              efi = {
+                efiSysMountPoint = "/boot/";
+                canTouchEfiVariables = true;
+              };
+            };
             # Enable AMD gpu drivers early
             boot.initrd.kernelModules = [ "amdgpu" ];
             # Use the zen kernel
