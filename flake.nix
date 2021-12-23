@@ -53,5 +53,18 @@
         };
         modules = [ ./hardware/levitation.nix ] ++ desktopModules;
       };
+
+      nixosConfigurations.x86vm = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          unstable = import nixpkgs-unstable {
+            config = { allowUnfree = true; };
+            overlays = [ emacs.overlay ];
+            system = "x86_64-linux";
+          };
+          fenix = fenix.packages.x86_64-linux;
+        };
+        modules = desktopModules;
+      };
     };
 }
