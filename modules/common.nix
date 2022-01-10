@@ -12,7 +12,7 @@
   # Turn on compressed memory swap
   zramSwap = {
     enable = true;
-    algorithm = "zstd";
+    algorithm = "lz4";
     memoryPercent = 25;
   };
   # Automatically optimize and garbage collect the store

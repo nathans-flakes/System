@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   ## Boot, drivers, and host name
   # Use grub
   boot.loader = {
@@ -18,8 +18,18 @@
   };
   # Enable AMD gpu drivers early
   boot.initrd.kernelModules = [ "amdgpu" ];
-  # Use the zen kernel
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  # Use the zen kernel with muqss turned on
+  boot.kernelPackages =
+    let
+      linuxZenWMuQSS = pkgs.linuxPackagesFor (pkgs.linuxPackages_zen.kernel.override {
+        structuredExtraConfig = with lib.kernel; {
+          SCHED_MUQSS = yes;
+        };
+        ignoreConfigErrors = true;
+      }
+      );
+    in
+    linuxZenWMuQSS;
   # Define the hostname, enable dhcp
   networking = {
     hostName = "levitation";
