@@ -6,15 +6,17 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     fenix = {
       url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     emacs = {
       url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    mozilla = {
+      url = "github:mozilla/nixpkgs-mozilla";
+      flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla }:
     let
       coreModules = [
         ./modules/user.nix
@@ -39,6 +41,7 @@
         ./applications/syncthing.nix
         ./desktop.nix
       ];
+      mozillaOverlay = import "${mozilla}";
     in
     {
       nixosConfigurations.levitation = nixpkgs.lib.nixosSystem {
@@ -46,7 +49,7 @@
         specialArgs = {
           unstable = import nixpkgs-unstable {
             config = { allowUnfree = true; };
-            overlays = [ emacs.overlay ];
+            overlays = [ emacs.overlay mozillaOverlay ];
             system = "x86_64-linux";
           };
           fenix = fenix.packages.x86_64-linux;

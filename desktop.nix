@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, unstable, ... }: {
   ## Boot, drivers, and host name
   # Use grub
   boot.loader = {
@@ -44,6 +44,6 @@
   };
   ## Left over uncategorized packages
   environment.systemPackages = with pkgs; [
-    firefox-wayland
+    firefox unstable.firefox-beta-bin
   ];
 }
