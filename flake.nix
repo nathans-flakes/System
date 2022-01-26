@@ -23,6 +23,20 @@
         ./modules/common.nix
         ./modules/ssh.nix
         ./applications/utils-core.nix
+        ({ pkgs, ... }: {
+          ## Setup binary caches
+          # First install cachix, so we can discover new ones
+          environment.systemPackages = [ pkgs.cachix ];
+          # Then configure up the nix community cache
+          nix = {
+            binaryCaches = [
+              "https://nix-community.cachix.org"
+            ];
+            binaryCachePublicKeys = [
+              "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+            ];
+          };
+        })
       ];
       desktopModules = coreModules ++ [
         ./modules/audio.nix
@@ -56,20 +70,6 @@
         };
         modules = [
           ./hardware/levitation.nix
-          ({ pkgs, ... }: {
-            ## Setup binary caches
-            # First install cachix, so we can discover new ones
-            environment.systemPackages = [ pkgs.cachix ];
-            # Then configure up the nix community cache
-            nix = {
-              binaryCaches = [
-                "https://nix-community.cachix.org"
-              ];
-              binaryCachePublicKeys = [
-                "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-              ];
-            };
-          })
         ] ++ desktopModules;
       };
 

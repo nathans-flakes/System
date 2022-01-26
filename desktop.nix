@@ -44,7 +44,6 @@
   };
   ## Left over uncategorized packages
   environment.systemPackages = with pkgs; [
-    firefox
     unstable.firefox-beta-bin
   ];
 }
