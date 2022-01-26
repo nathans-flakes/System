@@ -33,8 +33,6 @@
 
   # Install general use packages
   environment.systemPackages = with pkgs; [
-    # cachix for nix cache management
-    cachix
     # Install our shell of choice
     unstable.fish
   ];
