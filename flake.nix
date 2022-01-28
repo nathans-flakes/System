@@ -70,6 +70,7 @@
         };
         modules = [
           ./hardware/levitation.nix
+          ./modules/games.nix
         ] ++ desktopModules;
       };
 
