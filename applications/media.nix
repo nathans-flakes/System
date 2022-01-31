@@ -11,5 +11,7 @@
     plex-media-player
     # OBS studio for screen recording
     unstable.obs-studio
+    # Soulseek client
+    nicotine-plus
   ];
 }

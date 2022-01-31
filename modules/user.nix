@@ -35,5 +35,7 @@
   environment.systemPackages = with pkgs; [
     # Install our shell of choice
     unstable.fish
+    # Install rclone
+    rclone
   ];
 }
