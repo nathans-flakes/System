@@ -39,7 +39,7 @@ in
       # So we can pick up the fusermount wrapper, this is a less than ideal way to do this
       Environment = "PATH=/usr/bin:/run/wrappers/bin/";
       Type = "notify";
-      ExecStart = "${pkgs.rclone}/bin/rclone mount music: /home/nathan/Music --vfs-cache-mode full --vfs-cache-max-size 32Gi --vfs-read-chunk-size 4Mi --vfs-read-ahead 8Mi --config /home/nathan/.config/rclone/rclone.conf --cache-dir /home/nathan/.cache/rclone";
+      ExecStart = "${pkgs.rclone}/bin/rclone mount music: /home/nathan/Music --vfs-cache-mode full --vfs-cache-max-size 32Gi --vfs-read-chunk-size 4Mi --buffer-size 32Mi --vfs-read-ahead 128Mi --config /home/nathan/.config/rclone/rclone.conf --cache-dir /home/nathan/.cache/rclone --no-checksum --no-modtime --transfers 8";
     };
     enable = true;
   };
