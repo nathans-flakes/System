@@ -30,6 +30,8 @@ in
     nicotine-plus
     # Mopidy + extensions
     mopidy
+    # Picard for sorting
+    unstable.picard
   ];
 
   # Mount music directory
