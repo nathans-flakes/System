@@ -15,18 +15,19 @@
       flake = false;
     };
     sops-nix.url = "github:Mic92/sops-nix";
+    home-manager.url = "github:nix-community/home-manager";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix, home-manager }:
     let
       coreModules = [
-        ./modules/user.nix
         ./modules/common.nix
         ./modules/ssh.nix
         ./applications/utils-core.nix
         sops-nix.nixosModules.sops
+        home-manager.nixosModules.home-manager
+        ## Setup binary caches
         ({ pkgs, ... }: {
-          ## Setup binary caches
           # First install cachix, so we can discover new ones
           environment.systemPackages = [ pkgs.cachix ];
           # Then configure up the nix community cache
@@ -41,14 +42,103 @@
         })
         ## Setup sops
         ({ pkgs, config, ... }: {
+          # Add default secrets
           sops.defaultSopsFile = ./secrets/nathan.yaml;
+          # Use system ssh key as an age key
           sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+          # Load up lastfm scrobbling secret 
           sops.secrets.lastfm-conf = {
             owner = "nathan";
             format = "binary";
             sopsFile = ./secrets/lastfm.conf;
           };
         })
+        ## Setup home manager
+        ({ pkgs, config, ... }:
+          let
+            unstable = import nixpkgs-unstable {
+              config = { allowUnfree = true; };
+              overlays = [ emacs.overlay mozillaOverlay ];
+              system = "x86_64-linux";
+            };
+          in
+          {
+            ## Some general settings that were in the user configuration
+            # Set time zone
+            time.timeZone = "America/New_York";
+            # Select internationalisation properties.
+            i18n.defaultLocale = "en_US.UTF-8";
+            console = {
+              font = "Lat2-Terminus16";
+              keyMap = "us";
+            };
+            # enable sudo
+            security.sudo.enable = true;
+            ## Setup user first
+            users = {
+              mutableUsers = false;
+              users.nathan = {
+                isNormalUser = true;
+                home = "/home/nathan";
+                description = "Nathan McCarty";
+                extraGroups = [ "wheel" "networkmanager" "audio" "docker" "libvirtd" "uinput" "adbusers" ];
+                hashedPassword = "$6$ShBAPGwzKZuB7eEv$cbb3erUqtVGFo/Vux9UwT2NkbVG9VGCxJxPiZFYL0DIc3t4GpYxjkM0M7fFnh.6V8MoSKLM/TvOtzdWbYwI58.";
+              };
+            };
+            ## Home manager proper
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.nathan = {
+                ## Shell
+                # Shell proper
+                programs.fish = {
+                  enable = true;
+                  # Use latest possible fish
+                  package = unstable.fish;
+                  # Setup our aliases
+                  shellAliases = {
+                    ls = "exa --icons";
+                  };
+                  # Custom configuration
+                  interactiveShellInit = ''
+                    # Setup any-nix-shell
+                    any-nix-shell fish --info-right | source
+                  '';
+                };
+                # Starship, for the prompt
+                programs.starship = {
+                  enable = true;
+                  settings = {
+                    directory = {
+                      truncation_length = 3;
+                      fish_style_pwd_dir_length = 1;
+                    };
+                    git_commit = {
+                      commit_hash_length = 6;
+                      only_detached = false;
+                    };
+                    package = {
+                      symbol = "";
+                    };
+                    time = {
+                      disabled = false;
+                      format = "[$time]($style)";
+                      time_format = "%I:%M %p";
+                    };
+                  };
+                };
+              };
+            };
+            ## Misc packages that were in user.nix
+            # Install general use packages
+            environment.systemPackages = with pkgs; [
+              # Install our shell of choice
+              unstable.fish
+              # Install rclone
+              rclone
+            ];
+          })
       ];
       desktopModules = coreModules ++ [
         ./modules/audio.nix
