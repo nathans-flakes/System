@@ -43,8 +43,11 @@
         ({ pkgs, config, ... }: {
           sops.defaultSopsFile = ./secrets/nathan.yaml;
           sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-          sops.secrets.lastfm-username.owner = "nathan";
-          sops.secrets.lastfm-password.owner = "nathan";
+          sops.secrets.lastfm-conf = {
+            owner = "nathan";
+            format = "binary";
+            sopsFile = ./secrets/lastfm.conf;
+          };
         })
       ];
       desktopModules = coreModules ++ [
