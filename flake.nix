@@ -90,6 +90,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.nathan = {
+                programs.home-manager.enable = true;
                 ## Shell
                 # Shell proper
                 programs.fish = {
@@ -128,6 +129,9 @@
                     };
                   };
                 };
+                ## Multimedia
+                # Easyeffects for the eq
+                services.easyeffects.enable = true;
               };
             };
             ## Misc packages that were in user.nix
