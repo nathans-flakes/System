@@ -71,9 +71,12 @@
       # Make pipewire present a pulse audio tcp port
       pactl load-module module-native-protocol-tcp
       # Make firefox use wayland
-      export MOZ_ENABLE_WAYLAND=1
       export XDG_CURRENT_DESKTOP="sway"
     '';
+  };
+
+  environment.sessionVariables = {
+    MOZ_ENABLE_WAYLAND = "1";
   };
 
   # Enable the xdg-portal
