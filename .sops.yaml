@@ -1,0 +1,10 @@
+# Yaml anchor for key
+keys:
+  - &nathan age1ud80054jwf6ff7xx65ta6g7qxx2flc24r5gyyfjz43kvppjutqyskr2qm2
+  - &levitation age1tsq68swufcjq6qavqpzrtse4474p5gs58v6qp6w7gum49yz45cgsegxhuw
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+          - *nathan
+          - *levitation

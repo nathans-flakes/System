@@ -14,15 +14,17 @@
       url = "github:mozilla/nixpkgs-mozilla";
       flake = false;
     };
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix }:
     let
       coreModules = [
         ./modules/user.nix
         ./modules/common.nix
         ./modules/ssh.nix
         ./applications/utils-core.nix
+        sops-nix.nixosModules.sops
         ({ pkgs, ... }: {
           ## Setup binary caches
           # First install cachix, so we can discover new ones
@@ -36,6 +38,13 @@
               "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             ];
           };
+        })
+        ## Setup sops
+        ({ pkgs, config, ... }: {
+          sops.defaultSopsFile = ./secrets/nathan.yaml;
+          sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+          sops.secrets.lastfm-username.owner = "nathan";
+          sops.secrets.lastfm-password.owner = "nathan";
         })
       ];
       desktopModules = coreModules ++ [
