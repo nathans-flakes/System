@@ -7,6 +7,7 @@ let
       mopidy-mpd
       mopidy-iris
       mopidy-scrobbler
+      mopidy-local
     ];
     pathsToLink = [ "/${pkgs.mopidyPackages.python.sitePackages}" ];
     buildInputs = [ pkgs.makeWrapper ];
@@ -63,6 +64,9 @@ let
       #follow_symlinks = false
       #metadata_timeout = 1000
 
+      [local]
+      media_dir = /home/nathan/Music
+
       [http]
       #enabled = true
       #hostname = 127.0.0.1
@@ -112,6 +116,10 @@ in
     nicotine-plus
     # Mopidy + extensions
     mopidy
+    mopidy-mpd
+    mopidy-iris
+    mopidy-scrobbler
+    mopidy-local
     # Picard for sorting
     unstable.picard
   ];
@@ -125,7 +133,7 @@ in
       # So we can pick up the fusermount wrapper, this is a less than ideal way to do this
       Environment = "PATH=/usr/bin:/run/wrappers/bin/";
       Type = "notify";
-      ExecStart = "${pkgs.rclone}/bin/rclone mount music: /home/nathan/Music --vfs-cache-mode full --vfs-cache-max-size 32Gi --vfs-read-chunk-size 4Mi --buffer-size 32Mi --vfs-read-ahead 128Mi --config /home/nathan/.config/rclone/rclone.conf --cache-dir /home/nathan/.cache/rclone --no-checksum --no-modtime --transfers 8";
+      ExecStart = "${pkgs.rclone}/bin/rclone mount music: /home/nathan/Music --vfs-cache-mode writes --vfs-cache-max-size 32Gi --vfs-read-chunk-size 4Mi --buffer-size 32Mi --vfs-read-ahead 128Mi --config /home/nathan/.config/rclone/rclone.conf --cache-dir /home/nathan/.cache/rclone --no-checksum --no-modtime --transfers 16";
     };
     enable = true;
   };
