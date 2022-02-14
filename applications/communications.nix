@@ -44,7 +44,7 @@
       discord
       unstable.betterdiscordctl
       # Use unstable element for latest features
-      unstable.element-desktop-wayland
+      element-desktop-wayland
       # Desktop signal client
       signal-desktop
       signalWaylandItem
