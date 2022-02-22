@@ -25,7 +25,7 @@
       signalWaylandItem = pkgs.makeDesktopItem {
         name = "signal-desktop-wayland";
         desktopName = "Signal (Wayland)";
-        exec = "${pkgs.signal-desktop}/bin/signal-desktop --enable-features=UseOzonePlatform -ozone-platform=wayland";
+        exec = "${unstable.signal-desktop}/bin/signal-desktop --enable-features=UseOzonePlatform -ozone-platform=wayland";
         terminal = false;
         icon = "signal-desktop";
         type = "Application";
@@ -41,12 +41,12 @@
     in
     [
       # Discord
-      discord
+      unstable.discord
       unstable.betterdiscordctl
       # Use unstable element for latest features
       element-desktop-wayland
       # Desktop signal client
-      signal-desktop
+      unstable.signal-desktop
       signalWaylandItem
       # Desktop telegram client
       tdesktop
