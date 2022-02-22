@@ -1,16 +1,18 @@
 { config, pkgs, unstable, ... }:
 {
-  imports = [ "$unstable/nixos/modules/services/printing/cupsd.nix" ];
-  disabledModules = [ "services/printing/cupsd.nix" ];
+  nixpkgs.config.packageOverrides = pkgs: {
+    canon-cups-ufr2 = unstable.canon-cups-ufr2;
+  };
+  
   services.printing = {
     enable = true;
     drivers = [
-      # My printer requires at least v5 to run, 21.11 has 3.70
-      unstable.canon-cups-ufr2
+      pkgs.canon-cups-ufr2
     ];
   };
 
-  environment.systemPackages = [
-    unstable.canon-cups-ufr2
+  environment.systemPackages = with pkgs; [
+    canon-cups-ufr2
+    cups
   ];
 }

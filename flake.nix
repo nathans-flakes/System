@@ -64,6 +64,7 @@
         ./modules/logitech.nix
         ./modules/qemu.nix
         ./modules/docker.nix
+        ./modules/printing.nix
         ./applications/communications.nix
         ./applications/devel-core.nix
         ./applications/devel-rust.nix
