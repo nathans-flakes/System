@@ -3,7 +3,7 @@
   nixpkgs.config.packageOverrides = pkgs: {
     canon-cups-ufr2 = unstable.canon-cups-ufr2;
   };
-  
+
   services.printing = {
     enable = true;
     drivers = [

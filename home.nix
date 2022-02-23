@@ -186,6 +186,9 @@
             wordRegex = ".";
             submodule = "log";
           };
+          credential = {
+            helper = "cache";
+          };
         };
       };
       ## Multimedia
