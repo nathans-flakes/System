@@ -45,6 +45,7 @@
   ## Left over uncategorized packages
   environment.systemPackages = with pkgs; [
     unstable.firefox-beta-bin
+    wally-cli
   ];
 
   # Enable firewall and pass some ports
@@ -53,4 +54,6 @@
     allowedTCPPorts = [ 61377 ];
     allowedUDPPorts = [ 61377 ];
   };
+  # Enable ergodox udev rules
+  hardware.keyboard.zsa.enable = true;
 }
