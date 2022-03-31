@@ -10,11 +10,7 @@
     # General development requirements
     python3Full
     cmake
-    gcc
-    unstable.libvterm-neovim
     libtool
-    binutils
-    clang
     gnumake
     nixpkgs-fmt
     # jq for interacting with JSON
