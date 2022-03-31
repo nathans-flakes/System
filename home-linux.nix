@@ -9,8 +9,8 @@
   ## Linux specific user configuration
   users = {
     mutableUsers = false;
-    isNormalUser = true;
     users.nathan = {
+      isNormalUser = true;
       extraGroups = [ "wheel" "networkmanager" "audio" "docker" "libvirtd" "uinput" "adbusers" "plugdev" ];
       hashedPassword = "$6$ShBAPGwzKZuB7eEv$cbb3erUqtVGFo/Vux9UwT2NkbVG9VGCxJxPiZFYL0DIc3t4GpYxjkM0M7fFnh.6V8MoSKLM/TvOtzdWbYwI58.";
       openssh.authorizedKeys.keys = [
@@ -71,6 +71,6 @@
       ## Multimedia
       # Easyeffects for the eq
       services.easyeffects.enable = true;
-    }
-      }
-      }
+    };
+  };
+}
