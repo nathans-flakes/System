@@ -24,12 +24,25 @@
         # Setup our aliases
         shellAliases = {
           ls = "exa --icons";
+          cat = "bat";
         };
         # Custom configuration
         interactiveShellInit = ''
           # Setup any-nix-shell
           any-nix-shell fish --info-right | source
+          # Load logger function
+          source ~/.config/fish/functions/cmdlogger.fish
         '';
+        functions = {
+          # Setup command logging to ~/.logs
+          cmdlogger = {
+            onEvent = "fish_preexec";
+            body = ''
+              mkdir -p ~/.logs
+              echo (date -u +"%Y-%m-%dT%H:%M:%SZ")" "(echo %self)" "(pwd)": "$argv >> ~/.logs/(hostname)-(date "+%Y-%m-%d").log
+            '';
+          };
+        };
       };
       # Starship, for the prompt
       programs.starship = {
