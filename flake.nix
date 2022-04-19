@@ -104,6 +104,7 @@
           };
           modules = [
             ./hardware/levitation.nix
+            ./machines/levitation.nix
             ./modules/games.nix
             ./home-linux.nix
           ] ++ desktopModules;
