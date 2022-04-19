@@ -182,7 +182,7 @@
           # Lock the screen after 5 minutes of inactivity
           {
             timeout = 300;
-            command = swaylock-command;
+            command = builtins.replaceStrings [ "%" ] [ "%%" ] swaylock-command;
           }
           # Turn off the displays after 10 minutes of inactivity
           {
