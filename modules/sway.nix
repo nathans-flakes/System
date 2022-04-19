@@ -1,5 +1,5 @@
 ## Enable and setup SwayWM
-{ config, pkgs, unstable, ... }:
+{ config, pkgs, lib, unstable, ... }:
 {
   # Turn on GDM for login
   services.xserver = {
@@ -94,63 +94,100 @@
   };
 
   ## Home manager stuff for sway
-  home-manager.users.nathan = {
-    # Configure sway itself
-    wayland.windowManager.sway = {
-      enable = true;
-      systemdIntegration = true;
-      wrapperFeatures = {
-        base = true;
-        gtk = true;
+  home-manager.users.nathan =
+    let
+      swaylock-command = "${pkgs.swaylock-effects}/bin/swaylock --screenshots --grace 30 --indicator --clock --timestr \"%-I:%M:%S %p\" --datestr \"%A %Y-%M-%d\" --effect-blur 20x3";
+    in
+    {
+      # Configure sway itself
+      wayland.windowManager.sway = {
+        enable = true;
+        systemdIntegration = true;
+        wrapperFeatures = {
+          base = true;
+          gtk = true;
+        };
+        config = {
+          # Setup gaps
+          gaps = {
+            smartGaps = true;
+            inner = 9;
+          };
+          # disable borders
+          window = {
+            border = 0;
+          };
+          # Use windows key as modifier
+          modifier = "Mod4";
+          # Alacritty as default terminal
+          terminal = "alacritty";
+          # Use krunner (from kde) as our launcher
+          menu = "albert show";
+          # Use waybar
+          bars = [{
+            command = "${unstable.waybar}/bin/waybar";
+          }];
+          # Use fira code
+          fonts = {
+            names = [ "Fira Code Nerd Font" ];
+            size = 10.0;
+          };
+          # Setup keybindings
+          keybindings =
+            let
+              modifer = "Mod4";
+            in
+            lib.mkOptionDefault {
+              "${modifer}+q" = "kill";
+              "${modifer}+z" = "exec ${swaylock-command}";
+              ## Sreenshot keybinds
+              # Copy area to clipboard
+              "${modifer}+x" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy area";
+              # Copy window to clipboard
+              "${modifer}+Ctrl+x" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy window";
+              # Clpy entire output to clipboard
+              "${modifer}+Alt+x" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy output";
+            };
+        };
+        extraConfig = ''
+          exec albert
+          exec mako
+        '';
       };
-      config = {
-        # Setup gaps
-        gaps = {
-          smartGaps = true;
-          inner = 9;
-        };
-        # disable borders
-        window = {
-          border = 0;
-        };
-        # Use windows key as modifier
-        modifier = "Mod4";
-        # Alacritty as default terminal
-        terminal = "alacritty";
-        # Use krunner (from kde) as our launcher
-        menu = "albert show";
-        # Use waybar
-        bars = [{
-          command = "${unstable.waybar}/bin/waybar";
-        }];
-        # Use fira code
-        fonts = {
-          names = [ "Fira Code Nerd Font" ];
-          size = 10.0;
-        };
+      # Mako for notifications
+      programs.mako = {
+        enable = true;
+        # Selenized color scheme
+        borderColor = "#f275be";
+        backgroundColor = "#184956";
+        textColor = "#adbcbc";
+        # Border configuration
+        borderSize = 3;
+        # Timeout to 5 seconds
+        defaultTimeout = 5000;
+        # Use Fira Code for font
+        font = "Fira Code Nerd Font 10";
+        # Group by application
+        groupBy = "app-name";
+        # Bottom right corner
+        anchor = "bottom-right";
       };
-      extraConfig = ''
-        exec albert
-        exec mako
-      '';
+      # Swayidle for automatic screen locking
+      services.swayidle = {
+        enable = true;
+        timeouts = [
+          # Lock the screen after 5 minutes of inactivity
+          {
+            timeout = 300;
+            command = swaylock-command;
+          }
+          # Turn off the displays after 10 minutes of inactivity
+          {
+            timeout = 600;
+            command = "swaymsg \"output * dpms off\"";
+            resumeCommand = "swaymsg \"output * dpms on\"";
+          }
+        ];
+      };
     };
-    # Mako for notifications
-    programs.mako = {
-      enable = true;
-      # Selenized color scheme
-      borderColor = "#f275be";
-      backgroundColor = "#184956";
-      textColor = "#adbcbc";
-      # Border configuration
-      borderSize = 3;
-      # Timeout to 5 seconds
-      defaultTimeout = 5000;
-      # Use Fira Code for font
-      font = "Fira Code Nerd Font 10";
-      # Group by application
-      groupBy = "app-name";
-      # Bottom right corner
-      anchor = "bottom-right";
-    };
-  };
 }
