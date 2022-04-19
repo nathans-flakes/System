@@ -59,4 +59,9 @@
       fbChromeDesktopItem
       teamsItem
     ];
+
+  # Override for waylandified discord, really jank, but its still newer than the bundled electron
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-13.6.9"
+  ];
 }
