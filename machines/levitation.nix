@@ -44,6 +44,12 @@
           subpixel = "rgb";
         };
       };
+      startup = [
+        # GLPaper
+        { command = "glpaper DP-1 ${../custom-files/sway/selen.frag} --fork"; }
+        { command = "glpaper DP-3 ${../custom-files/sway/selen.frag} --fork"; }
+        { command = "glpaper HDMI-A-1 ${../custom-files/sway/selen.frag} --fork"; }
+      ];
     };
     # Mako output configuration
     programs.mako = {

@@ -148,11 +148,14 @@
               # Clpy entire output to clipboard
               "${modifer}+Alt+x" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy output";
             };
+          # Startup applications
+          startup = [
+            # Albert, the launcher
+            { command = "albert"; }
+            # Mako, the notification daemon
+            { command = "mako"; }
+          ];
         };
-        extraConfig = ''
-          exec albert
-          exec mako
-        '';
       };
       # Mako for notifications
       programs.mako = {
