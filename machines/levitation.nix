@@ -22,4 +22,33 @@
     allowedTCPPorts = [ 61377 ];
     allowedUDPPorts = [ 61377 ];
   };
+
+  ## Machine specific home-manager
+  home-manager.users.nathan = {
+    # Sway outputs
+    wayland.windowManager.sway.config = {
+      output = {
+        DP-1 = {
+          pos = "0 140";
+          scale = "1";
+          subpixel = "rgb";
+        };
+        DP-3 = {
+          pos = "2560 0";
+          scale = "1.25";
+          subpixel = "rgb";
+        };
+        HDMI-A-1 = {
+          pos = "5632 140";
+          scale = "1";
+          subpixel = "rgb";
+        };
+      };
+    };
+    # Mako output configuration
+    programs.mako = {
+      # Lock mako notifs to main display
+      output = "DP-3";
+    };
+  };
 }

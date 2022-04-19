@@ -64,6 +64,8 @@
       glpaper
       # Screenshots
       sway-contrib.grimshot
+      # Albert for launcher
+      albert
     ];
     extraSessionCommands = ''
       # Make qt theming work
@@ -88,6 +90,67 @@
         xdg-desktop-portal-gtk
       ];
       gtkUsePortal = true;
+    };
+  };
+
+  ## Home manager stuff for sway
+  home-manager.users.nathan = {
+    # Configure sway itself
+    wayland.windowManager.sway = {
+      enable = true;
+      systemdIntegration = true;
+      wrapperFeatures = {
+        base = true;
+        gtk = true;
+      };
+      config = {
+        # Setup gaps
+        gaps = {
+          smartGaps = true;
+          inner = 9;
+        };
+        # disable borders
+        window = {
+          border = 0;
+        };
+        # Use windows key as modifier
+        modifier = "Mod4";
+        # Alacritty as default terminal
+        terminal = "alacritty";
+        # Use krunner (from kde) as our launcher
+        menu = "albert show";
+        # Use waybar
+        bars = [{
+          command = "${unstable.waybar}/bin/waybar";
+        }];
+        # Use fira code
+        fonts = {
+          names = [ "Fira Code Nerd Font" ];
+          size = 10.0;
+        };
+      };
+      extraConfig = ''
+        exec albert
+        exec mako
+      '';
+    };
+    # Mako for notifications
+    programs.mako = {
+      enable = true;
+      # Selenized color scheme
+      borderColor = "#f275be";
+      backgroundColor = "#184956";
+      textColor = "#adbcbc";
+      # Border configuration
+      borderSize = 3;
+      # Timeout to 5 seconds
+      defaultTimeout = 5000;
+      # Use Fira Code for font
+      font = "Fira Code Nerd Font 10";
+      # Group by application
+      groupBy = "app-name";
+      # Bottom right corner
+      anchor = "bottom-right";
     };
   };
 }
