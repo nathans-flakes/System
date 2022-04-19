@@ -4,5 +4,8 @@
     (dwarf-fortress-packages.dwarf-fortress-full.override {
       enableFPS = true;
     })
+    # PolyMC minecraft stuff
+    polymc
+    glfw-wayland
   ];
 }

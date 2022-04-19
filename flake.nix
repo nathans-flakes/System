@@ -20,9 +20,13 @@
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    polymc = {
+      url = "github:PolyMC/PolyMC";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix, home-manager, darwin }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix, home-manager, darwin, polymc }:
     let
       baseModules = [
         ./applications/utils-core.nix
@@ -97,7 +101,7 @@
           specialArgs = {
             unstable = import nixpkgs-unstable {
               config = { allowUnfree = true; };
-              overlays = [ emacs.overlay mozillaOverlay ];
+              overlays = [ emacs.overlay mozillaOverlay polymc.overlay ];
               system = "x86_64-linux";
             };
             fenix = fenix.packages.x86_64-linux;
