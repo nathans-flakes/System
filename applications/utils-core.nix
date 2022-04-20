@@ -20,10 +20,29 @@
     sd
     du-dust
     ripgrep
+    ripgrep-all
     tokei
-    unstable.procs
     hyperfine
     unstable.bottom
+    dogdns
+    unstable.zenith
+    duf
+    # CLI Markdown renderer
+    glow
+    # Command line file manager
+    broot
+    # Much better curl
+    unstable.httpie
+    # CLI spreadsheets
+    visidata
+    # User friendly cut
+    choose
+    # Cheatsheet manager
+    cheat
+    # Ping with a graph
+    gping
+    # Man but terse
+    tealdeer
     # Pandoc for documentation
     unstable.pandoc
     # For nslookup

@@ -24,7 +24,11 @@
         # Setup our aliases
         shellAliases = {
           ls = "exa --icons";
-          cat = "bat";
+          la = "exa --icons -a";
+          lg = "exa --icons --git"
+            cat = "bat";
+          dig = "dog";
+          df = "duf";
         };
         # Custom configuration
         interactiveShellInit = ''
@@ -102,6 +106,7 @@
           "tramp"
           "\\#*\\#"
         ];
+        delta.enable = true;
         extraConfig = {
           init = {
             defaultBranch = "trunk";
