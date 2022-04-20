@@ -25,8 +25,8 @@
         shellAliases = {
           ls = "exa --icons";
           la = "exa --icons -a";
-          lg = "exa --icons --git"
-            cat = "bat";
+          lg = "exa --icons --git";
+          cat = "bat";
           dig = "dog";
           df = "duf";
         };
