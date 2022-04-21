@@ -9,6 +9,7 @@
     };
     emacs = {
       url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     mozilla = {
       url = "github:mozilla/nixpkgs-mozilla";
@@ -24,9 +25,14 @@
       url = "github:PolyMC/PolyMC";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    nix-doom-emacs = {
+      url = "github:nix-community/nix-doom-emacs";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.emacs-overlay.follows = "emacs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix, home-manager, darwin, polymc }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix, home-manager, darwin, polymc, nix-doom-emacs }:
     let
       baseModules = [
         ./applications/utils-core.nix
@@ -105,6 +111,7 @@
               system = "x86_64-linux";
             };
             fenix = fenix.packages.x86_64-linux;
+            doomEmacs = nix-doom-emacs.hmModule;
           };
           modules = [
             ./hardware/levitation.nix
