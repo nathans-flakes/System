@@ -144,6 +144,7 @@
               system = "x86_64-darwin";
             };
             fenix = fenix.packages.x86_64-darwin;
+            doomEmacs = nix-doom-emacs.hmModule;
           };
           modules = baseModules ++ [
             ./darwin-modules/base.nix
@@ -152,6 +153,7 @@
             ./darwin-modules/gpg.nix
             ./applications/devel-core.nix
             ./applications/devel-rust.nix
+            ./applications/emacs.nix
           ];
         };
       };

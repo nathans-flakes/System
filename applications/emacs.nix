@@ -23,7 +23,7 @@ in
     };
     # Startup service
     services.emacs = {
-      enable = true;
+      enable = pkgs.stdenv.isLinux;
       client.enable = true;
       defaultEditor = true;
       # TODO remove when we enable doom-emacs again
