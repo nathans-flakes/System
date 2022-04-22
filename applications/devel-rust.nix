@@ -21,5 +21,7 @@
     cargo-expand # Dump expanded macros
     unstable.cargo-tarpaulin # Code coverage
     cargo-play # Quickly execute code outside of a crate
+    # For building stuff that uses protocol buffers
+    protobuf
   ];
 }
