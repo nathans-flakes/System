@@ -5,5 +5,6 @@
     gcc
     binutils
     clang
+    unstable.mold
   ];
 }
