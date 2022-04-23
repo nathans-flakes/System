@@ -92,6 +92,7 @@
         ./applications/devel-core.nix
         ./applications/devel-core-linux.nix
         ./applications/devel-rust.nix
+        ./applications/devel-raku.nix
         ./applications/emacs.nix
         ./applications/image-editing.nix
         ./applications/media.nix
@@ -153,6 +154,7 @@
             ./darwin-modules/gpg.nix
             ./applications/devel-core.nix
             ./applications/devel-rust.nix
+            ./applications/devel-raku.nix
             ./applications/emacs.nix
           ];
         };
