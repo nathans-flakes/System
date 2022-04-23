@@ -13,6 +13,7 @@
       tray = {
         enable = true;
         package = unstable.syncthingtray;
+        command = "syncthingtray --wait";
       };
     };
   };
