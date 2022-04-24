@@ -155,7 +155,6 @@
             ./darwin-modules/gpg.nix
             ./applications/devel-core.nix
             ./applications/devel-rust.nix
-            ./applications/devel-raku.nix
             ./applications/emacs.nix
           ];
         };
