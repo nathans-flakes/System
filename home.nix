@@ -169,6 +169,11 @@
             user = "nathan";
             hostname = "172.23.12.134";
           };
+          "perception" = {
+            forwardAgent = true;
+            user = "nathan";
+            hostname = "172.23.55.145";
+          };
         };
       };
     };
