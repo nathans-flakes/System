@@ -152,6 +152,25 @@
           };
         };
       };
+      # SSH configuration
+      programs.ssh = {
+        enable = true;
+        # extra config to set the ciphers
+        extraConfig = ''
+          Ciphers aes128-gcm@openssh.com,aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+        '';
+        # enable session reuse
+        controlMaster = "auto";
+        controlPersist = "10m";
+        # Configure known hosts
+        matchBlocks = {
+          "levitation" = {
+            forwardAgent = true;
+            user = "nathan";
+            hostname = "172.23.12.134";
+          };
+        };
+      };
     };
   };
   ## Misc packages that were in user.nix
