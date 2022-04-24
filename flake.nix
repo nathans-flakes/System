@@ -88,6 +88,7 @@
         ./modules/qemu.nix
         ./modules/docker.nix
         ./modules/printing.nix
+        ./modules/zt.nix
         ./applications/communications.nix
         ./applications/devel-core.nix
         ./applications/devel-core-linux.nix
