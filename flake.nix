@@ -151,6 +151,7 @@
           modules = baseModules ++ [
             ./darwin-modules/base.nix
             home-manager.darwinModules.home-manager
+            ./modules/fonts.nix
             ./home.nix
             ./darwin-modules/gpg.nix
             ./applications/devel-core.nix

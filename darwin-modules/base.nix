@@ -3,9 +3,10 @@
 {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages =
+  environment.systemPackages = with pkgs;
     [
-      pkgs.vim
+      openssh
+      coreutils-full
     ];
 
   # Use a custom configuration.nix location.
@@ -18,6 +19,17 @@
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
   programs.fish.enable = true;
+  # Give nix packages higher priority than system packages in fish
+  programs.fish.shellInit = ''
+    for p in /run/current-system/sw/bin
+      if not contains $p $fish_user_paths
+        set -g fish_user_paths $p $fish_user_paths
+      end
+    end
+  '';
+
+  # Make nix managed fonts work on macos
+  fonts.fontDir.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
