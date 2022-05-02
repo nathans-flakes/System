@@ -15,6 +15,17 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    # Disable git "safe directories" for root
+    # This is _highly_ cautioned against, but the feature breaks my workflow
+    users.root = {
+      programs.git = {
+        extraConfig = {
+          safe = {
+            directory = "*";
+          };
+        };
+      };
+    };
     users.nathan = {
       programs.home-manager.enable = true;
       ## Shell
@@ -149,6 +160,10 @@
           };
           credential = {
             helper = "cache";
+          };
+          # Disable annoying safe directory nonsense
+          safe = {
+            directory = "*";
           };
         };
       };

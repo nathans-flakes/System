@@ -1,6 +1,6 @@
 { config, pkgs, unstable, doomEmacs, ... }:
 let
-  emacsPackage = (unstable.emacsPackagesFor unstable.emacsPgtkGcc).emacsWithPackages (epkgs: with epkgs; [
+  emacsPackage = (unstable.emacsPackagesFor unstable.emacsPgtkNativeComp).emacsWithPackages (epkgs: with epkgs; [
     vterm
     pdf-tools
   ]);
