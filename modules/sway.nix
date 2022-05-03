@@ -67,14 +67,6 @@
       # Albert for launcher
       albert
     ];
-    extraSessionCommands = ''
-      # Make qt theming work
-      export QT_QPA_PLATFORMTHEME="qt5ct"
-      # Make pipewire present a pulse audio tcp port
-      pactl load-module module-native-protocol-tcp
-      # Make firefox use wayland
-      export XDG_CURRENT_DESKTOP="sway"
-    '';
   };
 
   environment.sessionVariables = {
@@ -107,6 +99,10 @@
           base = true;
           gtk = true;
         };
+        extraSessionCommands = ''
+          # Make qt theming work
+          export QT_QPA_PLATFORMTHEME="qt5ct"
+        '';
         config = {
           # Setup gaps
           gaps = {
@@ -123,10 +119,8 @@
           terminal = "alacritty";
           # Use krunner (from kde) as our launcher
           menu = "albert show";
-          # Use waybar
-          bars = [{
-            command = "${unstable.waybar}/bin/waybar";
-          }];
+          # Use waybar, but through systemd
+          bars = [ ];
           # Use fira code
           fonts = {
             names = [ "Fira Code Nerd Font" ];
@@ -191,6 +185,16 @@
             resumeCommand = "swaymsg \"output * dpms on\"";
           }
         ];
+      };
+      # Waybar configuration
+      programs.waybar = {
+        enable = true;
+        package = unstable.waybar;
+        # Enable systemd configuration
+        systemd = {
+          enable = true;
+          target = "sway-session.target";
+        };
       };
     };
 }
