@@ -9,6 +9,8 @@ in
   # Install emacs
   environment.systemPackages = [
     emacsPackage
+    # For markdown rendering
+    pkgs.pythonPackages.grip
   ];
 
   # Utilize home-manager
