@@ -11,6 +11,8 @@ in
     emacsPackage
     # For markdown rendering
     pkgs.pythonPackages.grip
+    # For graph generation
+    pkgs.graphviz
   ];
 
   # Utilize home-manager
