@@ -57,6 +57,11 @@
       fsType = "vfat";
     };
 
+  fileSystems."/home/nathan/Music" = {
+    device = "10.0.0.139:/mnt/tank/root/nathan/music";
+    fsType = "nfs";
+  };
+
   swapDevices =
     [{
       device = "/dev/disk/by-partuuid/f9d26ecd-7df5-48ad-bc19-b9ac4e91b0ee";

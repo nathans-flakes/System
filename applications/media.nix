@@ -124,20 +124,6 @@ in
     unstable.picard
   ];
 
-  # Mount music directory
-  systemd.user.services.rclone-music = {
-    description = "Rclone mount ~/Music";
-    wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
-    serviceConfig = {
-      # So we can pick up the fusermount wrapper, this is a less than ideal way to do this
-      Environment = "PATH=/usr/bin:/run/wrappers/bin/";
-      Type = "notify";
-      ExecStart = "${pkgs.rclone}/bin/rclone mount music: /home/nathan/Music --config /home/nathan/.config/rclone/rclone.conf --cache-dir /home/nathan/.cache/rclone --no-checksum --no-modtime";
-    };
-    enable = true;
-  };
-
   # Start mopidy as a user service, for sanity
   systemd.user.services.mopidy = {
     description = "Mopidy music server";
