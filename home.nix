@@ -7,7 +7,7 @@
   users = {
     users.nathan = {
       # darwin is special
-      home = if pkgs.stdenv.isDarwin then "/home/Nathan" else "/home/nathan";
+      home = if pkgs.stdenv.isDarwin then "/Users/nathan" else "/home/nathan";
       description = "Nathan McCarty";
       shell = pkgs.fish;
     };
