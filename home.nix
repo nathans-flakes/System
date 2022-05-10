@@ -6,7 +6,8 @@
   ## Setup user first
   users = {
     users.nathan = {
-      home = "/home/nathan";
+      # darwin is special
+      home = if pkgs.stdenv.isDarwin then "/home/Nathan" else "/home/nathan";
       description = "Nathan McCarty";
       shell = pkgs.fish;
     };
