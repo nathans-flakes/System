@@ -1,3 +1,14 @@
+#+title: Nathan's Doom Emacs Configuration
+#+author: Nathan McCarty
+#+PROPERTY: header-args:emacs-lisp :tangle yes
+
+My doom emacs configuration
+
+* Basic Doom stuff
+
+The provided default ~config.el~
+
+#+begin_src emacs-lisp
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
@@ -82,21 +93,39 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
-
+#+end_src
+* Appearance and UI
+** Centaur tabs
+#+begin_src emacs-lisp
 (after! centaur-tabs
   (setq centaur-tabs-set-icons t
         centaur-tabs-set-bar 'underflow
         centaur-tabs-style "alternate")
   (centaur-tabs-headline-match)
   (centaur-tabs-group-by-projectile-project))
-
+#+end_src
+** Mixed Pitch Mode
+Use mixed pitch mode in prose writing modes, to make the writing experience a bit more pleasant.
+This tweak applies to:
+- ~org-mode~
+- ~markdown-mode~
+#+begin_src emacs-lisp
 (use-package! mixed-pitch
   :hook
   (org-mode . mixed-pitch-mode)
   (markdown-mode . mixed-pitch-mode)
   :config
   (setq mixed-pitch-set-height t))
+#+end_src
 
+Setting ~mixed-pitch-set-height~ is required to get ~mixed-pitch-mode~ to render fonts with the correct size in doom emacs, apparently.
+* Basic Editing
+** Navigation
+*** Avy
+More modern ace-jump-mode
+
+Set up our key bindings
+#+begin_src emacs-lisp
 (after! avy
   (define-key!
     "C-:" 'avy-goto-char
@@ -111,34 +140,78 @@
                         '(:key "M-g w" :description "Goto word")
                         '(:key "M-g e" :description "Goto word (0)")))
 
+#+end_src
+*** Swiper
+Better isearch
+
+Override old isearch
+#+begin_src emacs-lisp
 (after! swiper
   (define-key! "C-s" 'swiper))
+#+end_src
+** Crux
+Smarter replacements for emacs built ins, with the following in use:
+ - ~crux-smart-kill-line~ - Smart ~C-k~ replacement
+ - ~crux-top-join-line~ - ~C-c ^~ Join two lines
 
+#+begin_src emacs-lisp
 (use-package! crux
   :bind (("C-k"   . crux-smart-kill-line)
          ("C-c ^" . crux-top-join-line)))
-
+#+end_src
+** string-inflection
+Automatically cycle case of names
+#+begin_src emacs-lisp
 (global-unset-key (kbd "C-q"))
 (use-package! string-inflection
   :bind (("C-q" . string-inflection-all-cycle)))
 (cheatsheet-add-group 'string-inflection
                       '(:key "C-q" :description "Rotate case"))
-
+#+end_src
+** Smart Hungry Delete
+Gobble up whitespace in a smarter way
+#+begin_src emacs-lisp
 (use-package! smart-hungry-delete
   :bind (("M-<backspace>" . smart-hungry-delete-backward-char)))
-
+#+end_src
+** Search
+*** Deadgrep
+Ripgrep, but from within emacs
+#+begin_src emacs-lisp
 (use-package! deadgrep
   :bind ("C-c s r" . deadgrep))
+#+end_src
+* Org Mode
+Improvements to the best mode in emacs
 
+Setup some basic cosmetic improvements
+ - Disable showing of emphasis markers
+ - Show entities as utf-8 ~test~
+
+  #+begin_src emacs-lisp
 (setq org-hide-emphasis-markers t
       org-pretty-entities t)
+  #+end_src
 
+  Setup font lock for normal (non-heading) list items, to make things a bit more pleasnt to look at
+
+  #+begin_src emacs-lisp
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "")))
                           ("^ *\\([+]\\) "
                            0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "")))))
+  #+end_src
+** org-roam
+A second brain in emacs
 
+
+Here we:
+ - Set the roam directory to be a sub-directory of the org directory, which I have in syncthing
+ - Use a more informative display template, as we use ivy
+ - Turn on db autosync
+ - Setup dalies to add the time of the capture to the note
+#+begin_src emacs-lisp
 (use-package! org-roam
   :custom
   (org-roam-directory (concat org-directory "Roam/"))
@@ -158,19 +231,58 @@
   (setq org-roam-dailies-capture-templates
       '(("d" "default" entry "* %<%I:%M %p>: %?"
          :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
-
+#+end_src
+* General Modes
+** Magit
+Further configuration for magit
+*** magit-todos
+Count the number of todos in the project in the ~magit-status~ buffer
+#+begin_src emacs-lisp
 (use-package! magit-todos
   :hook (magit-mode . magit-todos-mode))
-
+#+end_src
+*** magit-delta
+Use delta for git diff display
+#+begin_src emacs-lisp
 (use-package! magit-delta
   :hook (magit-mode . magit-delta-mode))
-
+#+end_src
+*** magit-wip-mode
+Stash autosaves inside of git
+#+begin_src emacs-lisp
 (magit-wip-mode)
+#+end_src
+** System integration
+Various tools for interacting with the system from within emacs
+*** Terminal
+Doom already provides pretty nice vterm support, but lets take us a step further, using ~multi-vterm~ to provide ergonomic support for multiple terminals.
 
+Vterm really doesn't like being installed through emacs on nix, so proper support for it in my setup requires installing it through nix like so:
+#+begin_src nix :tangle no
+let emacsPackage = (emacsPackagesFor emacs).emacsWithPackages (epgks: with epkgs; [
+      vterm
+    ]);
+in
+{
+  environment.systemPackages = [
+    emacsPackage
+  ];
+}
+#+end_src
+**** [[https://github.com/suonlight/multi-vterm][multi-vterm]]
+Add ergonomic support for multiple vterm terminals
+#+begin_src emacs-lisp
 (use-package! multi-vterm
   :bind (("C-c o M" . multi-vterm)
          ("C-c o m" . multi-vterm-project)))
+#+end_src
+* Programming
+** General Editing
+*** Sepraedit
+Edit indirect for comments
 
+Set the default mode to github flavored markdown, turn on smart use of fill column, and bind to the normal edit-indirect keybinding.
+#+begin_src emacs-lisp
 (use-package! separedit
   :bind
   (:map prog-mode-map
@@ -178,21 +290,40 @@
   :config
   (setq separedit-default-mode 'gfm-mode
         separedit-continue-fill-column t))
-
+#+end_src
+** LSP Mode
+Custom configuration for lsp-mode
+*** LSP UI
+Turn on the UI features we want
+**** Sideline
+Show as much as possible in the sideline
+#+begin_src emacs-lisp
 (after! lsp-ui
   (setq lsp-ui-sideline-show-diagnostics t
       lsp-ui-sideline-show-hover t
       lsp-ui-sideline-show-code-actions t))
-
+#+end_src
+**** Peeking
+Turn on peeking, and show us the directory as well
+#+begin_src emacs-lisp
 (after! lsp-ui
   (setq lsp-ui-peek-enable t
       lsp-ui-peek-show-directory t))
-
+#+end_src
+**** Documentation
+Show the documentation in a popup frame in the top right corner
+#+begin_src emacs-lisp
 (after! lsp-ui
   (setq lsp-ui-doc-enable t
       lsp-ui-doc-position 'top
       lsp-ui-doc-show-with-cursor t))
+#+end_src
+** Rust
+Configuration specific for rust
+*** LSP Tweaks
+Most of these are defaults, but I like having them explicit for my sanity
 
+#+begin_src emacs-lisp
 (after! lsp-mode
   (setq lsp-auto-configure t
         lsp-lens-enable t
@@ -202,7 +333,23 @@
         lsp-rust-analyzer-proc-macro-enable t
         lsp-rust-analyzer-use-rustc-wrapper-for-build-scripts t
         lsp-rust-analyzer-import-enforce-granularity t))
+#+end_src
+* Composition
+Modes for handling plain text and prose
+** Markdown
+Everybody's favorite markup format
+*** Markdown mode
+Make the following configuration tweaks to result in a better markdown experience:
+ - Use a variable pitch font (this is prose after all)
+ - Turn on header scaling
+ - Default to gfm mode for readmes
+ - Turn on auto-fill mode
+ - Hide mark up
+ - Fontify code blocks with the language's native mode
 
+The goal here is to create a more pretty and fluid composition environment for prose, closer to what you would get in a word processor, but without the horrors of wysiwyg.
+
+#+begin_src emacs-lisp
 (use-package! markdown-mode
   :mode ("README\\.md" . gfm-mode)
   :hook (markdown-mode . variable-pitch-mode)
@@ -211,11 +358,24 @@
   (setq markdown-header-scaling t
         markdown-hide-markup t
         markdown-fontify-code-blocks-natively t))
-
+#+end_src
+*** Grip mode
+Provide a live, rendered preview when editing markdown readmes using [[https://github.com/joeyespo/grip][grip]].
+#+begin_src emacs-lisp
 (use-package! grip-mode
   :bind (:map markdown-mode-command-map
          ("g" . grip-mode)))
+#+end_src
+* Applications
+Emacs is good for more than just editing text
+** RSS
+Use ~elfeed~ for RSS. Doom provides most of the configuration, but we'll make a few minor tweaks:
+ - Automatically update the feed when opening elfeed
+ - Set default filter to only show unread posts
+ - Put the elfeed directory in the org dir (I have it in syncthing)
+ - Create a global keybinding for elfeed (~C-x w~)
 
+#+begin_src emacs-lisp
 (use-package! elfeed
   :hook (elfeed-search-mode . elfeed-update)
   :bind ("C-x w" . elfeed)
@@ -224,3 +384,4 @@
         elfeed-db-directory (concat org-directory "elfeed/db/")
         elfeed-enclosure-default-dir (concat org-directory "elfeed/enclosures/"))
   (make-directory elfeed-db-directory t))
+#+end_src
