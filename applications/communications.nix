@@ -53,6 +53,8 @@
       # zulip
       unstable.zulip
       zulipWayland
+      # Zoom (for work, sadly)
+      unstable.zoom-us
       # chromium
       chromium
       # Wayland workaround packages
