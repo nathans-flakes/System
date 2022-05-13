@@ -18,6 +18,8 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILRs6zVljIlQEZ8F+aEBqqbpeFJwCw3JdveZ8TQWfkev cardno:000615938515"
         # Macbook pro key
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBfkO7kq37RQMT8UE8zQt/vP4Ub7kizLw6niToJwAIe nathan@Nathans-MacBook-Pro.local"
+        # Phone key
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILY7KmG/eFm3hgTx7GBB5jNrV/yryg5C6xcgCxFQhn+o JuiceSSH"
       ];
     };
   };
