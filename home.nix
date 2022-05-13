@@ -190,6 +190,11 @@
             user = "nathan";
             hostname = "172.23.55.145";
           };
+          "oracles" = {
+            forwardAgent = true;
+            user = "nathan";
+            hostname = "172.23.108.12";
+          };
         };
       };
     };
