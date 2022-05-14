@@ -19,4 +19,7 @@
     permitRootLogin = "no";
     passwordAuthentication = false;
   };
+
+  # Enable mosh for connecting to phone
+  programs.mosh.enable = true;
 }

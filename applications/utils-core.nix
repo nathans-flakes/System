@@ -49,5 +49,7 @@
     dnsutils
     # Feh image viewer
     feh
+    # Mosh for better high-latency ssh
+    mosh
   ];
 }
