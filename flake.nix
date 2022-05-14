@@ -101,6 +101,7 @@
         ./desktop.nix
       ];
       serverModules = coreModules ++ [
+        ./home-linux.nix
         ./modules/zt.nix
         ./modules/autoupdate.nix
         ./applications/devel-core.nix
@@ -142,7 +143,6 @@
           modules = [
             ./hardware/oracles.nix
             ./machines/oracles.nix
-            ./home-linux.nix
             ./applications/devel-rust.nix
             ./modules/docker.nix
             ./system-specific/oracles/matrix.nix
@@ -164,7 +164,6 @@
           modules = [
             ./hardware/perception.nix
             ./machines/perception.nix
-            ./home-linux.nix
             ./applications/devel-rust.nix
             ./modules/docker.nix
             ./system-specific/perception/plex.nix
@@ -184,8 +183,6 @@
           modules = [
             ./hardware/shadowchild.nix
             ./machines/shadowchild.nix
-            ./home-linux.nix
-            ./applications/devel-rust.nix
             ./modules/docker.nix
           ] ++ serverModules;
         };
