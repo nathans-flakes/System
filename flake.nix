@@ -171,6 +171,25 @@
           ] ++ serverModules;
         };
 
+        shadowchild = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            unstable = import nixpkgs-unstable {
+              config = { allowUnfree = true; };
+              overlays = [ ];
+              system = "x86_64-linux";
+            };
+            fenix = fenix.packages.x86_64-linux;
+          };
+          modules = [
+            ./hardware/shadowchild.nix
+            ./machines/shadowchild.nix
+            ./home-linux.nix
+            ./applications/devel-rust.nix
+            ./modules/docker.nix
+          ] ++ serverModules;
+        };
+
         x86vm = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
