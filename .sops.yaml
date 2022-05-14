@@ -5,6 +5,7 @@ keys:
   - &oracles: age12ayrv88xjt4r276fzc9du70x8q0r7xutt85vj627ykf4k8kgms4sc6wyw
   - &perception: age1r0aszjkyp4zlcw2w2vrk8hmcyvntshr8rew4ehlu5zad4eh6mspsatuczd
   - &shadowchild: age10zd0y2zpty2z39sh2qe66yuu9jd6hrcd3ag2wqtjp8tc579nmphsymhdla
+  - &matrix: age1pm647k04hhwm2dmqh07hnzflkurfevefcyf8xlhmc83a07n77e3sltyt0d
 creation_rules:
   - path_regex: .*
     key_groups:
@@ -14,3 +15,4 @@ creation_rules:
           - *oracles
           - *perception
           - *shadowchild
+          - *matrix
