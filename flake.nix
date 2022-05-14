@@ -100,6 +100,12 @@
         ./applications/syncthing.nix
         ./desktop.nix
       ];
+      serverModules = coreModules ++ [
+        ./modules/zt.nix
+        ./modules/autoupdate.nix
+        ./applications/devel-core.nix
+        ./applications/devel-core-linux.nix
+      ];
       mozillaOverlay = import "${mozilla}";
     in
     {
@@ -121,6 +127,28 @@
             ./modules/games.nix
             ./home-linux.nix
           ] ++ desktopModules;
+        };
+
+        oracles = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            unstable = import nixpkgs-unstable {
+              config = { allowUnfree = true; };
+              overlays = [ ];
+              system = "x86_64-linux";
+            };
+            fenix = fenix.packages.x86_64-linux;
+          };
+          modules = [
+            ./hardware/oracles.nix
+            ./machines/oracles.nix
+            ./home-linux.nix
+            ./applications/devel-rust.nix
+            ./modules/docker.nix
+            ./system-specific/oracles/matrix.nix
+            ./system-specific/oracles/gitlab-runner.nix
+            ./system-specific/oracles/gitea.nix
+          ] ++ serverModules;
         };
 
         x86vm = nixpkgs.lib.nixosSystem {
