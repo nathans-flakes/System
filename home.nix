@@ -195,6 +195,21 @@
             user = "nathan";
             hostname = "172.23.108.12";
           };
+          "tounge" = {
+            forwardAgent = true;
+            user = "nathan";
+            hostname = "172.23.98.121";
+          };
+          "shadowchild" = {
+            forwardAgent = true;
+            user = "nathan";
+            hostname = "172.23.217.149";
+          };
+          "matrix.community.rs" = {
+            forwardAgent = true;
+            user = "nathan";
+            hostname = "172.23.129.209";
+          };
         };
       };
     };
