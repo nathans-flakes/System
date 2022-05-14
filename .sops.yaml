@@ -2,9 +2,11 @@
 keys:
   - &nathan age1ud80054jwf6ff7xx65ta6g7qxx2flc24r5gyyfjz43kvppjutqyskr2qm2
   - &levitation age1tsq68swufcjq6qavqpzrtse4474p5gs58v6qp6w7gum49yz45cgsegxhuw
+  - &oracles: age12ayrv88xjt4r276fzc9du70x8q0r7xutt85vj627ykf4k8kgms4sc6wyw
 creation_rules:
   - path_regex: .*
     key_groups:
       - age:
           - *nathan
           - *levitation
+          - *oracles
