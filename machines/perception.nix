@@ -51,7 +51,7 @@
   # Open firewall ports
   networking.firewall = {
     enable = false;
-    allowedTCPPorts = [ 8080 8989 9383 ];
-    allowedUDPPorts = [ 8080 8989 9383 ];
+    allowedTCPPorts = [ 8080 8989 9383 7878 ];
+    allowedUDPPorts = [ 8080 8989 9383 7878 ];
   };
 }
