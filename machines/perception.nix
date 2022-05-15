@@ -43,6 +43,10 @@
   services.sonarr = {
     enable = true;
   };
+  # Enable radarr
+  services.radarr = {
+    enable = true;
+  };
 
   # Open firewall ports
   networking.firewall = {
