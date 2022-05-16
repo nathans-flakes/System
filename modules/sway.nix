@@ -120,7 +120,11 @@
           # Use krunner (from kde) as our launcher
           menu = "albert show";
           # Use waybar, but through systemd
-          bars = [ ];
+          bars = [
+            {
+              command = "waybar";
+            }
+          ];
           # Use fira code
           fonts = {
             names = [ "Fira Code Nerd Font" ];
@@ -195,11 +199,6 @@
       programs.waybar = {
         enable = true;
         package = unstable.waybar;
-        # Enable systemd configuration
-        systemd = {
-          enable = true;
-          target = "sway-session.target";
-        };
       };
     };
 }

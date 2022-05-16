@@ -88,6 +88,7 @@
        (sh +fish)                ; she sells {ba,z,fi}sh shells on the C xor
        yaml             ; JSON, but readable
        (kotlin +lsp)
+       (java +lsp +meghanada)
        :email
        ;;(mu4e +org +gmail)
        ;;notmuch
