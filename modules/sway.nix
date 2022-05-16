@@ -149,7 +149,12 @@
             # Mako, the notification daemon
             { command = "mako"; }
           ];
+          # Other stuff
         };
+        # disable transparency for minecraft
+        extraConfig = ''
+          for_window [title=".*Minecraft.*"] opacity 1
+        '';
       };
       # Mako for notifications
       programs.mako = {
