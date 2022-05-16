@@ -30,9 +30,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.emacs-overlay.follows = "emacs";
     };
+    nix-on-droid = {
+      url = "github:t184256/nix-on-droid";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix, home-manager, darwin, polymc, nix-doom-emacs }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix, home-manager, darwin, polymc, nix-doom-emacs, nix-on-droid }:
     let
       baseModules = [
         ./applications/utils-core.nix
@@ -62,7 +66,6 @@
         ./modules/common.nix
         ./modules/ssh.nix
         sops-nix.nixosModules.sops
-        home-manager.nixosModules.home-manager
         ## Setup sops
         ({ pkgs, config, ... }: {
           # Add default secrets
@@ -76,10 +79,19 @@
             sopsFile = ./secrets/lastfm.conf;
           };
         })
-        ## Setup home manager
+      ];
+      baseHomeModules = [
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.nathan = import ./home-manager/common.nix;
+          };
+        }
         ./home.nix
       ];
-      desktopModules = coreModules ++ [
+      desktopModules = baseHomeModules ++ coreModules ++ [
         ./modules/audio.nix
         ./modules/sway.nix
         ./modules/fonts.nix
@@ -101,7 +113,7 @@
         ./applications/syncthing.nix
         ./desktop.nix
       ];
-      serverModules = coreModules ++ [
+      serverModules = baseHomeModules ++ coreModules ++ [
         ./home-linux.nix
         ./modules/zt.nix
         ./modules/autoupdate.nix
@@ -244,5 +256,16 @@
           ];
         };
       };
+      homeConfigurations.linux =
+        let
+          system = "x86_64-linux";
+        in
+        home-manager.lib.homeManagerConfiguration {
+          configuration = import ./home-manager/linux.nix;
+          inherit system;
+          username = "nathan";
+          homeDirectory = "/home/nathan";
+          stateVersion = "21.11";
+        };
     };
 }
