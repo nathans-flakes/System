@@ -20,6 +20,8 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBfkO7kq37RQMT8UE8zQt/vP4Ub7kizLw6niToJwAIe nathan@Nathans-MacBook-Pro.local"
         # Phone key
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILY7KmG/eFm3hgTx7GBB5jNrV/yryg5C6xcgCxFQhn+o JuiceSSH"
+        # Tablet key
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMd+LlxJnluU0xvIMRIz74iypKfcSpQ5/7y2SB4c6SFY JuiceSSH"
       ];
     };
   };
