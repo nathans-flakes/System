@@ -86,8 +86,8 @@
        rest              ; Emacs as a REST client
        (rust +lsp)
        (sh +fish)                ; she sells {ba,z,fi}sh shells on the C xor
-       yaml              ; JSON, but readable
-
+       yaml             ; JSON, but readable
+       (kotlin +lsp)
        :email
        ;;(mu4e +org +gmail)
        ;;notmuch
