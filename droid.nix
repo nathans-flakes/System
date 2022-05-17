@@ -70,10 +70,10 @@
       ## devel-core
       ###
       # Full version of git
-      unstable.gitFull
+      gitFull
       # Git addons
       git-secret
-      unstable.git-lfs
+      git-lfs
       delta
       # General development requirements
       python3Full
