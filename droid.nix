@@ -12,9 +12,6 @@
   # Get home-manager up and running
   home-manager.config = ./home-manager/common.nix;
 
-  # Override git signing key
-  home-manager.config.programs.git.signing.signByDefault = mkForce false;
-
   # Have to put packages here, as it does not have environment.systemPackages
   environment.packages = with pkgs;
     [

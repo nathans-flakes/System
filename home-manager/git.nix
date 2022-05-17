@@ -8,7 +8,7 @@
     userEmail = "nathan@mccarty.io";
     signing = {
       key = "B7A40A5D78C08885";
-      signByDefault = true;
+      signByDefault = pkgs.stdenv.isx86_64;
     };
     ignores = [
       "**/*~"
