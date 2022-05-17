@@ -272,6 +272,7 @@
         # Galaxy Tab S7+
         tablet = nix-on-droid.lib.nixOnDroidConfiguration {
           system = "aarch64-linux";
+          config = ./droid.nix;
           extraModules = [
             ./applications/devel-core.nix
             ./applications/utils-core.nix
