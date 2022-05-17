@@ -12,6 +12,9 @@
   # Get home-manager up and running
   home-manager.config = ./home-manager/common.nix;
 
+  # Override git signing key
+  home-manager.config.programs.git.signing.signByDefault = mkForce false;
+
   # Have to put packages here, as it does not have environment.systemPackages
   environment.packages = with pkgs;
     [
@@ -108,7 +111,6 @@
       cargo-bloat # Find out what's taking up space in the executable
       cargo-udeps # Find unused dependencies
       cargo-expand # Dump expanded macros
-      unstable.cargo-tarpaulin # Code coverage
       cargo-play # Quickly execute code outside of a crate
       # For building stuff that uses protocol buffers
       protobuf
