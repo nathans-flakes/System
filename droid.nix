@@ -11,6 +11,11 @@
 
   # Get home-manager up and running
   home-manager.config = ./home-manager/common.nix;
+  home-manager.sharedModules = [
+    ({ unstable, ... }: {
+      programs.starship.package = unstable.starship;
+    })
+  ];
 
   # Have to put packages here, as it does not have environment.systemPackages
   environment.packages = with pkgs;

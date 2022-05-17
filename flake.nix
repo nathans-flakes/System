@@ -89,6 +89,9 @@
             users.nathan = import ./home-manager/common.nix;
           };
         }
+        ({ pkgs, config, unstable, ... }: {
+          home-manager.users.nathan.programs.starship.package = unstable.starship;
+        })
         ./home.nix
       ];
       desktopModules = baseHomeModules ++ coreModules ++ [
