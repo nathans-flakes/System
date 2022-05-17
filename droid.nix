@@ -9,6 +9,9 @@
     GDK_SCALE = "2";
   };
 
+  # Get home-manager up and running
+  home-manager.config = ./home-manager/common.nix;
+
   # Have to put packages here, as it does not have environment.systemPackages
   environment.packages = with pkgs;
     [
@@ -38,7 +41,6 @@
       hyperfine
       unstable.bottom
       dogdns
-      unstable.zenith
       duf
       # CLI Markdown renderer
       glow
