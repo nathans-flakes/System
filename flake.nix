@@ -267,5 +267,25 @@
           homeDirectory = "/home/nathan";
           stateVersion = "21.11";
         };
+
+      nixOnDroidConfigurations = {
+        # Galaxy Tab S7+
+        tablet = nix-on-droid.lib.nixOnDroidConfiguration {
+          system = "aarch64-linux";
+          extraModules = [
+            ./applications/devel-core.nix
+            ./applications/utils-core.nix
+          ];
+          extraSpecialArgs = {
+            unstable = import nixpkgs-unstable {
+              config = { allowUnfree = true; };
+              overlays = [ emacs.overlay ];
+              system = "aarch64-linux";
+            };
+            fenix = fenix.packages.x86_64-darwin;
+            doomEmacs = nix-doom-emacs.hmModule;
+          };
+        };
+      };
     };
 }
