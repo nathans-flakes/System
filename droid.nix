@@ -2,9 +2,7 @@
 
 {
   system.stateVersion = "21.11";
-  user = {
-    userName = "nathan";
-  };
+
   environment.sessionVariables = {
     XDG_RUNTIME_DIR = "/data/data/com.termux.nix/files/home/run";
     GDK_DPI_SCALE = "2";
