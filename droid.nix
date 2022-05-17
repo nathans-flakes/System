@@ -96,7 +96,7 @@
       # Install the latest rust analyzer
       fenix.rust-analyzer
       # Sccache for faster builds
-      sccache
+      # sccache
       # Misc cargo utilites
       cargo-binutils # Allow invoking the llvm tools included with the toolchain
       cargo-edit # Command line Cargo.toml manipulation
