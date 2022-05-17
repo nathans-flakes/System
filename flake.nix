@@ -17,6 +17,7 @@
     };
     sops-nix.url = "github:Mic92/sops-nix";
     home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -90,7 +91,11 @@
           };
         }
         ({ pkgs, config, unstable, ... }: {
-          home-manager.users.nathan.programs.starship.package = unstable.starship;
+          home-manager.users.nathan.programs = {
+            starship.package = unstable.starship;
+            git.package = unstable.gitFull;
+            fish.package = unstable.fish;
+          };
         })
         ./home.nix
       ];

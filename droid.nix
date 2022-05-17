@@ -70,7 +70,7 @@
       ## devel-core
       ###
       # Full version of git
-      gitFull
+      git
       # Git addons
       git-secret
       git-lfs
