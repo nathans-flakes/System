@@ -87,6 +87,13 @@
           };
         })
       ];
+      setHomeManagerVersions = ({ pkgs, config, unstable, ... }: {
+        home-manager.users.nathan.programs = {
+          starship.package = unstable.starship;
+          git.package = unstable.gitFull;
+          fish.package = unstable.fish;
+        };
+      });
       baseHomeModules = [
         home-manager.nixosModules.home-manager
         {
@@ -96,13 +103,7 @@
             users.nathan = import ./home-manager/common.nix;
           };
         }
-        ({ pkgs, config, unstable, ... }: {
-          home-manager.users.nathan.programs = {
-            starship.package = unstable.starship;
-            git.package = unstable.gitFull;
-            fish.package = unstable.fish;
-          };
-        })
+        setHomeManagerVersions
         ./home.nix
       ];
       desktopModules = baseHomeModules ++ coreModules ++ [
@@ -261,8 +262,8 @@
           modules = baseModules ++ [
             ./darwin-modules/base.nix
             home-manager.darwinModules.home-manager
+            baseHomeModules
             ./modules/fonts.nix
-            ./home.nix
             ./darwin-modules/gpg.nix
             ./applications/devel-core.nix
             ./applications/devel-rust.nix
