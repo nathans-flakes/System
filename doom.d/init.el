@@ -89,6 +89,7 @@
        yaml             ; JSON, but readable
        (kotlin +lsp)
        (java +lsp +meghanada)
+       (javascript +lsp)
        :email
        ;;(mu4e +org +gmail)
        ;;notmuch

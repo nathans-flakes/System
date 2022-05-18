@@ -122,6 +122,7 @@
         ./applications/devel-rust.nix
         ./applications/devel-raku.nix
         ./applications/devel-kotlin.nix
+        ./applications/devel-js.nix
         ./applications/emacs.nix
         ./applications/image-editing.nix
         ./applications/media.nix
