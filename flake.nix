@@ -73,6 +73,7 @@
         ./modules/common.nix
         ./modules/ssh.nix
         sops-nix.nixosModules.sops
+        home-manager.nixosModules.home-manager
         ## Setup sops
         ({ pkgs, config, ... }: {
           # Add default secrets
@@ -95,7 +96,6 @@
         };
       });
       baseHomeModules = [
-        home-manager.nixosModules.home-manager
         {
           home-manager = {
             useGlobalPkgs = true;
@@ -260,10 +260,9 @@
             fenix = fenix.packages.x86_64-darwin;
             doomEmacs = nix-doom-emacs.hmModule;
           };
-          modules = baseModules ++ [
+          modules = baseModules ++ baseHomeModules ++ [
             ./darwin-modules/base.nix
             home-manager.darwinModules.home-manager
-            baseHomeModules
             ./modules/fonts.nix
             ./darwin-modules/gpg.nix
             ./applications/devel-core.nix
