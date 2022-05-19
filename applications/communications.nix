@@ -55,6 +55,8 @@
       zulipWayland
       # Zoom (for work, sadly)
       unstable.zoom-us
+      # Teams (also for work)
+      unstable.teams
       # chromium
       chromium
       # Wayland workaround packages
