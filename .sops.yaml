@@ -2,10 +2,10 @@
 keys:
   - &nathan age1ud80054jwf6ff7xx65ta6g7qxx2flc24r5gyyfjz43kvppjutqyskr2qm2
   - &levitation age1tsq68swufcjq6qavqpzrtse4474p5gs58v6qp6w7gum49yz45cgsegxhuw
-  - &oracles: age12ayrv88xjt4r276fzc9du70x8q0r7xutt85vj627ykf4k8kgms4sc6wyw
-  - &perception: age1r0aszjkyp4zlcw2w2vrk8hmcyvntshr8rew4ehlu5zad4eh6mspsatuczd
-  - &shadowchild: age10zd0y2zpty2z39sh2qe66yuu9jd6hrcd3ag2wqtjp8tc579nmphsymhdla
-  - &matrix: age1pm647k04hhwm2dmqh07hnzflkurfevefcyf8xlhmc83a07n77e3sltyt0d
+  - &oracles age12ayrv88xjt4r276fzc9du70x8q0r7xutt85vj627ykf4k8kgms4sc6wywn
+  - &perception age1r0aszjkyp4zlcw2w2vrk8hmcyvntshr8rew4ehlu5zad4eh6mspsatuczd
+  - &shadowchild age10zd0y2zpty2z39sh2qe66yuu9jd6hrcd3ag2wqtjp8tc579nmphsymhdla
+  - &matrix age1pm647k04hhwm2dmqh07hnzflkurfevefcyf8xlhmc83a07n77e3sltyt0d
 creation_rules:
   - path_regex: .*
     key_groups:
