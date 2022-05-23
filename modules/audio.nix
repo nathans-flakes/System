@@ -56,9 +56,9 @@
     pkgs.pulseaudio
   ];
   # Add noisetorch for microphone noise canceling
-  programs.noisetorch = {
-    enable = true;
+  #programs.noisetorch = {
+    # enable = true; TODO: https://github.com/noisetorch/NoiseTorch/releases/tag/0.11.6
     # Use latest noisetorch, its a fast moving target
-    package = unstable.noisetorch;
-  };
+    #package = unstable.noisetorch;
+  #};
 }
