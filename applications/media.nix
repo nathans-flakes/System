@@ -135,6 +135,13 @@ in
     wants = [ "rclone-music.service" ];
     enable = true;
   };
+  # Load up lastfm scrobbling secret
+          sops.secrets.lastfm-conf = {
+            owner = "nathan";
+            format = "binary";
+            sopsFile = ../secrets/lastfm.conf;
+          };
+
   # Same for the scanning service
   systemd.user.services.mopidy-scan = {
     description = "Mopidy files local scanner";

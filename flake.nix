@@ -77,12 +77,6 @@
           sops.defaultSopsFile = ./secrets/nathan.yaml;
           # Use system ssh key as an age key
           sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-          # Load up lastfm scrobbling secret
-          sops.secrets.lastfm-conf = {
-            owner = "nathan";
-            format = "binary";
-            sopsFile = ./secrets/lastfm.conf;
-          };
         })
       ];
       coreModules = baseModules ++ sopsModules ++ [
