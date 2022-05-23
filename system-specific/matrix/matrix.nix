@@ -397,9 +397,7 @@ in
 
   # Matrix recaptcha keys
   sops.secrets."matrix-secrets.yaml" = {
-    owner = config.users.users.nobody.name;
-    group = config.users.users.nobody.name;
-    mode = "0440";
+    owner = "matrix-synapse";
     format = "binary";
     sopsFile = ../../secrets/matrix-community-recaptcha;
   };
