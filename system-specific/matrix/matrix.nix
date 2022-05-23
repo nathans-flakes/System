@@ -395,6 +395,15 @@ in
     };
   };
 
+  # Matrix recaptcha keys
+  sops.secrets."matrix-secrets.yaml" = {
+    owner = config.users.users.nobody.name;
+    group = config.users.users.nobody.name;
+    mode = "0440";
+    format = "binary";
+    sopsFile = ../../secrets/matrix-community-recaptcha;
+  };
+
   services.matrix-synapse = {
     enable = true;
     server_name = config.networking.domain;
@@ -413,7 +422,8 @@ in
         ];
       }
     ];
-    enable_registration = false;
+    enable_registration = true;
+    enable_registration_captcha = true;
     allow_guest_access = false;
     extraConfig = ''
       allow_public_rooms_over_federation: true
@@ -421,7 +431,8 @@ in
       auto_join_rooms: [ "#space:community.rs" ,  "#rust:community.rs" , "#rules:community.rs" , "#info:community.rs" ]
     '';
     turn_uris = [ "turn:turn.community.rs:3478?transport=udp" "turn:turn.community.rs:3478?transport=tcp" ];
-    turn_shared_secret = "5C1rbLi5pPJhEGTzkVR1";
     turn_user_lifetime = "1h";
+    # Configure secrets
+    extraConfigFiles = [ config.sops.secrets."matrix-secrets.yaml".path ];
   };
 }

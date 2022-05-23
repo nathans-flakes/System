@@ -69,24 +69,26 @@
           };
         })
       ];
-      coreModules = baseModules ++ [
-        ./modules/common.nix
-        ./modules/ssh.nix
+      sopsModules = [
         sops-nix.nixosModules.sops
-        home-manager.nixosModules.home-manager
         ## Setup sops
         ({ pkgs, config, ... }: {
           # Add default secrets
           sops.defaultSopsFile = ./secrets/nathan.yaml;
           # Use system ssh key as an age key
           sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-          # Load up lastfm scrobbling secret 
+          # Load up lastfm scrobbling secret
           sops.secrets.lastfm-conf = {
             owner = "nathan";
             format = "binary";
             sopsFile = ./secrets/lastfm.conf;
           };
         })
+      ];
+      coreModules = baseModules ++ sopsModules ++ [
+        ./modules/common.nix
+        ./modules/ssh.nix
+        home-manager.nixosModules.home-manager
       ];
       setHomeManagerVersions = ({ pkgs, config, unstable, ... }: {
         home-manager.users.nathan.programs = {
