@@ -404,7 +404,8 @@ in
 
   services.matrix-synapse = {
     enable = true;
-    server_name = config.networking.domain;
+    server_name = "matrix.community.rs";
+    public_baseurl = "https://matrix.community.rs";
     listeners = [
       {
         port = 8008;
