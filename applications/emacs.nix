@@ -10,7 +10,7 @@ in
   environment.systemPackages = [
     emacsPackage
     # For markdown rendering
-    pkgs.python310Packages.grip
+    pkgs.python39Packages.grip
     # For graph generation
     pkgs.graphviz
   ];
