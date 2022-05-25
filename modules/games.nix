@@ -1,13 +1,13 @@
-{ pkgs, unstable, ... }: {
+{ pkgs, ... }: {
   environment.systemPackages =
     let
-      glfw-patched = unstable.glfw-wayland.overrideAttrs (attrs: {
+      glfw-patched = pkgs.glfw-wayland.overrideAttrs (attrs: {
         patches = attrs.patches ++ [ ../patches/minecraft/0003-Don-t-crash-on-calls-to-focus-or-icon.patch ];
       });
     in
-    with unstable; [
+    with pkgs; [
       # Dwarf fortress
-      (pkgs.dwarf-fortress-packages.dwarf-fortress-full.override {
+      (dwarf-fortress-packages.dwarf-fortress-full.override {
         enableFPS = true;
       })
       # PolyMC minecraft stuff

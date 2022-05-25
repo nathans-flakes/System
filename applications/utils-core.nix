@@ -13,7 +13,7 @@
     hunspell
     hunspellDicts.en-us
     # Rust rewrites of common shell utilities
-    unstable.starship
+    starship
     exa
     bat
     fd
@@ -32,7 +32,7 @@
     # Command line file manager
     broot
     # Much better curl
-    unstable.httpie
+    httpie
     # CLI spreadsheets
     visidata
     # User friendly cut

@@ -1,4 +1,4 @@
-{ pkgs, config, unstable, ... }:
+{ pkgs, config, ... }:
 {
   ## Some general settings that were in the user configuration
   # Set time zone

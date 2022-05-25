@@ -1,18 +1,23 @@
-{ config, pkgs, unstable, ... }:
+{ config, pkgs, ... }:
 {
-  nixpkgs.config.packageOverrides = pkgs: {
-    canon-cups-ufr2 = unstable.canon-cups-ufr2;
-  };
-
   services.printing = {
     enable = true;
-    drivers = [
-      pkgs.canon-cups-ufr2
+    drivers = with pkgs; [
+      canon-cups-ufr2
+      carps-cups
+      cnijfilter2
     ];
+  };
+
+  # Enable avahi for printer discovery
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
   };
 
   environment.systemPackages = with pkgs; [
     canon-cups-ufr2
     cups
+    cups-filters
   ];
 }

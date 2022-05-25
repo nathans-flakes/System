@@ -1,4 +1,4 @@
-{ config, pkgs, unstable, doomEmacs, ... }:
+{ config, pkgs, doomEmacs, ... }:
 let
   emacsPackage = (pkgs.emacsPackagesFor pkgs.emacsPgtkNativeComp).emacsWithPackages (epkgs: with epkgs; [
     vterm
@@ -10,7 +10,7 @@ in
   environment.systemPackages = [
     emacsPackage
     # For markdown rendering
-    pkgs.pythonPackages.grip
+    pkgs.python310Packages.grip
     # For graph generation
     pkgs.graphviz
   ];

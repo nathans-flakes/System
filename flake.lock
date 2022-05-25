@@ -394,6 +394,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-staging": {
+      "locked": {
+        "lastModified": 1653437856,
+        "narHash": "sha256-ONO0zbEhvFjVIbIMnYsq0GjGrKSZuKjLqZhEw2Zqoh4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "1774dcc1ca62f9deb31f776512e9482bcaf56192",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "staging-next-22.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1653060744,
@@ -586,6 +602,7 @@
         "mozilla": "mozilla",
         "nix-doom-emacs": "nix-doom-emacs",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-staging": "nixpkgs-staging",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "polymc": "polymc",
         "sops-nix": "sops-nix"

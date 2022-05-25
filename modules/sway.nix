@@ -61,7 +61,7 @@
       # glib for sound stuff
       glib
       # Glpaper for the background
-      glpaper
+      unstable.glpaper
       # Screenshots
       sway-contrib.grimshot
       # Albert for launcher

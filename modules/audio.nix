@@ -1,5 +1,5 @@
 ## Setup pipewire, including bluetooth audio
-{ config, pkgs, unstable, ... }:
+{ config, pkgs, ... }:
 {
   # Disable normal audio subsystem explicitly
   sound.enable = false;
@@ -15,35 +15,6 @@
     };
     pulse.enable = true;
     jack.enable = true;
-    # Turn on the media session manager, and setup bluetooth
-    media-session = {
-      enable = true;
-      # Configure bluetooth support
-      config.bluez-monitor.rules = [
-        {
-          # Matches all cards
-          matches = [{ "device.name" = "~bluez_card.*"; }];
-          actions = {
-            "update-props" = {
-              "bluez5.reconnect-profiles" = [ "a2dp_sink" ];
-              # SBC-XQ is not expected to work on all headset + adapter combinations.
-              "bluez5.sbc-xq-support" = true;
-            };
-          };
-        }
-        {
-          matches = [
-            # Matches all sources
-            { "node.name" = "~bluez_input.*"; }
-            # Matches all outputs
-            { "node.name" = "~bluez_output.*"; }
-          ];
-          actions = {
-            "node.pause-on-idle" = false;
-          };
-        }
-      ];
-    };
   };
   # Turn on bluetooth services
   services.blueman.enable = true;

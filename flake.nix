@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-staging.url = "github:NixOS/nixpkgs/staging-next-22.05";
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpgks.follows = "nixpkgs";
@@ -39,7 +40,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix, home-manager, darwin, polymc, nix-doom-emacs }:
+  outputs =
+    { self
+    , nixpkgs
+    , nixpkgs-unstable
+    , nixpkgs-staging
+    , fenix
+    , emacs
+    , mozilla
+    , sops-nix
+    , home-manager
+    , darwin
+    , polymc
+    , nix-doom-emacs
+    }:
     let
       baseModules = [
         ./applications/utils-core.nix
@@ -64,7 +78,9 @@
             '';
           };
           # Setup overlays
-          nixpkgs.overlays = [ emacs.overlay ];
+          nixpkgs.overlays = [ emacs.overlay polymc.overlay ];
+          # System state version for compat
+          system.stateVersion = "21.11";
         })
       ];
       sopsModules = [
@@ -135,12 +151,12 @@
     in
     {
       nixosConfigurations = {
-        levitation = nixpkgs.lib.nixosSystem {
+        levitation = nixpkgs-staging.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
             unstable = import nixpkgs-unstable {
               config = { allowUnfree = true; };
-              overlays = [ mozillaOverlay polymc.overlay ];
+              overlays = [ mozillaOverlay ];
               system = "x86_64-linux";
             };
             fenix = fenix.packages.x86_64-linux;
