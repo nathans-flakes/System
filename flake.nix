@@ -37,13 +37,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.emacs-overlay.follows = "emacs";
     };
-    nix-on-droid = {
-      url = "github:t184256/nix-on-droid";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix, home-manager, darwin, polymc, nix-doom-emacs, nix-on-droid }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, fenix, emacs, mozilla, sops-nix, home-manager, darwin, polymc, nix-doom-emacs }:
     let
       baseModules = [
         ./applications/utils-core.nix
@@ -281,22 +277,5 @@
           homeDirectory = "/home/nathan";
           stateVersion = "21.11";
         };
-
-      nixOnDroidConfigurations = {
-        # Galaxy Tab S7+
-        tablet = nix-on-droid.lib.nixOnDroidConfiguration {
-          system = "aarch64-linux";
-          config = ./droid.nix;
-          extraSpecialArgs = {
-            unstable = import nixpkgs-unstable {
-              config = { allowUnfree = true; };
-              overlays = [ emacs.overlay ];
-              system = "aarch64-linux";
-            };
-            fenix = fenix.packages.aarch64-linux;
-            doomEmacs = nix-doom-emacs.hmModule;
-          };
-        };
-      };
     };
 }

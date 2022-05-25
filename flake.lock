@@ -220,21 +220,6 @@
         "type": "github"
       }
     },
-    "flake-utils_3": {
-      "locked": {
-        "lastModified": 1652776076,
-        "narHash": "sha256-gzTw/v1vj4dOVbpBSJX4J0DwUR6LIyXo7/SuuTJp1kM=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "04c1b180862888302ddfb2e3ad9eaa63afc60cf8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "format-all": {
       "flake": false,
       "locked": {
@@ -255,27 +240,6 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1653340164,
-        "narHash": "sha256-t6BPApyasx6FOv2cEVyFBXvkEDrknyUe7bngMbNSBkA=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "e66f0ff69a6c0698b35034b842c4b68814440778",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "home-manager_2": {
-      "inputs": {
-        "nixpkgs": [
-          "nix-on-droid",
           "nixpkgs"
         ]
       },
@@ -363,28 +327,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "nix-doom-emacs",
-        "type": "github"
-      }
-    },
-    "nix-on-droid": {
-      "inputs": {
-        "flake-utils": "flake-utils_3",
-        "home-manager": "home-manager_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1650613939,
-        "narHash": "sha256-x+OlhRDWXpqFZKmeEOE+vXbmt9kiCe35rKVBcJo3gxQ=",
-        "owner": "t184256",
-        "repo": "nix-on-droid",
-        "rev": "e7e7d1347ffa88f8f67852a58a94d339c7d58fa0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "t184256",
-        "repo": "nix-on-droid",
         "type": "github"
       }
     },
@@ -643,7 +585,6 @@
         "home-manager": "home-manager",
         "mozilla": "mozilla",
         "nix-doom-emacs": "nix-doom-emacs",
-        "nix-on-droid": "nix-on-droid",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "polymc": "polymc",
