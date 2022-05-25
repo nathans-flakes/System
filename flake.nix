@@ -79,8 +79,6 @@
           };
           # Setup overlays
           nixpkgs.overlays = [ emacs.overlay polymc.overlay ];
-          # System state version for compat
-          system.stateVersion = "21.11";
         })
       ];
       sopsModules = [
@@ -97,6 +95,11 @@
         ./modules/common.nix
         ./modules/ssh.nix
         home-manager.nixosModules.home-manager
+        # Configure system state version for linux
+        ({ pkgs, ... }: {
+          # System state version for compat
+          system.stateVersion = "21.11";
+        })
       ];
       setHomeManagerVersions = ({ pkgs, config, unstable, ... }: {
         home-manager.users.nathan.programs = {
