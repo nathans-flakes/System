@@ -10,7 +10,7 @@
     };
     emacs = {
       url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     mozilla = {
       url = "github:mozilla/nixpkgs-mozilla";
@@ -67,6 +67,8 @@
               experimental-features = nix-command flakes
             '';
           };
+          # Setup overlays
+          nixpkgs.overlays = [ emacs.overlay ];
         })
       ];
       sopsModules = [
@@ -141,7 +143,7 @@
           specialArgs = {
             unstable = import nixpkgs-unstable {
               config = { allowUnfree = true; };
-              overlays = [ emacs.overlay mozillaOverlay polymc.overlay ];
+              overlays = [ mozillaOverlay polymc.overlay ];
               system = "x86_64-linux";
             };
             fenix = fenix.packages.x86_64-linux;
@@ -236,7 +238,7 @@
           specialArgs = {
             unstable = import nixpkgs-unstable {
               config = { allowUnfree = true; };
-              overlays = [ emacs.overlay ];
+              overlays = [ ];
               system = "x86_64-linux";
             };
             fenix = fenix.packages.x86_64-linux;
@@ -250,7 +252,7 @@
           specialArgs = {
             unstable = import nixpkgs-unstable {
               config = { allowUnfree = true; };
-              overlays = [ emacs.overlay ];
+              overlays = [ ];
               system = "x86_64-darwin";
             };
             fenix = fenix.packages.x86_64-darwin;
