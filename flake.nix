@@ -114,6 +114,7 @@
         ./modules/docker.nix
         ./modules/printing.nix
         ./modules/zt.nix
+        ./modules/lxc.nix
         ./applications/communications.nix
         ./applications/devel-core.nix
         ./applications/devel-core-linux.nix
