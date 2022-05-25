@@ -33,5 +33,11 @@ in
       # TODO remove when we enable doom-emacs again
       package = emacsPackage;
     };
+    # Link up the doom configuration for now
+    home.file = {
+      ".doom.d/config.org".source = ../doom.d/config.org;
+      ".doom.d/init.el".source = ../doom.d/init.el;
+      ".doom.d/packages.el".source = ../doom.d/packages.el;
+    };
   };
 }
