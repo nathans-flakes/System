@@ -400,10 +400,13 @@ Use ~elfeed~ for RSS. Doom provides most of the configuration, but we'll make a 
 #+begin_src emacs-lisp
 (use-package! elfeed
   :hook (elfeed-search-mode . elfeed-update)
+  :hook (elfeed-show-mode . variable-pitch-mode)
+  :hook (elfeed-show-mode . visual-line-mode)
   :bind ("C-x w" . elfeed)
   :config
-  (setq elfeed-search-filter "@2-weeks-ago +unread"
+  (setq elfeed-search-filter "@4-weeks-ago +unread"
         elfeed-db-directory (concat org-directory "elfeed/db/")
-        elfeed-enclosure-default-dir (concat org-directory "elfeed/enclosures/"))
+        elfeed-enclosure-default-dir (concat org-directory "elfeed/enclosures/")
+        shr-max-width nil)
   (make-directory elfeed-db-directory t))
 #+end_src
