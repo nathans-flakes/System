@@ -204,8 +204,10 @@ Setup some basic cosmetic improvements
   #+end_src
 
   Automatically add all files in the org dir to the agenda. This performs some filtering of the files returned from ~directory-files~ to exclude some things that would confuse org-agenda.
+  We also setup an idle timer, with a short duration, only 30 seconds, to update the ~org-agenda-files~ list, as well as a longer regular timer with a duration of 300 seconds (5 minutes) to keep the agenda up to date even when we are actively using emacs.
   #+begin_src emacs-lisp
-(after! org
+;; A function to update the org-agenda files
+(defun nm/update-org-agenda-files ()
   (setq org-agenda-files
         (seq-filter (lambda (item)
                       (and
@@ -217,6 +219,48 @@ Setup some basic cosmetic improvements
                        ;; Exclude the elfeed data folder
                        (not (string-match-p (concat "^" (regexp-quote org-directory) "elfeed/.*") item))))
                     (directory-files-recursively org-directory directory-files-no-dot-files-regexp))))
+
+(after! org
+  ;; Set the agenda files on first start
+  (nm/update-org-agenda-files)
+  ;; Set up a timer to automatically update them in the background
+  ;; This first one is an idle timer that runs when emacs has been idle for 30 seconds
+  (run-with-idle-timer 25 t 'nm/update-org-agenda-files)
+  ;; Then setup the non-idle timer for 5 minutes
+  (run-with-timer "5 min" t 'nm/update-org-agenda-files))
+  #+end_src
+
+Set up two different timers for updating the org-agenda buffer.
++ Idle timer
+  The idle timer simply updates the views unconditionally, and is set with a slightly higher timeout than our idle time that updates the org agenda files. This idle time can safely modify the state of the buffer without any other checks, as if the user is idle, they aren't doing anything in the buffer
+  + Timer timer
+    Setup a timer that attempts to update the org-agenda buffer every 5 minutes. This timer is a little bit unsafe, so it _could_ end up annyoing the user by updating the state while they are in the middle of doing something, so it cancels out and does nothing  if the user is currently focused on the agenda buffer.
+  #+begin_src emacs-lisp
+;; Helper function to refresh the buffer
+(defun nm/org-agenda-refresh ()
+  ;; Attempt to get the org agenda buffer
+  (when-let ((buffer (get-buffer org-agenda-buffer-name)))
+    ;; Update the views
+    (with-current-buffer buffer
+      (org-agenda-redo-all))))
+
+;; Helper function to only refresh the buffer if it isn't focused, we don't want to annoy ourselves
+;; by refreshing in the middle of faffing around, the idle timer will clean us up when we are done
+;; anyway
+(defun nm/org-agenda-refresh-conditional ()
+  ;; Attempt to get the org agenda buffer
+  (when-let ((buffer (get-buffer org-agenda-buffer-name)))
+    ;; Get the currently selected window and see if it contains the org-agenda buffer, we don't want
+    ;; to trample the current state if the user (me) is currently active in the buffer
+    (when (not (eq (window-buffer (selected-window)) buffer))
+      ;; Since we are not in the org-agenda-buffer it is safe to rebuild the views
+      (with-current-buffer buffer
+        (org-agenda-redo-all)))))
+
+(after! org
+  ;; Set up an idle time that's slighty longer than our update-org-agenda-files idle timer
+  (run-with-idle-timer 30 t 'nm/org-agenda-refresh)
+  (run-with-timer "5 min" t 'nm/org-agenda-refresh-conditional))
   #+end_src
 
   Log state changes into a drawer
@@ -312,6 +356,12 @@ Set the default mode to github flavored markdown, turn on smart use of fill colu
   :config
   (setq separedit-default-mode 'gfm-mode
         separedit-continue-fill-column t))
+#+end_src
+*** Rainbow delimiters
+Makes pairs of delimiters into pretty colors. Hook this into prog-mode
+#+begin_src emacs-lisp
+(use-package! rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 ** LSP Mode
 Custom configuration for lsp-mode
