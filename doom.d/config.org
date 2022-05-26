@@ -202,6 +202,28 @@ Setup some basic cosmetic improvements
                           ("^ *\\([+]\\) "
                            0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "")))))
   #+end_src
+
+  Automatically add all files in the org dir to the agenda. This performs some filtering of the files returned from ~directory-files~ to exclude some things that would confuse org-agenda.
+  #+begin_src emacs-lisp
+(after! org
+  (setq org-agenda-files
+        (seq-filter (lambda (item)
+                      (and
+                       ;; Only accept things that are a directory, or an org file
+                       (or (file-directory-p item)
+                          (string-match-p ".*org$" item))
+                       ;; Exclude the syncthing folder
+                       (not (string-match-p ".*stfolder$" item))
+                       ;; Exclude the elfeed data folder
+                       (not (string-match-p (concat "^" (regexp-quote org-directory) "elfeed/.*") item))))
+                    (directory-files-recursively org-directory directory-files-no-dot-files-regexp))))
+  #+end_src
+
+  Log state changes into a drawer
+  #+begin_src emacs-lisp
+(after! org
+  (setq org-log-into-drawer t))
+  #+end_src
 ** org-roam
 A second brain in emacs
 
