@@ -206,9 +206,27 @@ Setup some basic cosmetic improvements
   Automatically add all files in the org dir to the agenda. This performs some filtering of the files returned from ~directory-files~ to exclude some things that would confuse org-agenda.
   We also setup an idle timer, with a short duration, only 30 seconds, to update the ~org-agenda-files~ list, as well as a longer regular timer with a duration of 300 seconds (5 minutes) to keep the agenda up to date even when we are actively using emacs.
   #+begin_src emacs-lisp
-;; A function to update the org-agenda files
+(defvar nm/org-agenda-files-timer nil
+  "Timer for automatically updating the org-agenda files")
+(defvar nm/time-at-agenda-update 0
+  "Time at last agenda update")
+
 (defun nm/update-org-agenda-files ()
-  (setq org-agenda-files
+  "Helper function for updating the org-agenda files."
+  ;; Calcuate time since last update
+  (let* ((time-seconds  (float-time (current-time)))
+         (seconds-since (- time-seconds nm/time-at-agenda-update))
+         (idle-time     (current-idle-time))
+         (idle-seconds  (if idle-time (float-time idle-time) 0)))
+    ;; If it has been more than 10 minutes since our last agenda file update, then go ahead and update
+    ;; Additionally update if the idle timer is greater than 30 seconds
+    (when (or
+           (> seconds-since 600)
+           (> idle-seconds 30))
+      ;; Update our time variable
+      (setq nm/time-at-agenda-update seconds-since)
+      ;; Update our agenda files
+      (setq org-agenda-files
         (seq-filter (lambda (item)
                       (and
                        ;; Only accept things that are a directory, or an org file
@@ -218,49 +236,59 @@ Setup some basic cosmetic improvements
                        (not (string-match-p ".*stfolder$" item))
                        ;; Exclude the elfeed data folder
                        (not (string-match-p (concat "^" (regexp-quote org-directory) "elfeed/.*") item))))
-                    (directory-files-recursively org-directory directory-files-no-dot-files-regexp))))
+                    (directory-files-recursively org-directory directory-files-no-dot-files-regexp)))))
+  ;; Update the timer, first canceling the old one
+  (when nm/org-agenda-update-timer
+    (cancel-timer nm/org-agenda-update-timer))
+  (setq nm/org-agenda-update-timer (run-with-timer 60 nil 'nm/org-agenda-update-timer)))
 
 (after! org
   ;; Set the agenda files on first start
-  (nm/update-org-agenda-files)
-  ;; Set up a timer to automatically update them in the background
-  ;; This first one is an idle timer that runs when emacs has been idle for 30 seconds
-  (run-with-idle-timer 25 t 'nm/update-org-agenda-files)
-  ;; Then setup the non-idle timer for 5 minutes
-  (run-with-timer "5 min" t 'nm/update-org-agenda-files))
+  ;; This also configures the timer for us
+  (nm/update-org-agenda-files))
   #+end_src
 
 Set up two different timers for updating the org-agenda buffer.
 + Idle timer
   The idle timer simply updates the views unconditionally, and is set with a slightly higher timeout than our idle time that updates the org agenda files. This idle time can safely modify the state of the buffer without any other checks, as if the user is idle, they aren't doing anything in the buffer
   + Timer timer
-    Setup a timer that attempts to update the org-agenda buffer every 5 minutes. This timer is a little bit unsafe, so it _could_ end up annyoing the user by updating the state while they are in the middle of doing something, so it cancels out and does nothing  if the user is currently focused on the agenda buffer.
+    Setup a timer that attempts to update the org-agenda buffer every 5 minutes. This timer is a little bit unsafe, so it _could_ end up annoying the user by updating the state while they are in the middle of doing something, so it cancels out and does nothing  if the user is currently focused on the agenda buffer.
   #+begin_src emacs-lisp
-;; Helper function to refresh the buffer
-(defun nm/org-agenda-refresh ()
-  ;; Attempt to get the org agenda buffer
-  (when-let ((buffer (get-buffer org-agenda-buffer-name)))
-    ;; Update the views
-    (with-current-buffer buffer
-      (org-agenda-redo-all))))
+(defvar nm/org-agenda-update-timer nil
+  "Timer for automatically updating the org-agenda views")
 
-;; Helper function to only refresh the buffer if it isn't focused, we don't want to annoy ourselves
-;; by refreshing in the middle of faffing around, the idle timer will clean us up when we are done
-;; anyway
 (defun nm/org-agenda-refresh-conditional ()
-  ;; Attempt to get the org agenda buffer
-  (when-let ((buffer (get-buffer org-agenda-buffer-name)))
-    ;; Get the currently selected window and see if it contains the org-agenda buffer, we don't want
-    ;; to trample the current state if the user (me) is currently active in the buffer
-    (when (not (eq (window-buffer (selected-window)) buffer))
-      ;; Since we are not in the org-agenda-buffer it is safe to rebuild the views
-      (with-current-buffer buffer
-        (org-agenda-redo-all)))))
+  "Helper function to only refresh the org-agenda views if it
+either isn't focused or we have been idle long enough. This
+avoids updating the buffer, and thus annoying the user, while
+they are in the middle of doing something.
+
+This function will run on a 60 second loop, only actually doing
+work if it thinks it needs to."
+  ;; Make sure the org-agenda-buffer exists, bail out if it doesnt
+  (when (boundp 'org-agenda-buffer-name)
+    ;; Attempt to get the org agenda buffer
+    (when-let ((buffer (get-buffer org-agenda-buffer-name)))
+      ;; Calcuate idle time
+      (let* ((idle-time (current-idle-time))
+             (idle-seconds (if idle-time (float-time idle-time) 0)))
+        ;; Update the org-agenda views if any of the following apply:
+        ;; - The agenda buffer is not in focus
+        ;; - The idle time is greater than one minute
+        (when (or
+               (not (eq (window-buffer (selected-window)) buffer))
+               (> idle-seconds 60))
+          ;; Since we are not in the org-agenda-buffer it is safe to rebuild the views
+          (with-current-buffer buffer
+            (org-agenda-redo-all))))))
+    ;; Update the timer, first canceling the old one
+    (when nm/org-agenda-update-timer
+      (cancel-timer nm/org-agenda-update-timer))
+    (setq nm/org-agenda-update-timer (run-with-timer 60 nil 'nm/org-agenda-refresh-conditional)))
 
 (after! org
-  ;; Set up an idle time that's slighty longer than our update-org-agenda-files idle timer
-  (run-with-idle-timer 30 t 'nm/org-agenda-refresh)
-  (run-with-timer "5 min" t 'nm/org-agenda-refresh-conditional))
+  ;; This method sets up the timer on its own
+  (nm/org-agenda-refresh-conditional))
   #+end_src
 
   Log state changes into a drawer
