@@ -189,7 +189,7 @@
             ./applications/devel-rust.nix
             ./modules/docker.nix
             ./system-specific/oracles/matrix.nix
-            # ./system-specific/oracles/gitlab-runner.nix
+            ./system-specific/oracles/gitlab-runner.nix
             ./system-specific/oracles/gitea.nix
           ] ++ serverModules;
         };
