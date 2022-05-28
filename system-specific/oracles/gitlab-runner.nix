@@ -19,6 +19,7 @@
           "/var/sharedstore:/sharedstore"
         ];
         dockerDisableCache = true;
+        dockerPrivileged = true;
       };
     in
     {
