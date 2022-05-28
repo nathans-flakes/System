@@ -14,7 +14,7 @@
   services.gitlab-runner =
     let
       nix-shared = with lib; {
-        dockerImage = "alpine";
+        dockerImage = "alpine:latest";
         dockerVolumes = [
           "/nix/store:/nix/store:ro"
           "/nix/var/nix/db:/nix/var/nix/db:ro"
@@ -33,7 +33,7 @@
           mkdir -p -m 0755 /nix/var/nix/profiles/per-user/root
           mkdir -p -m 0700 "$HOME/.nix-defexpr"
           . ${pkgs.nix}/etc/profile.d/nix.sh
-          ${pkgs.nix}/bin/nix-channel --add https://nixos.org/channels/nixos-21.05 nixpkgs # 3
+          ${pkgs.nix}/bin/nix-channel --add https://nixos.org/channels/nixos-unstable nixpkgs # 3
           ${pkgs.nix}/bin/nix-channel --update nixpkgs
           ${pkgs.nix}/bin/nix-env -i ${concatStringsSep " " (with pkgs; [ nixUnstable cacert git openssh ])}
         '';
