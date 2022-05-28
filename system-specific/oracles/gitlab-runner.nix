@@ -16,7 +16,7 @@
       nix-shared = with lib; {
         dockerImage = "nixpkgs/nix-flakes";
         dockerVolumes = [
-          "/nix:/sharedstore"
+          "/var/sharedstore:/sharedstore"
         ];
         dockerDisableCache = true;
       };
