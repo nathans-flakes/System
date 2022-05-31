@@ -19,7 +19,7 @@ in
       LC_CTYPE = "C";
   '';
   # configure cert email
-  security.acme.email = "thatonelutenist@protonmail.com";
+  security.acme.defaults.email = "thatonelutenist@protonmail.com";
   security.acme.acceptTerms = true;
   # Enable nginx
   services.nginx = {
@@ -404,34 +404,36 @@ in
 
   services.matrix-synapse = {
     enable = true;
-    server_name = config.networking.domain;
-    public_baseurl = "https://matrix.community.rs";
-    listeners = [
-      {
-        port = 8008;
-        bind_address = "0.0.0.0";
-        type = "http";
-        tls = false;
-        x_forwarded = true;
-        resources = [
-          {
-            names = [ "client" "federation" ];
-            compress = false;
-          }
-        ];
-      }
-    ];
-    enable_registration = true;
-    enable_registration_captcha = true;
-    allow_guest_access = false;
-    extraConfig = ''
-      allow_public_rooms_over_federation: true
-      experimental_features: { spaces_enabled: true }
-      auto_join_rooms: [ "#space:community.rs" ,  "#rust:community.rs" , "#rules:community.rs" , "#info:community.rs" ]
-    '';
-    turn_uris = [ "turn:turn.community.rs:3478?transport=udp" "turn:turn.community.rs:3478?transport=tcp" ];
-    turn_user_lifetime = "1h";
-    # Configure secrets
-    extraConfigFiles = [ config.sops.secrets."matrix-secrets.yaml".path ];
+    settings = {
+      server_name = config.networking.domain;
+      public_baseurl = "https://matrix.community.rs";
+      listeners = [
+        {
+          port = 8008;
+          bind_addresses = [ "0.0.0.0" ];
+          type = "http";
+          tls = false;
+          x_forwarded = true;
+          resources = [
+            {
+              names = [ "client" "federation" ];
+              compress = false;
+            }
+          ];
+        }
+      ];
+      enable_registration = true;
+      enable_registration_captcha = true;
+      allow_guest_access = false;
+      extraConfig = ''
+        allow_public_rooms_over_federation: true
+        experimental_features: { spaces_enabled: true }
+        auto_join_rooms: [ "#space:community.rs" ,  "#rust:community.rs" , "#rules:community.rs" , "#info:community.rs" ]
+      '';
+      turn_uris = [ "turn:turn.community.rs:3478?transport=udp" "turn:turn.community.rs:3478?transport=tcp" ];
+      turn_user_lifetime = "1h";
+      # Configure secrets
+      extraConfigFiles = [ config.sops.secrets."matrix-secrets.yaml".path ];
+    };
   };
 }

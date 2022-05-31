@@ -33,10 +33,12 @@
     recommendedProxySettings = true;
   };
   security.acme = {
-    email = "nathan@mccarty.io";
+    defaults.email = "nathan@mccarty.io";
     acceptTerms = true;
   };
   # Redis
-  services.redis.enable = true;
-  services.redis.bind = "172.23.108.12";
+  services.redis.servers.main = {
+    enable = true;
+    bind = "172.23.108.12";
+  };
 }

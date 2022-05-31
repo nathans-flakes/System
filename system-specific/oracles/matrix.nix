@@ -37,29 +37,31 @@
 
   services.matrix-synapse = {
     enable = true;
-    enable_registration = true;
-    server_name = "mccarty.io";
-    listeners = [
-      {
-        port = 8008;
-        bind_address = "::1";
-        type = "http";
-        tls = false;
-        x_forwarded = true;
-        resources = [
-          {
-            names = [ "client" "federation" ];
-            compress = false;
-          }
-        ];
-      }
-    ];
-    database_user = "matrix-synapse";
-    database_name = "synapse";
-    extraConfig = ''
-      ip_range_whitelist:
-        - '172.23.0.0/16'
-      registration_requires_token: true
-    '';
+    settings = {
+      enable_registration = true;
+      server_name = "mccarty.io";
+      listeners = [
+        {
+          port = 8008;
+          bind_addresses = [ "::1" ];
+          type = "http";
+          tls = false;
+          x_forwarded = true;
+          resources = [
+            {
+              names = [ "client" "federation" ];
+              compress = false;
+            }
+          ];
+        }
+      ];
+      database_user = "matrix-synapse";
+      database_name = "synapse";
+      extraConfig = ''
+        ip_range_whitelist:
+          - '172.23.0.0/16'
+        registration_requires_token: true
+      '';
+    };
   };
 }

@@ -27,7 +27,7 @@
     description = "Create the network bridge woodpecker-br for filerun.";
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
-    before = [ "docker-woodpecker-server" ];
+    before = [ "docker-woodpecker-server.service" ];
 
     serviceConfig.Type = "oneshot";
     script =

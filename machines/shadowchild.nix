@@ -7,7 +7,7 @@
   networking.firewall.allowPing = true;
 
   # Turn on nginx so we can get a lets encrypt cert
-  security.acme.email = "nathan@mccarty.io";
+  security.acme.defaults.email = "nathan@mccarty.io";
   security.acme.acceptTerms = true;
 
   services.nginx = {

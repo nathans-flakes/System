@@ -2,9 +2,8 @@
   description = "Nathan's system configurations";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-staging.url = "github:NixOS/nixpkgs/staging-next-22.05";
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpgks.follows = "nixpkgs";
@@ -44,7 +43,6 @@
     { self
     , nixpkgs
     , nixpkgs-unstable
-    , nixpkgs-staging
     , fenix
     , emacs
     , mozilla
@@ -154,7 +152,7 @@
     in
     {
       nixosConfigurations = {
-        levitation = nixpkgs-staging.lib.nixosSystem {
+        levitation = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
             unstable = import nixpkgs-unstable {
