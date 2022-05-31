@@ -38,7 +38,7 @@
   services.matrix-synapse = {
     enable = true;
     settings = {
-      enable_registration = true;
+      enable_registration = false;
       server_name = "mccarty.io";
       listeners = [
         {
