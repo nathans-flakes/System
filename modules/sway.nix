@@ -61,7 +61,15 @@
       # glib for sound stuff
       glib
       # Glpaper for the background
-      unstable.glpaper
+      (glpaper.overrideAttrs (old: {
+        src = fetchFromSourcehut {
+          owner = "~scoopta";
+          repo = "glpaper";
+          vc = "hg";
+          rev = "f89e60b7941fb60f1069ed51af9c5bb4917aab35";
+          hash = "sha256-E7FKjt3NL0aAEibfaq+YS2IVvpjNjInA+Rs8SU63/3M=";
+        };
+      }))
       # Screenshots
       sway-contrib.grimshot
       # Albert for launcher
