@@ -55,13 +55,15 @@
           ];
         }
       ];
-      database_name = "matrix-synapse";
-      database_user = "synapse";
       extraConfig = ''
         ip_range_whitelist:
           - '172.23.0.0/16'
         registration_requires_token: true
       '';
+      database.args = {
+        user = "matrix-synapse";
+        database = "synapse";
+      };
     };
   };
 }
