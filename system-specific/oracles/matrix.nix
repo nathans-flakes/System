@@ -55,8 +55,8 @@
           ];
         }
       ];
-      database_user = "matrix-synapse";
-      database_name = "synapse";
+      database_name = "matrix-synapse";
+      database_user = "synapse";
       extraConfig = ''
         ip_range_whitelist:
           - '172.23.0.0/16'
