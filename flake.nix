@@ -128,6 +128,7 @@
         ./modules/printing.nix
         ./modules/zt.nix
         ./modules/lxc.nix
+        ./modules/protonmail.nix
         ./applications/communications.nix
         ./applications/devel-core.nix
         ./applications/devel-core-linux.nix
