@@ -21,5 +21,7 @@
     fx
     # Direnv for nix-shell niceness
     direnv
+    # Sops for secrets
+    sops
   ];
 }
