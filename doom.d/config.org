@@ -119,6 +119,16 @@ This tweak applies to:
 #+end_src
 
 Setting ~mixed-pitch-set-height~ is required to get ~mixed-pitch-mode~ to render fonts with the correct size in doom emacs, apparently.
+** Modeline configuration
+Configure the modeline to truncate with project (so that ~~/Projects/Asuran/replicator/src/lib.rs~ becomes ~replicator/s/lib.rs~)
+#+begin_src emacs-lisp
+(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+#+end_src
+
+Display the current time in the modeline
+#+begin_src emacs-lisp
+(display-time-mode 1)
+#+end_src
 * Basic Editing
 ** Navigation
 *** Avy
