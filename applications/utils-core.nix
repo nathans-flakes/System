@@ -51,5 +51,7 @@
     feh
     # Mosh for better high-latency ssh
     mosh
+    # PV for viewing pipes
+    pv
   ];
 }
