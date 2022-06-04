@@ -41,4 +41,9 @@
     enable = true;
     bind = "172.23.108.12";
   };
+
+  # Install java
+  environment.systemPackages = with pkgs; [
+    jdk
+  ];
 }
