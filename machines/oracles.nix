@@ -18,8 +18,8 @@
   };
 
   # Open ports in firewall
-  networking.firewall.allowedTCPPorts = [ 22 80 443 ];
-  networking.firewall.allowedUDPPorts = [ 22 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 22 80 443 25565 ];
+  networking.firewall.allowedUDPPorts = [ 22 80 443 25565 ];
   networking.firewall.enable = true;
   # Trust zerotier interface
   networking.firewall.trustedInterfaces = [ "zt5u4uutwm" ];
