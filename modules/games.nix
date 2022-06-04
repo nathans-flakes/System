@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, nixpkgs-unstable, ... }: {
   environment.systemPackages =
     let
       # https://github.com/Admicos/minecraft-wayland
@@ -8,14 +8,19 @@
           ../patches/minecraft/0004-wayland-fix-broken-opengl-screenshots-on-mutter.patch
         ];
       });
+      stable-packages = with pkgs; [
+        # Dwarf fortress
+        (dwarf-fortress-packages.dwarf-fortress-full.override {
+          enableFPS = true;
+        })
+        # PolyMC minecraft stuff
+        polymc
+        glfw-patched
+      ];
+      unstable-packages = with nixpkgs-unstable.legacyPackages."${pkgs.system}"; [
+        # Packwiz for maintaing modpacks
+        packwiz
+      ];
     in
-    with pkgs; [
-      # Dwarf fortress
-      (dwarf-fortress-packages.dwarf-fortress-full.override {
-        enableFPS = true;
-      })
-      # PolyMC minecraft stuff
-      polymc
-      glfw-patched
-    ];
+    stable-packages ++ unstable-packages;
 }

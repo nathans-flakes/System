@@ -51,7 +51,7 @@
     , darwin
     , polymc
     , nix-doom-emacs
-    }:
+    }@attrs:
     let
       baseModules = [
         ./applications/utils-core.nix
@@ -161,9 +161,8 @@
               overlays = [ mozillaOverlay ];
               system = "x86_64-linux";
             };
-            fenix = fenix.packages.x86_64-linux;
             doomEmacs = nix-doom-emacs.hmModule;
-          };
+          } // attrs;
           modules = [
             ./hardware/levitation.nix
             ./machines/levitation.nix
@@ -180,8 +179,7 @@
               overlays = [ ];
               system = "x86_64-linux";
             };
-            fenix = fenix.packages.x86_64-linux;
-          };
+          } // attrs;
           modules = [
             ./hardware/oracles.nix
             ./machines/oracles.nix
@@ -201,8 +199,7 @@
               overlays = [ ];
               system = "x86_64-linux";
             };
-            fenix = fenix.packages.x86_64-linux;
-          };
+          } // attrs;
           modules = [
             ./hardware/perception.nix
             ./machines/perception.nix
@@ -220,8 +217,7 @@
               overlays = [ ];
               system = "x86_64-linux";
             };
-            fenix = fenix.packages.x86_64-linux;
-          };
+          } // attrs;
           modules = [
             ./hardware/shadowchild.nix
             ./machines/shadowchild.nix
@@ -237,8 +233,7 @@
               overlays = [ ];
               system = "x86_64-linux";
             };
-            fenix = fenix.packages.x86_64-linux;
-          };
+          } // attrs;
           modules = [
             ./hardware/matrix.nix
             ./machines/matrix.nix
@@ -256,8 +251,7 @@
               overlays = [ ];
               system = "x86_64-linux";
             };
-            fenix = fenix.packages.x86_64-linux;
-          };
+          } // attrs;
           modules = [ ./home-linux.nix ] ++ desktopModules;
         };
       };
@@ -270,9 +264,8 @@
               overlays = [ ];
               system = "x86_64-darwin";
             };
-            fenix = fenix.packages.x86_64-darwin;
             doomEmacs = nix-doom-emacs.hmModule;
-          };
+          } // attrs;
           modules = baseModules ++ baseHomeModules ++ [
             ./darwin-modules/base.nix
             home-manager.darwinModules.home-manager

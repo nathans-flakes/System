@@ -5,7 +5,7 @@
     # Use rustup to get the compiler
     rustup
     # Install the latest rust analyzer
-    fenix.rust-analyzer
+    fenix.packages."${system}".rust-analyzer
     # Sccache for faster builds
     sccache
     # Misc cargo utilites
