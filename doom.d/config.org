@@ -250,7 +250,7 @@ Setup some basic cosmetic improvements
   ;; Update the timer, first canceling the old one
   (when nm/org-agenda-update-timer
     (cancel-timer nm/org-agenda-update-timer))
-  (setq nm/org-agenda-update-timer (run-with-timer 60 nil 'nm/org-agenda-update-timer)))
+  (setq nm/org-agenda-files-timer (run-with-timer 60 nil 'nm/update-org-agenda-files)))
 
 (after! org
   ;; Set the agenda files on first start
