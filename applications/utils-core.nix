@@ -1,5 +1,5 @@
 # Basic, must have, command-line utilities
-{ config, pkgs, unstable, ... }:
+{ config, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
     # Basic command line utilities
@@ -25,7 +25,6 @@
     hyperfine
     unstable.bottom
     dogdns
-    unstable.zenith
     duf
     # CLI Markdown renderer
     glow
@@ -44,7 +43,7 @@
     # Man but terse
     tealdeer
     # Pandoc for documentation
-    unstable.pandoc
+    pandoc
     # For nslookup
     dnsutils
     # Feh image viewer
