@@ -304,7 +304,8 @@ work if it thinks it needs to."
   Log state changes into a drawer
   #+begin_src emacs-lisp
 (after! org
-  (setq org-log-into-drawer t))
+  (setq org-log-into-drawer t
+        org-log-done 'time))
   #+end_src
 ** org-roam
 A second brain in emacs
