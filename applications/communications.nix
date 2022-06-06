@@ -43,13 +43,15 @@
       # Discord
       unstable.discord
       unstable.betterdiscordctl
-      # Use unstable element for latest features
-      element-desktop-wayland
+      # Desktop matrix client
+      element-desktop
       # Desktop signal client
-      unstable.signal-desktop
+      signal-desktop
       signalWaylandItem
       # Desktop telegram client
       tdesktop
+      # Desktop mastodon client
+      tootle
       # zulip
       unstable.zulip
       zulipWayland
