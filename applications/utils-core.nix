@@ -23,7 +23,7 @@
     ripgrep-all
     tokei
     hyperfine
-    unstable.bottom
+    bottom
     dogdns
     duf
     # CLI Markdown renderer
