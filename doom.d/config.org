@@ -97,10 +97,12 @@ The provided default ~config.el~
 * Appearance and UI
 ** Centaur tabs
 #+begin_src emacs-lisp
-(after! centaur-tabs
+(use-package! centaur-tabs
+  :config
   (setq centaur-tabs-set-icons t
         centaur-tabs-set-bar 'underflow
-        centaur-tabs-style "alternate")
+        centaur-tabs-style "wave"
+        centaur-tabs-enable-key-bindings t)
   (centaur-tabs-headline-match)
   (centaur-tabs-group-by-projectile-project))
 #+end_src
@@ -129,7 +131,19 @@ Display the current time in the modeline
 #+begin_src emacs-lisp
 (display-time-mode 1)
 #+end_src
+** Treemacs
+Configure treemacs, doing the following:
+
+#+begin_src emacs-lisp
+(after! treemacs
+  (setq treemacs-width 25))
+#+end_src
 * Basic Editing
+** Fill Column
+Set the default fill column to 100
+#+begin_src emacs-lisp
+(setq-default fill-column 100)
+#+end_src
 ** Navigation
 *** Avy
 More modern ace-jump-mode
@@ -191,6 +205,7 @@ Ripgrep, but from within emacs
 (use-package! deadgrep
   :bind ("C-c s r" . deadgrep))
 #+end_src
+
 * Org Mode
 Improvements to the best mode in emacs
 
@@ -248,9 +263,9 @@ Setup some basic cosmetic improvements
                        (not (string-match-p (concat "^" (regexp-quote org-directory) "elfeed/.*") item))))
                     (directory-files-recursively org-directory directory-files-no-dot-files-regexp)))))
   ;; Update the timer, first canceling the old one
-  (when nm/org-agenda-update-timer
-    (cancel-timer nm/org-agenda-update-timer))
-  (setq nm/org-agenda-files-timer (run-with-timer 60 nil 'nm/update-org-agenda-files)))
+  (when nm/org-agenda-files-timer
+    (cancel-timer nm/org-agenda-files-timer)
+  (setq nm/org-agenda-files-timer (run-with-timer 60 nil 'nm/update-org-agenda-files))))
 
 (after! org
   ;; Set the agenda files on first start
