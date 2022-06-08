@@ -37,6 +37,7 @@ in
   # Add pulse audio packages, but do not enable them
   environment.systemPackages = [
     pkgs.pulseaudio
+    pkgs.pavucontrol
   ];
   # Add noisetorch for microphone noise canceling
   programs.noisetorch = {

@@ -23,5 +23,7 @@
     direnv
     # Sops for secrets
     sops
+    # Just in case
+    neovim
   ];
 }
