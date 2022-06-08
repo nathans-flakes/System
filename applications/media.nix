@@ -103,26 +103,34 @@ let
     '';
 in
 {
-  environment.systemPackages = with pkgs; [
-    # Spotify
-    spotify
-    # Latest version of vlc
-    unstable.vlc
-    # Plex client
-    plex-media-player
-    # OBS studio for screen recording
-    unstable.obs-studio
-    # Soulseek client
-    nicotine-plus
-    # Mopidy + extensions
-    mopidy
-    mopidy-mpd
-    mopidy-iris
-    mopidy-scrobbler
-    mopidy-local
-    # Picard for sorting
-    unstable.picard
-  ];
+  environment.systemPackages =
+    let
+      ## Wrapper around iris
+      irisDesktopItem = pkgs.makeDesktopItem {
+        name = "iris";
+        desktopName = "Iris";
+        exec = "${pkgs.chromium}/bin/chromium --enable-features=UseOzonePlatform -ozone-platform=wayland --app=\"http://localhost:6680/iris/\"";
+        terminal = false;
+      };
+    in
+    with pkgs; [
+      # Spotify
+      spotify
+      # Latest version of vlc
+      unstable.vlc
+      # Plex client
+      plex-media-player
+      # OBS studio for screen recording
+      unstable.obs-studio
+      # Soulseek client
+      nicotine-plus
+      # Mopidy + extensions
+      mopidyEnv
+      # Iris desktop client
+      irisDesktopItem
+      # Picard for sorting
+      unstable.picard
+    ];
 
   # Start mopidy as a user service, for sanity
   systemd.user.services.mopidy = {
