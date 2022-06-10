@@ -43,6 +43,10 @@
         user = "nathan";
         hostname = "172.23.129.209";
       };
+      "de1955" = {
+        user = "de1955";
+        hostname = "de1955.rsync.net";
+      };
     };
   };
 }
