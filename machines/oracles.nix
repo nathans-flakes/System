@@ -45,5 +45,66 @@
   # Install java
   environment.systemPackages = with pkgs; [
     jdk
+    borgbackup
   ];
+
+  # Setup sops
+  sops.secrets."borg-sshKey" = {
+    format = "yaml";
+    sopsFile = ../secrets/borg.yaml;
+  };
+  sops.secrets."borg-oraclesPassword" = {
+    format = "yaml";
+    sopsFile = ../secrets/borg.yaml;
+  };
+  # Setup the job
+  services.borgbackup.jobs = {
+    files = {
+      paths = [
+        "/home"
+        "/var"
+        "/etc"
+      ];
+      exclude = [
+        "*/.cache"
+        "*/.tmp"
+        "/home/nathan/minecraft/server/backup"
+        "/var/lib/postgresql"
+        "/var/lib/redis"
+        "/var/lib/docker"
+      ];
+      repo = "de1955@de1955.rsync.net:computers/oracles";
+      encryption = {
+        mode = "repokey-blake2";
+        passCommand = "cat ${config.sops.secrets."borg-levitationPassword".path}";
+      };
+      environment.BORG_RSH = "ssh -i ${config.sops.secrets."borg-sshKey".path}";
+      compression = "auto,zstd";
+      startAt = "hourly";
+      prune.keep = {
+        within = "7d"; # Keep all archives for the past week
+        daily = 1; # Keep 1 snapshot a day for 2 weeks
+        weekly = 4; # Keep 1 snapshot a week for 4 weeks
+        monthly = -1; # Keep unlimited monthly backups
+      };
+    };
+    postgres = {
+      dumpCommand = "su postgres -c pg_dumpall";
+      repo = "de1955@de1955.rsync.net:databases/oracles/postgres";
+      encryption = {
+        mode = "repokey-blake2";
+        passCommand = "cat ${config.sops.secrets."borg-levitationPassword".path}";
+      };
+      environment.BORG_RSH = "ssh -i ${config.sops.secrets."borg-sshKey".path}";
+      compression = "auto,zstd";
+      startAt = "hourly";
+      prune.keep = {
+        within = "7d"; # Keep all archives for the past week
+        daily = 1; # Keep 1 snapshot a day for 2 weeks
+        weekly = 4; # Keep 1 snapshot a week for 4 weeks
+        monthly = -1; # Keep unlimited monthly backups
+      };
+    };
+  };
+
 }

@@ -98,6 +98,7 @@
         "/home/nathan/.local/share/Steam"
         "/home/nathan/Downloads"
         "/home/nathan/Music"
+        "/var/lib/docker"
       ];
       repo = "de1955@de1955.rsync.net:computers/levitation";
       encryption = {
