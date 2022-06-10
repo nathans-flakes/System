@@ -80,7 +80,7 @@
       };
       environment.BORG_RSH = "ssh -i ${config.sops.secrets."borg-sshKey".path}";
       compression = "auto,zstd";
-      startAt = "hourly";
+      startAt = "OnCalendar=00/4:00";
       prune.keep = {
         within = "7d"; # Keep all archives for the past week
         daily = 1; # Keep 1 snapshot a day for 2 weeks
@@ -88,31 +88,13 @@
         monthly = -1; # Keep unlimited monthly backups
       };
     };
-    postgres =
-      let dumper = pkgs.writeScript "pg-dumper"
-        ''
-          #!/usr/bin/env bash
-          su -c postgres pg_dumpall
-        '';
-      in
-      {
-
-        dumpCommand = dumper;
-        repo = "de1955@de1955.rsync.net:databases/oracles/postgres";
-        encryption = {
-          mode = "repokey-blake2";
-          passCommand = "cat ${config.sops.secrets."borg-oraclesPassword".path}";
-        };
-        environment.BORG_RSH = "ssh -i ${config.sops.secrets."borg-sshKey".path}";
-        compression = "auto,zstd";
-        startAt = "hourly";
-        prune.keep = {
-          within = "7d"; # Keep all archives for the past week
-          daily = 1; # Keep 1 snapshot a day for 2 weeks
-          weekly = 4; # Keep 1 snapshot a week for 4 weeks
-          monthly = -1; # Keep unlimited monthly backups
-        };
-      };
+  };
+  # Backup postgres
+  services.postgresqlBackup = {
+    enable = true;
+    compression = "none";
+    backupAll = true;
+    startAt = "OnCalendar=00/2:00";
   };
 
 }
