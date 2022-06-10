@@ -177,8 +177,6 @@
         textColor = "#adbcbc";
         # Border configuration
         borderSize = 3;
-        # Timeout to 5 seconds
-        defaultTimeout = 5000;
         # Use Fira Code for font
         font = "Fira Code Nerd Font 10";
         # Group by application
