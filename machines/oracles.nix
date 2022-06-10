@@ -76,7 +76,7 @@
       repo = "de1955@de1955.rsync.net:computers/oracles";
       encryption = {
         mode = "repokey-blake2";
-        passCommand = "cat ${config.sops.secrets."borg-levitationPassword".path}";
+        passCommand = "cat ${config.sops.secrets."borg-oraclesPassword".path}";
       };
       environment.BORG_RSH = "ssh -i ${config.sops.secrets."borg-sshKey".path}";
       compression = "auto,zstd";
@@ -93,7 +93,7 @@
       repo = "de1955@de1955.rsync.net:databases/oracles/postgres";
       encryption = {
         mode = "repokey-blake2";
-        passCommand = "cat ${config.sops.secrets."borg-levitationPassword".path}";
+        passCommand = "cat ${config.sops.secrets."borg-oraclesPassword".path}";
       };
       environment.BORG_RSH = "ssh -i ${config.sops.secrets."borg-sshKey".path}";
       compression = "auto,zstd";
