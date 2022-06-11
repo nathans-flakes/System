@@ -83,7 +83,7 @@
       };
       environment.BORG_RSH = "ssh -i ${config.sops.secrets."borg-sshKey".path}";
       compression = "auto,zstd";
-      startAt = "OnCalendar=00/4:00";
+      startAt = "OnCalendar=00/4:30";
       prune.keep = {
         within = "7d"; # Keep all archives for the past week
         daily = 1; # Keep 1 snapshot a day for 2 weeks
