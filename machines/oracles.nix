@@ -72,6 +72,7 @@
         "/var/lib/postgresql"
         "/var/lib/redis"
         "/var/lib/docker"
+        "/var/log"
       ];
       repo = "de1955@de1955.rsync.net:computers/oracles";
       encryption = {

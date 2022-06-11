@@ -99,6 +99,8 @@
         "/home/nathan/Downloads"
         "/home/nathan/Music"
         "/var/lib/docker"
+        "/var/log"
+        "/home/nathan/*/Cache"
       ];
       repo = "de1955@de1955.rsync.net:computers/levitation";
       encryption = {
