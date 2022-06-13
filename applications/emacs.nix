@@ -1,9 +1,6 @@
 { config, pkgs, doomEmacs, ... }:
 let
-  emacsPackage = (pkgs.emacsPackagesFor pkgs.emacsPgtkNativeComp).emacsWithPackages (epkgs: with epkgs; [
-    vterm
-    pdf-tools
-  ]);
+  emacsPackage = pkgs.emacsPgtkNativeComp;
 in
 {
   # Install emacs
@@ -21,7 +18,7 @@ in
     # TODO:Reenable, currently off because of ghub
     imports = [ doomEmacs ];
     programs.doom-emacs = {
-      enable = false;
+      enable = true;
       doomPrivateDir = ../doom.d;
       emacsPackage = emacsPackage;
     };
@@ -30,14 +27,6 @@ in
       enable = pkgs.stdenv.isLinux;
       client.enable = true;
       defaultEditor = true;
-      # TODO remove when we enable doom-emacs again
-      package = emacsPackage;
-    };
-    # Link up the doom configuration for now
-    home.file = {
-      ".doom.d/config.org".source = ../doom.d/config.org;
-      ".doom.d/init.el".source = ../doom.d/init.el;
-      ".doom.d/packages.el".source = ../doom.d/packages.el;
     };
   };
 }
