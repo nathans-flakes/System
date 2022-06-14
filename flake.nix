@@ -37,6 +37,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.emacs-overlay.follows = "emacs";
     };
+    java = {
+      url = "github:nathans-flakes/java";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -51,6 +55,7 @@
     , darwin
     , polymc
     , nix-doom-emacs
+    , java
     }@attrs:
     let
       baseModules = [

@@ -277,6 +277,27 @@
         "type": "github"
       }
     },
+    "java": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils_2"
+      },
+      "locked": {
+        "lastModified": 1655182547,
+        "narHash": "sha256-gmkb6l13CVKtlRydDJ9O3sifKtamKLgLdUaEASdQ6Ls=",
+        "owner": "nathans-flakes",
+        "repo": "java",
+        "rev": "8e53bfead6195e4440aef47b2f08b0e7f89b1d4d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nathans-flakes",
+        "repo": "java",
+        "type": "github"
+      }
+    },
     "libnbtplusplus": {
       "flake": false,
       "locked": {
@@ -618,6 +639,7 @@
         "emacs": "emacs",
         "fenix": "fenix",
         "home-manager": "home-manager",
+        "java": "java",
         "mozilla": "mozilla",
         "nix-doom-emacs": "nix-doom-emacs",
         "nixpkgs": "nixpkgs_2",
@@ -682,6 +704,21 @@
       }
     },
     "utils": {
+      "locked": {
+        "lastModified": 1653893745,
+        "narHash": "sha256-0jntwV3Z8//YwuOjzhV2sgJJPt+HY6KhU7VZUL0fKZQ=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "1ed9fb1935d260de5fe1c2f7ee0ebaae17ed2fa1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "utils_2": {
       "locked": {
         "lastModified": 1653893745,
         "narHash": "sha256-0jntwV3Z8//YwuOjzhV2sgJJPt+HY6KhU7VZUL0fKZQ=",
