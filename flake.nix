@@ -133,6 +133,7 @@
         ./modules/printing.nix
         ./modules/zt.nix
         ./modules/lxc.nix
+        ./modules/tailscale.nix
         ./modules/protonmail.nix
         ./applications/communications.nix
         ./applications/devel-core.nix
@@ -151,6 +152,7 @@
         ./home-linux.nix
         ./modules/zt.nix
         ./modules/autoupdate.nix
+        ./modules/tailscale.nix
         ./applications/devel-core.nix
         ./applications/devel-core-linux.nix
       ];
