@@ -1,15 +1,11 @@
 { config, pkgs, doomEmacs, ... }:
-let
-  emacsPackage = pkgs.emacsPgtkNativeComp;
-in
 {
   # Install emacs
-  environment.systemPackages = [
-    emacsPackage
+  environment.systemPackages = with pkgs; [
     # For markdown rendering
-    pkgs.python39Packages.grip
+    python39Packages.grip
     # For graph generation
-    pkgs.graphviz
+    graphviz
   ];
 
   # Utilize home-manager
@@ -20,7 +16,7 @@ in
     programs.doom-emacs = {
       enable = true;
       doomPrivateDir = ../doom.d;
-      emacsPackage = emacsPackage;
+      emacsPackage = pkgs.emacsPgtkNativeComp;
     };
     # Startup service
     services.emacs = {
