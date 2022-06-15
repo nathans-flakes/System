@@ -195,6 +195,7 @@
             ./system-specific/oracles/matrix.nix
             ./system-specific/oracles/gitlab-runner.nix
             ./system-specific/oracles/gitea.nix
+            ./system-specific/oracles/minecraft.nix
           ] ++ serverModules;
         };
 
