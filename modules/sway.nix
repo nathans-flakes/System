@@ -183,6 +183,10 @@
         groupBy = "app-name";
         # Bottom right corner
         anchor = "bottom-right";
+        # Maximum visible notifications
+        maxVisible = 10;
+        # Sort by time in descending order (newest first)
+        sort = "-time";
       };
       # Swayidle for automatic screen locking
       services.swayidle = {

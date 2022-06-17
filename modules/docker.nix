@@ -7,4 +7,11 @@
     # Automatically prune to keep things lean
     autoPrune.enable = true;
   };
+  # Setup networking for nixos containers
+  networking = {
+    nat = {
+      enable = true;
+      internalInterfaces = [ "ve-+" ];
+    };
+  };
 }

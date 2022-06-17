@@ -8,6 +8,7 @@
     domain = "mccarty.io";
     useDHCP = false;
     interfaces.enp5s0.useDHCP = true;
+    nat.externalInterface = "enp5s0";
   };
   ###
   ## Enable programs we don't want on every machine
