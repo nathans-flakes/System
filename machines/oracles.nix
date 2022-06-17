@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, java, ... }:
 
 {
   # Use the systemd-boot EFI boot loader.
@@ -44,7 +44,7 @@
 
   # Install java
   environment.systemPackages = with pkgs; [
-    jdk
+    java.packages.${system}.semeru-latest
     borgbackup
   ];
 
