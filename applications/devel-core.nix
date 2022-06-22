@@ -25,5 +25,7 @@
     sops
     # Just in case
     neovim
+    # For python
+    nodePackages.pyright
   ];
 }
