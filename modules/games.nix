@@ -16,6 +16,7 @@
         # PolyMC minecraft stuff
         polymc
         glfw-patched
+        (pkgs.callPackage ../packages/blockbench/default.nix {})
       ];
       unstable-packages = with nixpkgs-unstable.legacyPackages."${pkgs.system}"; [
         # Packwiz for maintaing modpacks
