@@ -1,4 +1,4 @@
-{ config, lib, pkgs, java, ... }:
+{ config, lib, pkgs, java, quilt-server, ... }:
 
 {
   # Use the systemd-boot EFI boot loader.
@@ -57,7 +57,99 @@
     format = "yaml";
     sopsFile = ../secrets/borg.yaml;
   };
-  # Setup the job
+  sops.secrets."friendpack-backblaze" = {
+    format = "yaml";
+    sopsFile = ../secrets/backblaze.yaml;
+  };
+
+  # Setup minecraft container
+  containers.minecraft =
+    let
+      b2AccountID = "00284106ead1ac40000000002";
+      b2KeyFile = "${config.sops.secrets."friendpack-backblaze".path}";
+      b2Bucket = "ForwardProgressServerBackup";
+    in
+    {
+      config = { pkgs, lib, ... }@attrs:
+        let
+          # OpenJDK 17
+          javaPackage = pkgs.jdk;
+        in
+        {
+          imports = [
+            quilt-server.nixosModules.default
+          ];
+          ###
+          ## Container stuff
+          ###
+          # Let nix know this is a container
+          boot.isContainer = true;
+          # Set system state version
+          system.stateVersion = "22.05";
+          # Setup networking
+          networking.useDHCP = false;
+          # Allow minecraft out
+          networking.firewall.allowedTCPPorts = [ 25565 ];
+
+          ###
+          ## User
+          ###
+          users = {
+            mutableUsers = false;
+            # Enable us to not use a password, this is a container
+            allowNoPasswordLogin = true;
+          };
+
+          ###
+          ## Configure module
+          ###
+          forward-progress = {
+            services = {
+              minecraft = {
+                enable = true;
+                minecraft-version = "1.18.2";
+                quilt-version = "0.17.1-beta.4";
+                ram = 6144;
+                properties = {
+                  motd = "Nathan's Private Modded Minecraft";
+                };
+                packwiz-url = "https://pack.forward-progress.net/0.3/pack.toml";
+                acceptEula = true;
+              };
+              backup = {
+                enable = true;
+                backblaze = {
+                  enable = true;
+                  accountId = b2AccountID;
+                  keyFile = b2KeyFile;
+                  bucket = b2Bucket;
+                };
+              };
+            };
+          };
+        };
+      autoStart = true;
+      bindMounts = {
+        "/var/minecraft" = {
+          hostPath = "/var/minecraft";
+          isReadOnly = false;
+        };
+      };
+      forwardPorts = [
+        {
+          containerPort = 25565;
+          hostPort = 25565;
+          protocol = "tcp";
+        }
+        {
+          containerPort = 25565;
+          hostPort = 25565;
+          protocol = "udp";
+        }
+      ];
+    };
+
+  # Setup the backup job
   services.borgbackup.jobs = {
     files = {
       paths = [
@@ -73,6 +165,7 @@
         "/var/lib/redis"
         "/var/lib/docker"
         "/var/log"
+        "/var/minecraft"
       ];
       repo = "de1955@de1955.rsync.net:computers/oracles";
       encryption = {

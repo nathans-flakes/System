@@ -279,6 +279,28 @@
         "type": "github"
       }
     },
+    "java_2": {
+      "inputs": {
+        "nixpkgs": [
+          "quilt-server",
+          "nixpkgs"
+        ],
+        "utils": "utils_3"
+      },
+      "locked": {
+        "lastModified": 1656122108,
+        "narHash": "sha256-wJrVZLqvBhq+u2Mi3yc4oS8pOtzdxL6uMmmSt+1bNHE=",
+        "owner": "nathans-flakes",
+        "repo": "java",
+        "rev": "4ade2ae9e949b184ba2d47495ec348f385ab0300",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nathans-flakes",
+        "repo": "java",
+        "type": "github"
+      }
+    },
     "libnbtplusplus": {
       "flake": false,
       "locked": {
@@ -566,6 +588,27 @@
         "type": "github"
       }
     },
+    "quilt-server": {
+      "inputs": {
+        "java": "java_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1656491198,
+        "narHash": "sha256-IGKH6jTFu5zrYZdkYw04Fbws4vcHAQL9AvUKSe+ZMXA=",
+        "owner": "forward-progress",
+        "repo": "quilt-server-nix-container",
+        "rev": "69fd2911bb627de147b44c0369065e00a79db7b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "forward-progress",
+        "repo": "quilt-server-nix-container",
+        "type": "github"
+      }
+    },
     "revealjs": {
       "flake": false,
       "locked": {
@@ -594,6 +637,7 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "polymc": "polymc",
+        "quilt-server": "quilt-server",
         "sops-nix": "sops-nix"
       }
     },
@@ -668,6 +712,21 @@
       }
     },
     "utils_2": {
+      "locked": {
+        "lastModified": 1653893745,
+        "narHash": "sha256-0jntwV3Z8//YwuOjzhV2sgJJPt+HY6KhU7VZUL0fKZQ=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "1ed9fb1935d260de5fe1c2f7ee0ebaae17ed2fa1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "utils_3": {
       "locked": {
         "lastModified": 1653893745,
         "narHash": "sha256-0jntwV3Z8//YwuOjzhV2sgJJPt+HY6KhU7VZUL0fKZQ=",
