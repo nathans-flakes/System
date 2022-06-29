@@ -5,5 +5,7 @@
   environment.systemPackages = with pkgs; [
     protonmail-bridge
     pass
+    offlineimap
+    mu
   ];
 }
