@@ -112,6 +112,8 @@
                 ram = 6144;
                 properties = {
                   motd = "Nathan's Private Modded Minecraft";
+                  white-list = true;
+                  enforce-whitelist = true;
                 };
                 packwiz-url = "https://pack.forward-progress.net/0.3/pack.toml";
                 acceptEula = true;
