@@ -6,6 +6,7 @@
     python39Packages.grip
     # For graph generation
     graphviz
+    sqlite
   ];
 
   # Utilize home-manager
