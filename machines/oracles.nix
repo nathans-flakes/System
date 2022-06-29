@@ -60,6 +60,8 @@
   sops.secrets."friendpack-backblaze" = {
     format = "yaml";
     sopsFile = ../secrets/backblaze.yaml;
+    owner = config.users.users.nathan.name;
+    group = config.users.users.nathan.group;
   };
 
   # Setup minecraft container
@@ -135,6 +137,9 @@
         "/var/minecraft" = {
           hostPath = "/var/minecraft";
           isReadOnly = false;
+        };
+        "/run/secrets" = {
+          hostPath = "/run/secrets";
         };
       };
       forwardPorts = [
