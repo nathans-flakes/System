@@ -12,6 +12,7 @@
       shell = pkgs.fish;
     };
   };
+  home-manager.users.nathan.home.stateVersion = "22.05";
   ## Misc packages that were in user.nix
   # Install general use packages
   environment.systemPackages = with pkgs; [
