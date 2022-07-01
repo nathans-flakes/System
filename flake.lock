@@ -597,11 +597,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1656495848,
-        "narHash": "sha256-IoZqbFHEMZwNVYqoB/sKFH9U02l0HVpr+RHsfGH/xCI=",
+        "lastModified": 1656661312,
+        "narHash": "sha256-o1N/HLJDNL8Mvs34NqJiLijpRJlmuNRD2NnLwKZk17Y=",
         "owner": "forward-progress",
         "repo": "quilt-server-nix-container",
-        "rev": "08c92c6b33afeb2d02822cfc79b87fcf64193a9c",
+        "rev": "339797c0187c2a0d5ea0d34cf46a75df7d6ae2cb",
         "type": "github"
       },
       "original": {
