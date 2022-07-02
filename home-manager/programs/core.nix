@@ -201,6 +201,13 @@ with lib;
           };
         };
       };
+      programs.bat = {
+        enable = true;
+        config = {
+          theme = "zenburn";
+          style = "header,rule,snip,changes";
+        };
+      };
     })
     (mkIf config.nathan.programs.util.json {
       #########################
