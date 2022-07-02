@@ -41,6 +41,10 @@
       url = "github:nathans-flakes/java";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    quilt-server = {
+      url = "github:forward-progress/quilt-server-nix-container";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -56,6 +60,7 @@
     , polymc
     , nix-doom-emacs
     , java
+    , quilt-server
     }@inputs:
     let
       makeNixosSystem = { system, hostName, extraModules ? [ ], ourNixpkgs ? nixpkgs }: ourNixpkgs.lib.nixosSystem {

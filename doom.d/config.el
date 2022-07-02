@@ -144,11 +144,10 @@
 (setq org-hide-emphasis-markers t
       org-pretty-entities t)
 
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([-]\\) "
-                           0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "")))
-                          ("^ *\\([+]\\) "
-                           0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "")))))
+(use-package! org-superstar
+  :hook (org-mode . org-superstar-mode)
+  :config
+  (setq org-superstart-special-todo-items t))
 
 (defvar nm/org-agenda-files-timer nil
   "Timer for automatically updating the org-agenda files")
@@ -250,6 +249,15 @@ work if it thinks it needs to."
   (setq org-roam-dailies-capture-templates
       '(("d" "default" entry "* %<%I:%M %p>: %?"
          :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
+
+(use-package! org-protocol-capture-html)
+
+(after! org
+  (push
+   '("w" "Web site" entry
+     (file "")
+     "* %a :website:\n\n%U %?\n\n%:initial")
+   org-capture-templates))
 
 (use-package! magit-todos
   :hook (magit-mode . magit-todos-mode))

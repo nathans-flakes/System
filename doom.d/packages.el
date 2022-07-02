@@ -60,3 +60,5 @@
 (package! deadgrep)
 (package! multi-vterm)
 (package! grip-mode)
+(package! org-protocol-capture-html)
+(package! org-superstar)
