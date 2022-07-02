@@ -15,6 +15,7 @@ in
     ./programs/utils.nix
     ./services/ssh.nix
     ./services/tailscale.nix
+    ./services/borg.nix
     ./linux/base.nix
   ];
 
@@ -30,6 +31,36 @@ in
         # Enable tailscale, on by default on linux
         tailscale = {
           enable = mkDefaultOption "tailscale" pkgs.stdenv.isLinux;
+        };
+        # Borg backup
+        # Disabled by default as it requires configuration, but a really good idea to turn on
+        borg = {
+          enable = mkEnableOption "borg";
+          extraExcludes = mkOption {
+            default = [ ];
+            description = "List of extra paths to exclude";
+          };
+          extraIncludes = mkOption {
+            default = [ ];
+            description = "List of extra paths to include";
+          };
+          location = mkOption {
+            default = "de1955@de1955.rsync.net:computers";
+            description = "Location to backup to";
+            type = lib.types.str;
+          };
+          passwordFile = mkOption {
+            description = "Path to the password file";
+            type = lib.types.str;
+          };
+          sshKey = mkOption {
+            description = "Path to the ssh key";
+            type = lib.types.str;
+          };
+          startAt = mkOption {
+            description = "How often to run backups";
+            default = "hourly";
+          };
         };
       };
       # Control enabling/configuratin of services

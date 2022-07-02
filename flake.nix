@@ -107,28 +107,35 @@
           extraModules = [
             ./hardware/levitation.nix
             ({ pkgs, config, lib, ... }: {
-              boot.loader = {
-                grub = {
-                  enable = true;
-                  version = 2;
-                  efiSupport = true;
-                  # Go efi only
-                  devices = [ "nodev" ];
-                  # Use os-prober
-                  useOSProber = true;
-                };
-                efi = {
-                  efiSysMountPoint = "/boot/";
-                  canTouchEfiVariables = false;
-                };
+              # sops for borg
+              sops.secrets."borg-ssh-key" = {
+                sopsFile = ./secrets/levitation/borg.yaml;
+                format = "yaml";
+              };
+              sops.secrets."borg-password" = {
+                sopsFile = ./secrets/levitation/borg.yaml;
+                format = "yaml";
               };
               # Setup system configuration
               nathan = {
                 programs = {
                   games = true;
                 };
+                services = {
+                  borg = {
+                    enable = true;
+                    extraExcludes = [
+                      "/home/${config.nathan.config.user}/Music"
+                      "/var/lib/docker"
+                      "/var/log"
+                    ];
+                    passwordFile = config.sops.secrets."borg-password".path;
+                    sshKey = config.sops.secrets."borg-ssh-key".path;
+                  };
+                };
                 config = {
                   isDesktop = true;
+                  setupGrub = true;
                   nix.autoUpdate = false;
                   harden = false;
                 };
