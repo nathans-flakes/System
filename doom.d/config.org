@@ -218,14 +218,13 @@ Setup some basic cosmetic improvements
       org-pretty-entities t)
   #+end_src
 
-  Setup font lock for normal (non-heading) list items, to make things a bit more pleasnt to look at
+Setup org-superstar-mode, to make lists and bullets pretty
 
   #+begin_src emacs-lisp
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([-]\\) "
-                           0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "")))
-                          ("^ *\\([+]\\) "
-                           0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "")))))
+(use-package! org-superstar
+  :hook (org-mode . org-superstar-mode)
+  :config
+  (setq org-superstart-special-todo-items t))
   #+end_src
 
   Automatically add all files in the org dir to the agenda. This performs some filtering of the files returned from ~directory-files~ to exclude some things that would confuse org-agenda.
@@ -351,6 +350,21 @@ Here we:
   (setq org-roam-dailies-capture-templates
       '(("d" "default" entry "* %<%I:%M %p>: %?"
          :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
+#+end_src
+** org-protocol-capture-html
+[[https://github.com/alphapapa/org-protocol-capture-html][Capture webpages]] really nice like
+#+begin_src emacs-lisp
+(use-package! org-protocol-capture-html)
+#+end_src
+** Capture Templates
+The default template for org-protocol-capture-html
+#+begin_src emacs-lisp
+(after! org
+  (push
+   '("w" "Web site" entry
+     (file "")
+     "* %a :website:\n\n%U %?\n\n%:initial")
+   org-capture-templates))
 #+end_src
 * General Modes
 ** Magit

@@ -81,7 +81,7 @@
        (latex +fold)             ; writing papers in Emacs has never been so fun
        markdown          ; writing docs for people to ignore
        nix               ; I hereby declare "nix geht mehr!"
-       (org +pandoc +present +pretty +roam2 +pomodoro)               ; organize your plain life in plain text
+       (org +pandoc +present +roam2 +pomodoro)               ; organize your plain life in plain text
        raku              ; the artist formerly known as perl6
        rest              ; Emacs as a REST client
        (rust +lsp)
