@@ -72,7 +72,7 @@
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
           ./modules/default.nix
-          ({ pkgs, lib, ... }: {
+          ({ pkgs, lib, config, ... }: {
             # Configure hostname
             networking = {
               hostName = hostName;
@@ -90,6 +90,7 @@
               useGlobalPkgs = true;
               extraSpecialArgs = {
                 inputs = inputs;
+                nixosConfig = config;
               };
               sharedModules = [
                 ./home-manager/default.nix

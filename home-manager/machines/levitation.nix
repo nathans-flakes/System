@@ -2,6 +2,11 @@
 
 {
   nathan = {
+    services = {
+      email = {
+        enable = true;
+      };
+    };
     config = {
       isDesktop = true;
     };

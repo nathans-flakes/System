@@ -11,7 +11,8 @@ with lib; with nLib; {
     ./programs/emacs.nix
     ./programs/image-editing.nix
     ./programs/media.nix
-    ./programs/syncthing.nix
+    ./services/syncthing.nix
+    ./services/email.nix
   ];
 
   options = {
@@ -20,6 +21,12 @@ with lib; with nLib; {
       services = {
         # Synthing, enabled by default on linux desktop
         syncthing = mkDefaultOption "Syncthing" (config.nathan.config.isDesktop && pkgs.stdenv.isLinux);
+        # Email syncing
+        # Disabled by default since this requires manual setup on the machine
+        # TODO: Get this working on darwin
+        email = {
+          enable = mkEnableOption "Email";
+        };
       };
       # Programs
       programs = {
