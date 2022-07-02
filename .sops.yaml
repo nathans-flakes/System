@@ -7,7 +7,7 @@ keys:
   - &shadowchild age10zd0y2zpty2z39sh2qe66yuu9jd6hrcd3ag2wqtjp8tc579nmphsymhdla
   - &matrix age1pm647k04hhwm2dmqh07hnzflkurfevefcyf8xlhmc83a07n77e3sltyt0d
 creation_rules:
-  - path_regex: .*
+  - path_regex: secrets/all/.*
     key_groups:
       - age:
           - *nathan
@@ -16,3 +16,8 @@ creation_rules:
           - *perception
           - *shadowchild
           - *matrix
+  - path_regex: secrets/levitation
+    key_groups:
+      - age:
+          - *nathan
+          - *levitation

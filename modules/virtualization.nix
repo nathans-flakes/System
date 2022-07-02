@@ -4,22 +4,27 @@ let
 in
 with lib;
 {
-  config = mkIf nc.virtualization.qemu {
-    # Enable the kernel modules
-    boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
-    # Enable libvirt
-    virtualisation.libvirtd.enable = true;
-    # Install virt-manager
-    environment.systemPackages = with pkgs; [
-      virtmanager
-    ] // mkIf nc.virtualization.docker {
+  config = mkMerge [
+    (mkIf nc.virtualization.qemu
+      {
+        # Enable the kernel modules
+        boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+        # Enable libvirt
+        virtualisation.libvirtd.enable = true;
+        # Install virt-manager
+        environment.systemPackages = with pkgs; [
+          virtmanager
+        ];
+      })
+    (mkIf nc.virtualization.docker {
       # Enable docker
       virtualisation.docker = {
         enable = true;
         # Automatically prune to keep things lean
         autoPrune.enable = true;
       };
-    } // mkIf nc.virtualization.lxc {
+    })
+    (mkIf nc.virtualization.lxc {
       virtualisation.lxd = {
         enable = true;
         recommendedSysctlSettings = true;
@@ -27,7 +32,8 @@ with lib;
       users.users.${nc.user} = mkIf nc.installUser {
         extraGroups = [ "lxd" ];
       };
-    } // mkIf nc.virtualization.nixos {
+    })
+    (mkIf nc.virtualization.nixos {
       # Setup networking for nixos containers
       networking = {
         nat = {
@@ -35,6 +41,6 @@ with lib;
           internalInterfaces = [ "ve-+" ];
         };
       };
-    };
-  };
+    })
+  ];
 }

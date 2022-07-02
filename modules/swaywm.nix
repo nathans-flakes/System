@@ -8,7 +8,7 @@ with lib;
     # Turn on GDM for login
     services.xserver = {
       enable = true;
-      autorun = true;
+      autorun = false;
       displayManager = {
         gdm = {
           enable = true;

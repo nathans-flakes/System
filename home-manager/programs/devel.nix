@@ -6,7 +6,7 @@ let
 in
 
 with lib; with nLib; {
-  config =
+  config = mkMerge [
     # Core development utilites
     (mkIf devel.core {
       home.packages = with pkgs;
@@ -44,7 +44,7 @@ with lib; with nLib; {
       };
     })
     # Rust development
-    // (mkIf devel.rust {
+    (mkIf devel.rust {
       home.packages = with pkgs; [
         # Rustup for having the compiler around
         rustup
@@ -68,7 +68,7 @@ with lib; with nLib; {
       ];
     })
     # JVM Development
-    // (mkIf devel.jvm {
+    (mkIf devel.jvm {
       home.packages = with unstable; [
         inputs.java.packages."${pkgs.system}".semeru-stable
         gradle
@@ -79,14 +79,14 @@ with lib; with nLib; {
       ];
     })
     # Python Development
-    // (mkIf devel.python {
+    (mkIf devel.python {
       home.packages = with pkgs; [
         python3Full
         nodePackages.pyright
       ];
     })
     # JavaScript/TypeScript Development
-    // (mkIf devel.js {
+    (mkIf devel.js {
       home.packages = with unstable; [
         nodejs
         yarn
@@ -95,12 +95,13 @@ with lib; with nLib; {
       ];
     })
     # Raku Development
-    // (mkIf devel.raku {
+    (mkIf devel.raku {
       home.packages = with pkgs; [
         rakudo
         zef
       ];
-    });
+    })
+  ];
 }
 
 

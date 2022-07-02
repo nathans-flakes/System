@@ -9,6 +9,7 @@ in
     ./desktop.nix
     ./swaywm.nix
     ./hardware.nix
+    ./virtualization.nix
     ./programs/games.nix
     ./programs/gpg.nix
     ./programs/utils.nix
@@ -81,7 +82,7 @@ in
         harden = mkEnableOptionT "Apply system hardening";
         # Enable audio subsystem
         # On by default if the system is a desktop
-        audio = mkDefaultOption "audio" config.nathan.conifg.isDesktop;
+        audio = mkDefaultOption "audio" config.nathan.config.isDesktop;
         # Basic grub configuration
         # Off by default
         setupGrub = mkEnableOption "Setup grub";

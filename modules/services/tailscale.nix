@@ -16,6 +16,7 @@ with lib;
 
     # Setup sops
     sops.secrets."tailscale-auth" = {
+      sopsFile = ../../secrets/all/tailscale.yaml;
       format = "yaml";
     };
 

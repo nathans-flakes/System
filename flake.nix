@@ -80,7 +80,6 @@
             # Setup sops
             # Add default secrets
             sops = {
-              defaultSopsFile = ./secrets/nathan.yaml;
               age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
             };
             nixpkgs.config.allowUnfree = true;
@@ -131,6 +130,7 @@
                 config = {
                   isDesktop = true;
                   nix.autoUpdate = false;
+                  harden = false;
                 };
               };
               # Configure networking
@@ -149,14 +149,7 @@
               # FIXME borg backup module
 
               # Setup home manager
-              home-manager.users.nathan = { config, lib, pkgs, ... }: {
-                # Module configuration
-                nathan = {
-                  config = {
-                    isDesktop = true;
-                  };
-                };
-              };
+              home-manager.users.nathan = import ./home-manager/machines/levitation.nix;
             })
           ];
         };
