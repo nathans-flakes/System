@@ -80,6 +80,37 @@ with lib;
             names = [ "Fira" ];
             size = 10.0;
           };
+          # Selenize it
+          colors = {
+            focused = {
+              border = "75b938";
+              background = "184956";
+              text = "adbcbc";
+              indicator = "fa5750";
+              childBorder = "75b938";
+            };
+            focusedInactive = {
+              border = "84c747";
+              background = "103c48";
+              text = "adbcbc";
+              indicator = "fa5750";
+              childBorder = "84c747";
+            };
+            unfocused = {
+              border = "72898f";
+              background = "103c48";
+              text = "72898f";
+              indicator = "fa5750";
+              childBorder = "72898f";
+            };
+            urgent = {
+              border = "f275be";
+              background = "184956";
+              text = "fa5750";
+              indicator = "fa5750";
+              childBorder = "f275be";
+            };
+          };
           # Setup keybindings
           keybindings =
             let
