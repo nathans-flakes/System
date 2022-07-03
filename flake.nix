@@ -157,7 +157,7 @@
               # FIXME borg backup module
 
               # Setup home manager
-              home-manager.users.nathan = import ./home-manager/machines/levitation.nix;
+              home-manager.users.nathan = import ./machines/levitation/home.nix;
             })
           ];
         };
@@ -178,7 +178,7 @@
                   nix.autoUpdate = false;
                 };
               };
-              home-manager.users.nathan = import ./home-manager/machines/x86vm.nix;
+              home-manager.users.nathan = import ./machines/x86vm/home.nix;
 
               # Workaround to get sway working in qemu
               environment.variables = {
