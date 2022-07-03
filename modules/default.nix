@@ -75,9 +75,6 @@ in
           # Core utililtes I want on  every system
           # Enabled by default
           core = mkEnableOptionT "utils-core";
-          # Productivity utilites that make sense for a desktop
-          # Enabled by default on desktop
-          productivity = mkDefaultOption "utils-productivity" config.nathan.config.isDesktop;
           # Enable multi system emulation
           # Enabled by default on desktop
           binfmt = mkDefaultOption "utils-productivity" config.nathan.config.isDesktop;

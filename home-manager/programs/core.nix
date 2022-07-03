@@ -2,6 +2,50 @@
 with lib;
 {
   config = mkMerge [
+    (mkIf config.nathan.programs.util.core {
+      home.packages = with pkgs; [
+        # Rust rewrites of common shell utilites
+        exa
+        bat
+        fd
+        sd
+        du-dust
+        ripgrep
+        ripgrep-all
+        hyperfine
+        bottom
+        dogdns
+        duf
+        # User friendly cut
+        choose
+        # Man but terse
+        tealdeer
+      ];
+    })
+    (mkIf config.nathan.programs.util.productivity {
+      home.packages = with pkgs; [
+        # Feh image viewer
+        feh
+        tokei
+        # Spell check
+        hunspell
+        hunspellDicts.en-us
+        # CLI Markdown renderer
+        glow
+        # Command line file manager
+        broot
+        # Much better curl
+        httpie
+        # CLI spreadsheets
+        visidata
+        # Cheatsheet manager
+        cheat
+        # Ping with a graph
+        gping
+        # Pandoc for documentation
+        pandoc
+      ];
+    })
     (mkIf config.nathan.programs.util.git.enable {
       #########################
       ## Git configuration

@@ -31,6 +31,8 @@ with lib; with nLib; {
       # Programs
       programs = {
         util = {
+          # Core utilites
+          core = mkEnableOptionT "core";
           # Ssh configuration, enabled by default
           ssh = mkEnableOptionT "ssh";
           # Fish configuration, enabled by default
@@ -38,12 +40,14 @@ with lib; with nLib; {
           # Git configuration, enabled by default
           git = {
             enable = mkEnableOptionT "git";
-            gpgSign = mkEnableOptionT "git signatures";
+            gpgSign = mkDefaultOption "git signatures" config.nathan.config.isDesktop;
           };
           # Bat configuration, enabled by default
           bat = mkEnableOptionT "bat";
           # JSON Utilities, enabled by default
           json = mkEnableOptionT "json";
+          # Productivity application
+          productivity = mkDefaultOption "Productivity applications" config.nathan.config.isDesktop;
         };
         # Swaywm and supoorting application configuration
         swaywm = {
