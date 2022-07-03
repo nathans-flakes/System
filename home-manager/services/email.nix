@@ -7,7 +7,6 @@ with lib; {
       pass
       protonmail-bridge
       mu
-      xapian
     ];
     # Configure protonmail as a service
     systemd.user.services.protonmail-bridge = {
@@ -64,10 +63,15 @@ with lib; {
             create = "maildir";
           };
           mu.enable = true;
+          msmtp = {
+            enable = true;
+          };
         };
       };
     };
-    # Setup mbsync
+    ## Enable email applications
+    # Setup mbsync for incoming emails
+    # For fun reasons this requires enabling the program and the service
     programs.mbsync = {
       enable = true;
     };
@@ -75,8 +79,12 @@ with lib; {
       enable = true;
       postExec = "${pkgs.mu}/bin/mu index";
     };
-    # Setup mu
+    # Setup mu for indexing emails
     programs.mu = {
+      enable = true;
+    };
+    # Setup msmtp for outbound emails
+    programs.msmtp = {
       enable = true;
     };
   };

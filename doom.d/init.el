@@ -91,7 +91,7 @@
        (java +lsp +meghanada)
        (javascript +lsp)
        :email
-       ;;(mu4e +org +gmail)
+       (mu4e +org)
        ;;notmuch
        ;;(wanderlust +gmail)
 

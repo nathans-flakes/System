@@ -330,3 +330,18 @@ work if it thinks it needs to."
         elfeed-enclosure-default-dir (concat org-directory "elfeed/enclosures/")
         shr-max-width nil)
   (make-directory elfeed-db-directory t))
+
+(after! mu4e
+  (setq sendmail-program (executable-find "msmtp")
+        send-mail-function #'smtpmail-send-it
+        message-sendmail-f-is-evil t
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-send-mail-function #'message-send-mail-with-sendmail))
+
+(set-email-account! "mccarty.io"
+                    '((mu4e-sent-folder . "/nathan@mccarty.io/Sent")
+                      (mu4e-drafts-folder . "/nathan@mccarty.io/Drafts")
+                      (mu4e-trash-folder . "/nathan@mccarty.io/Trash")
+                      (mu4e-refile-folder . "/nathan@mccarty.io/Archive")
+                      (smtpmail-smtp-user . "nathan@mccarty.io"))
+                    t)

@@ -33,6 +33,7 @@
           };
         };
       };
+      extraPackages = [ pkgs.mu ];
     };
     # Setup service
     services.emacs = {

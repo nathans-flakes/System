@@ -41,9 +41,9 @@ with lib;
           menu = "albert show";
           # Use waybar, but through systemd
           bars = [
-          #   {
-          #     command = "waybar";
-          #   }
+            #   {
+            #     command = "waybar";
+            #   }
           ];
           # Use fira code
           fonts = {
@@ -209,7 +209,7 @@ with lib;
         Unit = {
           Description = "Home Manager System Tray";
           Requires = [ "graphical-session-pre.target" "waybar.service" ];
-          After = ["waybar.service"];
+          After = [ "waybar.service" ];
         };
       };
     }

@@ -528,3 +528,24 @@ Use ~elfeed~ for RSS. Doom provides most of the configuration, but we'll make a 
         shr-max-width nil)
   (make-directory elfeed-db-directory t))
 #+end_src
+** Email
+Use ~mu4e~ for email. Most of the bootstrap is provided by doom emacs.
+First, tell mu4e to use msmtp
+#+begin_src emacs-lisp
+(after! mu4e
+  (setq sendmail-program (executable-find "msmtp")
+        send-mail-function #'smtpmail-send-it
+        message-sendmail-f-is-evil t
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-send-mail-function #'message-send-mail-with-sendmail))
+#+end_src
+Then tell it where our account's stuff is
+#+begin_src emacs-lisp
+(set-email-account! "mccarty.io"
+                    '((mu4e-sent-folder . "/nathan@mccarty.io/Sent")
+                      (mu4e-drafts-folder . "/nathan@mccarty.io/Drafts")
+                      (mu4e-trash-folder . "/nathan@mccarty.io/Trash")
+                      (mu4e-refile-folder . "/nathan@mccarty.io/Archive")
+                      (smtpmail-smtp-user . "nathan@mccarty.io"))
+                    t)
+#+end_src
