@@ -4,7 +4,7 @@ let
   irisDesktopItem = pkgs.makeDesktopItem {
     name = "iris";
     desktopName = "Iris";
-    exec = "${pkgs.chromium}/bin/chromium --enable-features=UseOzonePlatform -ozone-platform=wayland --app=\"http://localhost:6680/iris/\"";
+    exec = "${pkgs.chromium}/bin/chromium --enable-features=UseOzonePlatform -ozone-platform=wayland \"--app=http://localhost:6680/iris/\"";
     terminal = false;
   };
 in

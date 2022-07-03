@@ -38,14 +38,14 @@
         fbChromeDesktopItem = pkgs.makeDesktopItem {
           name = "messenger-chrome";
           desktopName = "Messenger (chrome)";
-          exec = "${pkgs.chromium}/bin/chromium --enable-features=UseOzonePlatform -ozone-platform=wayland --app=\"https://messenger.com\"";
+          exec = "${pkgs.chromium}/bin/chromium --enable-features=UseOzonePlatform -ozone-platform=wayland \"--app=https://messenger.com\"";
           terminal = false;
         };
         # Teams
         teamsItem = pkgs.makeDesktopItem {
           name = "teams-wayland";
           desktopName = "Teams (Wayland)";
-          exec = "${pkgs.chromium}/bin/chromium --enable-features=UseOzonePlatform -ozone-platform=wayland --app=\"https://teams.microsoft.com\"";
+          exec = "${pkgs.chromium}/bin/chromium --enable-features=UseOzonePlatform -ozone-platform=wayland \"--app=https://teams.microsoft.com\"";
           terminal = false;
         };
       in

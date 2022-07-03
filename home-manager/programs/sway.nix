@@ -192,6 +192,314 @@ with lib;
         systemd = {
           enable = false;
         };
+        settings = {
+          mainBar = {
+            layer = "top";
+            position = "bottom";
+            height = 27;
+            modules-left = [ "sway/workspaces" "sway/mode" ];
+            modules-center = [ "sway/window" ];
+            modules-right = [ "mpd" "clock" "tray" ];
+            "sway/workspaces" = {
+              disable-scroll = true;
+            };
+            "sway/window" = {
+              icon = true;
+            };
+            "clock" = {
+              format = "{:%I:%M%p %Y-%m-%d}";
+            };
+            "window" = {
+              icon = true;
+            };
+            "tray" = {
+              spacing = 5;
+            };
+            "mpd" = {
+              format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})";
+              format-disconnected = "Disconnected ❌";
+              format-stopped = "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ⏸";
+              consume-icons = {
+                on = "🍴";
+              };
+              random-icons = {
+                on = "🔀";
+              };
+              repeat-icons = {
+                on = "🔁";
+              };
+              state-icons = {
+                paused = "⏸";
+                playing = "▶";
+              };
+            };
+          };
+        };
+        style = ''
+          * {
+              /* `otf-font-awesome` is required to be installed for icons */
+              font-family: FontAwesome, Fira;
+              font-size: 14px;
+          }
+
+          window#waybar {
+              background-color: #103c48;
+              border: 2px solid #2d5b69;
+              color: #adbcbc;
+              transition-property: background-color;
+              transition-duration: .5s;
+          }
+
+          window#waybar.hidden {
+              opacity: 0.2;
+          }
+
+          /*
+          window#waybar.empty {
+              background-color: transparent;
+          }
+          window#waybar.solo {
+              background-color: #FFFFFF;
+          }
+          */
+
+          window#waybar.termite {
+              background-color: #3F3F3F;
+          }
+
+          window#waybar.chromium {
+              background-color: #000000;
+              border: none;
+          }
+
+          #workspaces button {
+              padding: 0 5px;
+              background-color: #184956;
+              color: #72898f;
+              /* Use box-shadow instead of border so the text isn't offset */
+              box-shadow: inset 0 -3px transparent;
+              /* Avoid rounded borders under each workspace name */
+              border: none;
+              border-radius: 0;
+          }
+
+          /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+          #workspaces button:hover {
+              background: rgba(0, 0, 0, 0.2);
+              box-shadow: inset 0 -3px #ffffff;
+          }
+
+          #workspaces button.focused {
+              background-color: #2d5b69;
+              color: #adbcbc;
+              /* box-shadow: inset 0 -3px #ffffff; */
+          }
+
+          #workspaces button.urgent {
+              background-color: #2d5b69;
+              color: #fa5750;
+          }
+
+          #mode {
+              background-color: #64727D;
+              border-bottom: 3px solid #ffffff;
+          }
+
+          #clock,
+          #battery,
+          #cpu,
+          #memory,
+          #disk,
+          #temperature,
+          #backlight,
+          #network,
+          #pulseaudio,
+          #custom-media,
+          #tray,
+          #mode,
+          #idle_inhibitor,
+          #mpd {
+              padding: 0 10px;
+          }
+
+          #window,
+          #workspaces {
+              margin: 0 4px;
+          }
+
+          /* If workspaces is the leftmost module, omit left margin */
+          .modules-left > widget:first-child > #workspaces {
+              margin-left: 0;
+          }
+
+          /* If workspaces is the rightmost module, omit right margin */
+          .modules-right > widget:last-child > #workspaces {
+              margin-right: 0;
+          }
+
+          #clock {
+              border: 2px solid #41c7b9;
+              background-color: #184956;
+              color: #41c7b9;
+          }
+
+          #battery {
+              background-color: #ffffff;
+              color: #000000;
+          }
+
+          #battery.charging, #battery.plugged {
+              color: #ffffff;
+              background-color: #26A65B;
+          }
+
+          @keyframes blink {
+              to {
+                  background-color: #ffffff;
+                  color: #000000;
+              }
+          }
+
+          #battery.critical:not(.charging) {
+              background-color: #f53c3c;
+              color: #ffffff;
+              animation-name: blink;
+              animation-duration: 0.5s;
+              animation-timing-function: linear;
+              animation-iteration-count: infinite;
+              animation-direction: alternate;
+          }
+
+          label:focus {
+              background-color: #000000;
+          }
+
+          #cpu {
+              background-color: #2ecc71;
+              color: #000000;
+          }
+
+          #memory {
+              background-color: #9b59b6;
+          }
+
+          #disk {
+              background-color: #964B00;
+          }
+
+          #backlight {
+              background-color: #90b1b1;
+          }
+
+          #network {
+              background-color: #2980b9;
+          }
+
+          #network.disconnected {
+              background-color: #f53c3c;
+          }
+
+          #pulseaudio {
+              background-color: #f1c40f;
+              color: #000000;
+          }
+
+          #pulseaudio.muted {
+              background-color: #90b1b1;
+              color: #2a5c45;
+          }
+
+          #custom-media {
+              background-color: #66cc99;
+              color: #2a5c45;
+              min-width: 100px;
+          }
+
+          #custom-media.custom-spotify {
+              background-color: #66cc99;
+          }
+
+          #custom-media.custom-vlc {
+              background-color: #ffa000;
+          }
+
+          #temperature {
+              background-color: #f0932b;
+          }
+
+          #temperature.critical {
+              background-color: #eb4d4b;
+          }
+
+          #tray {
+              background-color: #4695f7;
+              border: 2px solid #58a3ff;
+          }
+
+          #tray > .passive {
+              -gtk-icon-effect: dim;
+          }
+
+          #tray > .needs-attention {
+              -gtk-icon-effect: highlight;
+              background-color: #eb4d4b;
+          }
+
+          #idle_inhibitor {
+              background-color: #2d3436;
+          }
+
+          #idle_inhibitor.activated {
+              background-color: #ecf0f1;
+              color: #2d3436;
+          }
+
+          #mpd {
+              color: #adbcbc;
+              border: 2px solid #75b938;
+              background-color: #184956;
+
+          }
+
+          #mpd.disconnected {
+              color: #dbb32d;
+              border: 2px solid #dbb32d;
+          }
+
+          #mpd.stopped {
+              color: #fa5750;
+              border: 2px solid #fa5750;
+          }
+
+          #mpd.paused {
+              color: #f275be;
+              border: 2px solid #f275be;
+          }
+
+          #language {
+              background: #00b093;
+              color: #740864;
+              padding: 0 5px;
+              margin: 0 5px;
+              min-width: 16px;
+          }
+
+          #keyboard-state {
+              background: #97e1ad;
+              color: #000000;
+              padding: 0 0px;
+              margin: 0 5px;
+              min-width: 16px;
+          }
+
+          #keyboard-state > label {
+              padding: 0 5px;
+          }
+
+          #keyboard-state > label.locked {
+              background: rgba(0, 0, 0, 0.2);
+          }
+        '';
       };
       # Override the service to run during graphical-session-pre.target
       systemd.user.services.waybar = {
