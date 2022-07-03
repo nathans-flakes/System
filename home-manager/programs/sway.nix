@@ -9,6 +9,34 @@ with lib;
       swaylock-command = "${pkgs.swaylock-effects}/bin/swaylock --screenshots --grace 30 --indicator --clock --timestr \"%-I:%M:%S %p\" --datestr \"%A %Y-%M-%d\" --effect-blur 20x3";
     in
     {
+      home.packages = with pkgs; [
+        # Locking and display management
+        wdisplays
+        swaylock-effects
+        swayidle
+        # Clipboard
+        wl-clipboard
+        # Notifications
+        mako
+        # Terminal
+        alacritty
+        # glib for sound stuff
+        glib
+        # Glpaper for the background
+        (glpaper.overrideAttrs (old: {
+          src = fetchFromSourcehut {
+            owner = "~scoopta";
+            repo = "glpaper";
+            vc = "hg";
+            rev = "f89e60b7941fb60f1069ed51af9c5bb4917aab35";
+            hash = "sha256-E7FKjt3NL0aAEibfaq+YS2IVvpjNjInA+Rs8SU63/3M=";
+          };
+        }))
+        # Screenshots
+        sway-contrib.grimshot
+        # fuzzel for launcher
+        fuzzel
+      ];
       #########################
       ## Sway
       #########################
@@ -38,16 +66,18 @@ with lib;
           # Alacritty as default terminal
           terminal = "alacritty";
           # Use krunner (from kde) as our launcher
-          menu = "albert show";
+          menu = ''
+            fuzzel -f Fira -b "103c48ff" -S "adbcbcff" -s "184956ff" -t "72898fff" -B 5 -r 5 -C "ed8649ff"
+          '';
           # Use waybar, but through systemd
           bars = [
             #   {
             #     command = "waybar";
             #   }
           ];
-          # Use fira code
+          # Use fira
           fonts = {
-            names = [ "Fira Code Nerd Font" ];
+            names = [ "Fira" ];
             size = 10.0;
           };
           # Setup keybindings
@@ -68,8 +98,6 @@ with lib;
             };
           # Startup applications
           startup = [
-            # Albert, the launcher
-            { command = "albert"; }
             # Mako, the notification daemon
             { command = "mako"; }
           ];
@@ -92,7 +120,7 @@ with lib;
         # Border configuration
         borderSize = 3;
         # Use Fira Code for font
-        font = "Fira Code Nerd Font 10";
+        font = "Fira 10";
         # Group by application
         groupBy = "app-name";
         # Bottom right corner
