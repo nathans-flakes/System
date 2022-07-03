@@ -41,9 +41,9 @@ with lib;
           menu = "albert show";
           # Use waybar, but through systemd
           bars = [
-            {
-              command = "waybar";
-            }
+          #   {
+          #     command = "waybar";
+          #   }
           ];
           # Use fira code
           fonts = {
@@ -101,6 +101,9 @@ with lib;
         maxVisible = 10;
         # Sort by time in descending order (newest first)
         sort = "-time";
+        # Don't time out notifications , I want to have to dismiss them
+        defaultTimeout = 0;
+        ignoreTimeout = true;
       };
       #########################
       ## Swayidle
@@ -127,6 +130,28 @@ with lib;
       programs.waybar = {
         enable = true;
         package = inputs.nixpkgs-unstable.legacyPackages."${pkgs.system}".waybar;
+        systemd = {
+          enable = false;
+        };
+      };
+      # Override the service to run during graphical-session-pre.target
+      systemd.user.services.waybar = {
+        Unit = {
+          Description =
+            "Highly customizable Wayland bar for Sway and Wlroots based compositors.";
+          Documentation = "https://github.com/Alexays/Waybar/wiki";
+          Before = [ "tray.target" ];
+        };
+
+        Service = {
+          ExecStart = "${config.programs.waybar.package}/bin/waybar";
+          ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR2 $MAINPID";
+          ExecstartPost = "${pkgs.coreutils}/bin/sleep 1";
+          Restart = "on-failure";
+          KillMode = "mixed";
+        };
+
+        Install = { WantedBy = [ "graphical-session-pre.target" ]; };
       };
       #########################
       ## Alacritty
@@ -177,6 +202,16 @@ with lib;
       ## EasyEffects
       #########################
       services.easyeffects.enable = true;
+      #########################
+      ## Create tray target to fix some things
+      #########################
+      systemd.user.targets.tray = {
+        Unit = {
+          Description = "Home Manager System Tray";
+          Requires = [ "graphical-session-pre.target" "waybar.service" ];
+          After = ["waybar.service"];
+        };
+      };
     }
   );
 }
