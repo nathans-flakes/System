@@ -22,7 +22,8 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 11 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15))
+      doom-unicode-font (font-spec :family "FiraCode Nerd Font" :size 11 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Fira" :size 15))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -99,7 +100,8 @@
   :config
   (setq mixed-pitch-set-height t))
 
-(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+(setq doom-modeline-buffer-file-name-style 'truncate-with-project
+      doom-modeline-mu4e t)
 
 (display-time-mode 1)
 
@@ -338,10 +340,14 @@ work if it thinks it needs to."
         message-sendmail-extra-arguments '("--read-envelope-from")
         message-send-mail-function #'message-send-mail-with-sendmail))
 
-(set-email-account! "mccarty.io"
-                    '((mu4e-sent-folder . "/nathan@mccarty.io/Sent")
-                      (mu4e-drafts-folder . "/nathan@mccarty.io/Drafts")
-                      (mu4e-trash-folder . "/nathan@mccarty.io/Trash")
-                      (mu4e-refile-folder . "/nathan@mccarty.io/Archive")
-                      (smtpmail-smtp-user . "nathan@mccarty.io"))
-                    t)
+(after! mu4e
+  (set-email-account! "mccarty.io"
+                      '((mu4e-sent-folder . "/nathan@mccarty.io/Sent")
+                        (mu4e-drafts-folder . "/nathan@mccarty.io/Drafts")
+                        (mu4e-trash-folder . "/nathan@mccarty.io/Trash")
+                        (mu4e-refile-folder . "/nathan@mccarty.io/Archive")
+                        (smtpmail-smtp-user . "nathan@mccarty.io"))
+                      t))
+
+(after! mu4e
+  (mu4e-alert-enable-mode-line-display))

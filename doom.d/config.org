@@ -33,7 +33,8 @@ The provided default ~config.el~
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 11 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15))
+      doom-unicode-font (font-spec :family "FiraCode Nerd Font" :size 11 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Fira" :size 15))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -122,9 +123,12 @@ This tweak applies to:
 
 Setting ~mixed-pitch-set-height~ is required to get ~mixed-pitch-mode~ to render fonts with the correct size in doom emacs, apparently.
 ** Modeline configuration
-Configure the modeline to truncate with project (so that ~~/Projects/Asuran/replicator/src/lib.rs~ becomes ~replicator/s/lib.rs~)
+Configure the modeline to:
+ + truncate with project (so that ~~/Projects/Asuran/replicator/src/lib.rs~ becomes ~replicator/s/lib.rs~)
+ + Show the mu4e alert
 #+begin_src emacs-lisp
-(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+(setq doom-modeline-buffer-file-name-style 'truncate-with-project
+      doom-modeline-mu4e t)
 #+end_src
 
 Display the current time in the modeline
@@ -539,13 +543,19 @@ First, tell mu4e to use msmtp
         message-sendmail-extra-arguments '("--read-envelope-from")
         message-send-mail-function #'message-send-mail-with-sendmail))
 #+end_src
-Then tell it where our account's stuff is
+Tell it where our account's stuff is
 #+begin_src emacs-lisp
-(set-email-account! "mccarty.io"
-                    '((mu4e-sent-folder . "/nathan@mccarty.io/Sent")
-                      (mu4e-drafts-folder . "/nathan@mccarty.io/Drafts")
-                      (mu4e-trash-folder . "/nathan@mccarty.io/Trash")
-                      (mu4e-refile-folder . "/nathan@mccarty.io/Archive")
-                      (smtpmail-smtp-user . "nathan@mccarty.io"))
-                    t)
+(after! mu4e
+  (set-email-account! "mccarty.io"
+                      '((mu4e-sent-folder . "/nathan@mccarty.io/Sent")
+                        (mu4e-drafts-folder . "/nathan@mccarty.io/Drafts")
+                        (mu4e-trash-folder . "/nathan@mccarty.io/Trash")
+                        (mu4e-refile-folder . "/nathan@mccarty.io/Archive")
+                        (smtpmail-smtp-user . "nathan@mccarty.io"))
+                      t))
+#+end_src
+Tell it to enable the modeline display
+#+begin_src emacs-lisp
+(after! mu4e
+  (mu4e-alert-enable-mode-line-display))
 #+end_src

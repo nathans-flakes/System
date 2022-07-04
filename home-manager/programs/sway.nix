@@ -57,9 +57,19 @@ with lib;
             smartGaps = true;
             inner = 9;
           };
-          # disable borders
+          # Window configuration
           window = {
-            border = 0;
+            # Configure borders
+            border = 2;
+            # Application specific configuration
+            commands = [
+              {
+                command = "floating enable";
+                criteria = {
+                  app_id = "pinentry-qt";
+                };
+              }
+            ];
           };
           # Use windows key as modifier
           modifier = "Mod4";
@@ -67,7 +77,7 @@ with lib;
           terminal = "alacritty";
           # Use krunner (from kde) as our launcher
           menu = ''
-            fuzzel -f Fira -b "103c48ff" -S "adbcbcff" -s "184956ff" -t "72898fff" -B 5 -r 5 -C "ed8649ff"
+            fuzzel -f "Fira Sans" -b "103c48ff" -S "adbcbcff" -s "184956ff" -t "72898fff" -B 5 -r 5 -C "ed8649ff"
           '';
           # Use waybar, but through systemd
           bars = [
@@ -77,38 +87,38 @@ with lib;
           ];
           # Use fira
           fonts = {
-            names = [ "Fira" ];
+            names = [ "Fira Sans" ];
             size = 10.0;
           };
           # Selenize it
           colors = {
             focused = {
-              border = "75b938";
-              background = "184956";
-              text = "adbcbc";
-              indicator = "fa5750";
-              childBorder = "75b938";
+              border = "#75b938";
+              background = "#184956";
+              text = "#adbcbc";
+              indicator = "#84c747";
+              childBorder = "#75b938";
             };
             focusedInactive = {
-              border = "84c747";
-              background = "103c48";
-              text = "adbcbc";
-              indicator = "fa5750";
-              childBorder = "84c747";
+              border = "#41c7b9";
+              background = "#103c48";
+              text = "#adbcbc";
+              indicator = "#53d6c7";
+              childBorder = "#41c7b9";
             };
             unfocused = {
-              border = "72898f";
-              background = "103c48";
-              text = "72898f";
-              indicator = "fa5750";
-              childBorder = "72898f";
+              border = "#72898f";
+              background = "#103c48";
+              text = "#72898f";
+              indicator = "#adbcbc";
+              childBorder = "#72898f";
             };
             urgent = {
-              border = "f275be";
-              background = "184956";
-              text = "fa5750";
-              indicator = "fa5750";
-              childBorder = "f275be";
+              border = "#f275be";
+              background = "#184956";
+              text = "#fa5750";
+              indicator = "#fa5750";
+              childBorder = "#f275be";
             };
           };
           # Setup keybindings
@@ -132,12 +142,7 @@ with lib;
             # Mako, the notification daemon
             { command = "mako"; }
           ];
-          # Other stuff
         };
-        # disable transparency for minecraft
-        extraConfig = ''
-          for_window [title=".*Minecraft.*"] opacity 1
-        '';
       };
       #########################
       ## Mako (notifications)
@@ -151,7 +156,7 @@ with lib;
         # Border configuration
         borderSize = 3;
         # Use Fira Code for font
-        font = "Fira 10";
+        font = "Fira Sans 10";
         # Group by application
         groupBy = "app-name";
         # Bottom right corner

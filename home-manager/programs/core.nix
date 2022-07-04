@@ -20,6 +20,8 @@ with lib;
         choose
         # Man but terse
         tealdeer
+        # rsync for _The Cloud_ :tm:
+        rclone
       ];
     })
     (mkIf config.nathan.programs.util.productivity {
