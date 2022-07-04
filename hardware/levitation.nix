@@ -61,6 +61,14 @@
     device = "10.0.0.139:/mnt/tank/root/nathan/music";
     fsType = "nfs";
   };
+  fileSystems."/mnt/general" = {
+    device = "10.0.0.139:/mnt/tank/root/shares/general";
+    fsType = "nfs";
+  };
+  fileSystems."/mnt/archive" = {
+    device = "10.0.0.139:/mnt/tank/root/shares/archive";
+    fsType = "nfs";
+  };
 
   swapDevices =
     [{
