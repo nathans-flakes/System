@@ -93,32 +93,32 @@ with lib;
           # Selenize it
           colors = {
             focused = {
-              border = "#75b938";
-              background = "#184956";
-              text = "#adbcbc";
-              indicator = "#84c747";
-              childBorder = "#75b938";
+              border = "75b938";
+              background = "184956";
+              text = "adbcbc";
+              indicator = "84c747";
+              childBorder = "75b938";
             };
             focusedInactive = {
-              border = "#41c7b9";
+              border = "41c7b9";
               background = "#103c48";
-              text = "#adbcbc";
-              indicator = "#53d6c7";
-              childBorder = "#41c7b9";
+              text = "adbcbc";
+              indicator = "53d6c7";
+              childBorder = "41c7b9";
             };
             unfocused = {
-              border = "#72898f";
-              background = "#103c48";
-              text = "#72898f";
-              indicator = "#adbcbc";
-              childBorder = "#72898f";
+              border = "72898f";
+              background = "103c48";
+              text = "72898f";
+              indicator = "adbcbc";
+              childBorder = "72898f";
             };
             urgent = {
-              border = "#f275be";
-              background = "#184956";
-              text = "#fa5750";
-              indicator = "#fa5750";
-              childBorder = "#f275be";
+              border = "f275be";
+              background = "184956";
+              text = "fa5750";
+              indicator = "fa5750";
+              childBorder = "f275be";
             };
           };
           # Setup keybindings
