@@ -22,6 +22,7 @@ with lib; {
           "/home/${config.nathan.config.user}/.local/share/Steam"
           "/home/${config.nathan.config.user}/*/Cache"
           "/home/*/Downloads"
+          "/var/dislocker"
         ];
         repo = "${config.nathan.services.borg.location}/${config.networking.hostName}";
         encryption = {

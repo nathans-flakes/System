@@ -10,6 +10,7 @@ in
     ./swaywm.nix
     ./hardware.nix
     ./virtualization.nix
+    ./windows.nix
     ./programs/games.nix
     ./programs/gpg.nix
     ./programs/utils.nix
@@ -146,6 +147,27 @@ in
           docker = mkDefaultOption "docker" config.nathan.config.isDesktop;
           lxc = mkDefaultOption "lxc" config.nathan.config.isDesktop;
           nixos = mkDefaultOption "nixos containers" config.nathan.config.isDesktop;
+        };
+        # Support for interacting with a dual booted windows system
+        windows = {
+          enable = mkEnableOption "Windows Integration";
+          mount = {
+            enable = mkDefaultOption "Mount a bitlockered windows partition" config.nathan.config.windows.enable;
+            device = mkOption {
+              description = "Device to mount";
+              example = "/dev/sda2";
+              type = types.str;
+            };
+            mountPoint = mkOption {
+              description = "Location to mount the device to";
+              example = "/dev/sda2";
+              type = types.str;
+            };
+            keyFile = mkOption {
+              description = "File containing the recovery key for the partition";
+              type = types.str;
+            };
+          };
         };
       };
     };

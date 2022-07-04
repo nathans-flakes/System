@@ -1,14 +1,20 @@
 { config, lib, pkgs, ... }:
 
 {
-  # sops for borg
-  sops.secrets."borg-ssh-key" = {
-    sopsFile = ../../secrets/levitation/borg.yaml;
-    format = "yaml";
-  };
-  sops.secrets."borg-password" = {
-    sopsFile = ../../secrets/levitation/borg.yaml;
-    format = "yaml";
+  # Sops setup for this machine
+  sops.secrets = {
+    "borg-ssh-key" = {
+      sopsFile = ../../secrets/levitation/borg.yaml;
+      format = "yaml";
+    };
+    "borg-password" = {
+      sopsFile = ../../secrets/levitation/borg.yaml;
+      format = "yaml";
+    };
+    "windows-bitlocker-key" = {
+      sopsFile = ../../secrets/levitation/windows.yaml;
+      format = "yaml";
+    };
   };
   # Setup system configuration
   nathan = {
@@ -32,6 +38,14 @@
       setupGrub = true;
       nix.autoUpdate = false;
       harden = false;
+      windows = {
+        enable = true;
+        mount = {
+          device = "/dev/nvme0n1p3";
+          mountPoint = "/mnt/windows";
+          keyFile = config.sops.secrets."windows-bitlocker-key".path;
+        };
+      };
     };
   };
   # Configure networking

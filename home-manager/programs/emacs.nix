@@ -39,7 +39,11 @@
     services.emacs = {
       enable = config.nathan.programs.emacs.service;
       client.enable = true;
-      defaultEditor = true;
+    };
+    # Set editor
+    home.sessionVariables = {
+      EDITOR = "emacsclient";
+      VISUAL = "emacsclient";
     };
   };
 }
