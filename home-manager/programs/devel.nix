@@ -87,7 +87,7 @@ with lib; with nLib; {
     })
     # JavaScript/TypeScript Development
     (mkIf devel.js {
-      home.packages = with unstable; [
+      home.packages = with pkgs; [
         nodejs
         yarn
         nodePackages.typescript

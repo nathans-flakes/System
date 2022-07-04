@@ -77,7 +77,14 @@ with lib; {
     };
     services.mbsync = {
       enable = true;
-      postExec = "${pkgs.mu}/bin/mu index";
+      # Index manually with mu if we don't have emacs setup, but if we have the emacs service setup,
+      # run through emacsclient, as it will have the lock
+      postExec =
+        if config.nathan.programs.emacs.service
+        then
+          ''${config.nathan.programs.emacs.package}/bin/emacsclient --eval "(mu4e-update-mail-and-index t)"''
+        else
+          "${pkgs.mu}/bin/mu index";
     };
     # Setup mu for indexing emails
     programs.mu = {

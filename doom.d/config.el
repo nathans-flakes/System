@@ -347,7 +347,15 @@ work if it thinks it needs to."
                         (mu4e-trash-folder . "/nathan@mccarty.io/Trash")
                         (mu4e-refile-folder . "/nathan@mccarty.io/Archive")
                         (smtpmail-smtp-user . "nathan@mccarty.io"))
-                      t))
+                      t)
+  (add-to-list 'mu4e-bookmarks
+               '(:name "Inbox - nathan@mccarty.io"
+                 :key ?m
+                 :query "maildir:\"/nathan@mccarty.io/Inbox\" AND NOT flag:trashed")))
 
 (after! mu4e
   (mu4e-alert-enable-mode-line-display))
+
+(setq +mu4e-backend nil)
+(after! mu4e
+        mu4e-get-mail-command "true")

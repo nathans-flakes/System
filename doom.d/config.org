@@ -552,10 +552,20 @@ Tell it where our account's stuff is
                         (mu4e-trash-folder . "/nathan@mccarty.io/Trash")
                         (mu4e-refile-folder . "/nathan@mccarty.io/Archive")
                         (smtpmail-smtp-user . "nathan@mccarty.io"))
-                      t))
+                      t)
+  (add-to-list 'mu4e-bookmarks
+               '(:name "Inbox - nathan@mccarty.io"
+                 :key ?m
+                 :query "maildir:\"/nathan@mccarty.io/Inbox\" AND NOT flag:trashed")))
 #+end_src
 Tell it to enable the modeline display
 #+begin_src emacs-lisp
 (after! mu4e
   (mu4e-alert-enable-mode-line-display))
+#+end_src
+Tell it not to update the mail itself, we have a systemd unit for that
+#+begin_src emacs-lisp
+(setq +mu4e-backend nil)
+(after! mu4e
+        mu4e-get-mail-command "true")
 #+end_src
