@@ -103,6 +103,3 @@ with lib; with nLib; {
     })
   ];
 }
-
-
-# TODO: Add pyright and python3Full under python module

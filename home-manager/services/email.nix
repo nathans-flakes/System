@@ -35,7 +35,6 @@ with lib; {
           primary = true;
           realName = "Nathan McCarty";
           userName = "nathan@mccarty.io";
-          # TODO: Move into `pass`
           passwordCommand = "${pkgs.pass}/bin/pass protonmail-bridge-password";
           aliases = [
             "thatonelutenist@protonmail.com"

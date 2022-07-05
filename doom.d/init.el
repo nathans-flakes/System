@@ -22,7 +22,7 @@
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
        (emoji +unicode +github)  ; 🙂
-       hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
+       hl-todo           ; highlight todo-words
        indent-guides     ; highlighted indent columns
        ;;(ligatures +fira)         ; ligatures and symbols to make your code pretty again
        modeline          ; snazzy, Atom-inspired modeline, plus API
@@ -60,7 +60,7 @@
        (spell +flyspell +hunspell +everywhere) ; tasing you for misspelling mispelling
 
        :tools
-       (debugger +lsp)          ; FIXME stepping through code, to help you add bugs
+       (debugger +lsp)          ; stepping through code, to help you add bugs
        direnv
        docker
        editorconfig      ; let someone else argue about tabs vs spaces

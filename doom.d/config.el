@@ -108,6 +108,11 @@
 (after! treemacs
   (setq treemacs-width 25))
 
+(use-package! alert
+  :config
+  ;; TODO: Make this conditional so we can make the correct choice on macos
+  (setq alert-default-style 'libnotify))
+
 (setq-default fill-column 100)
 
 (after! avy
@@ -261,6 +266,8 @@ work if it thinks it needs to."
      "* %a :website:\n\n%U %?\n\n%:initial")
    org-capture-templates))
 
+(use-package! anki-editor)
+
 (use-package! magit-todos
   :hook (magit-mode . magit-todos-mode))
 
@@ -347,15 +354,27 @@ work if it thinks it needs to."
                         (mu4e-trash-folder . "/nathan@mccarty.io/Trash")
                         (mu4e-refile-folder . "/nathan@mccarty.io/Archive")
                         (smtpmail-smtp-user . "nathan@mccarty.io"))
-                      t)
+                      t))
+
+(after! mu4e
+  (setq mu4e-bookmarks '())
+  (add-to-list 'mu4e-bookmarks
+               '(:name "All Mail"
+                 :key ?a
+                 :query "NOT flag:trashed"))
   (add-to-list 'mu4e-bookmarks
                '(:name "Inbox - nathan@mccarty.io"
                  :key ?m
-                 :query "maildir:\"/nathan@mccarty.io/Inbox\" AND NOT flag:trashed")))
+                 :query "maildir:\"/nathan@mccarty.io/Inbox\" AND NOT flag:trashed"))
+  (add-to-list 'mu4e-bookmarks
+               '(:name "Unread"
+                 :key ?u
+                 :query "flag:unread AND NOT flag:trashed")))
 
 (after! mu4e
   (mu4e-alert-enable-mode-line-display))
 
 (setq +mu4e-backend nil)
 (after! mu4e
-        mu4e-get-mail-command "true")
+        (setq mu4e-get-mail-command "true"
+              mu4e-update-interval 300))

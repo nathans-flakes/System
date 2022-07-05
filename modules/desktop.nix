@@ -64,7 +64,7 @@ with lib; {
       ];
       # Add noisetorch for microphone noise canceling
       programs.noisetorch = {
-        enable = true; # TODO: https://github.com/noisetorch/NoiseTorch/releases/tag/0.11.6
+        enable = true;
       };
       # Configure fonts
     })

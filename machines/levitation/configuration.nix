@@ -55,13 +55,11 @@
     interfaces.enp6s0.useDHCP = true;
     nat.externalInterface = "enp6s0";
     # Open ports for soulseek
-    # TODO add in soulseek
     firewall = {
       allowedTCPPorts = [ 61377 ];
       allowedUDPPorts = [ 61377 ];
     };
   };
-  # FIXME borg backup module
 
   # Setup home manager
   home-manager.users.nathan = import ./home.nix;

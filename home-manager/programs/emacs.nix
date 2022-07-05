@@ -13,6 +13,10 @@
       sqlite
       # For latex editing
       texlive.combined.scheme-medium
+      # For notifications
+      libnotify
+      # For flash cards
+      anki
     ];
     # Setup doom emacs
     programs.doom-emacs = {
@@ -24,12 +28,27 @@
           pname = "org-protocol-capture-html";
           ename = "org-protocol-capture-html";
           version = "0.0.0";
-          buildInputs = [ self.s ];
+          packageRequires = [ self.s ];
           src = pkgs.fetchFromGitHub {
             owner = "alphapapa";
             repo = "org-protocol-capture-html";
             rev = "3359ce9a2f3b48df26329adaee0c4710b1024250";
             hash = "sha256-ueEHJCS+aHYCnd4Lm3NKgqg+m921nl5XijE9ZnSRQXI=";
+          };
+        };
+        anki-editor = self.trivialBuild {
+          pname = "anki-editor";
+          ename = "anki-editor";
+          version = "0.3.1";
+          packageRequires = with self; [
+            dash
+            request
+          ];
+          src = pkgs.fetchFromGitHub {
+            owner = "billop";
+            repo = "anki-editor";
+            rev = "c11187a79a980a738af608c98f8de2cdc1d988be";
+            hash = "sha256-3R9bEu982a9Tq+hXy+ALFF/N2NwK9MsqDELFVGHV09I=";
           };
         };
       };
