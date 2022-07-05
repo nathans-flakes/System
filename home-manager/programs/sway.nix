@@ -69,6 +69,13 @@ with lib;
                   app_id = "pinentry-qt";
                 };
               }
+              # Work around for chrome ui bug
+              {
+                command = "shortcuts_inhibitor disable";
+                criteria = {
+                  app_id = "^chrome-.*__-.*$";
+                };
+              }
             ];
           };
           # Use windows key as modifier
