@@ -184,5 +184,11 @@ in
     ];
     # Set system state version
     system.stateVersion = "22.05";
+    # Enable flakes
+    # Enable nix flakes
+    nix.package = pkgs.nixFlakes;
+    nix.extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
 }

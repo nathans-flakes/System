@@ -45,6 +45,14 @@
       url = "github:forward-progress/quilt-server-nix-container";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -61,6 +69,8 @@
     , nix-doom-emacs
     , java
     , quilt-server
+    , nixos-generators
+    , wsl
     }@inputs:
     let
       makeNixosSystem = { system, hostName, extraModules ? [ ], ourNixpkgs ? nixpkgs }: ourNixpkgs.lib.nixosSystem {
@@ -101,6 +111,7 @@
       };
     in
     rec {
+      # Real systems
       nixosConfigurations = {
         levitation = makeNixosSystem {
           system = "x86_64-linux";
@@ -119,6 +130,28 @@
             "${nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix"
             ./machines/x86vm/configuration.nix
           ];
+        };
+
+        # WSL sytem
+        wsl = makeNixosSystem {
+          system = "x86_64-linux";
+          hostName = "wsl";
+          extraModules = [
+            wsl.nixosModules.wsl
+            ./machines/wsl/configuration.nix
+          ];
+        };
+      };
+      packages = {
+        x86_64-linux = {
+          # Hyper-V image
+          hyperv = nixos-generators.nixosGenerate {
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            modules = [
+              ./machines/hyperv/configuration.nix
+            ];
+            format = "hyperv";
+          };
         };
       };
     };
