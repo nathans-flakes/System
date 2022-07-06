@@ -65,6 +65,8 @@ with lib; with nLib; {
         cargo-play # Quickly execute code outside of a crate
         # For building stuff that uses protocol buffers
         protobuf
+        # For faster builds
+        sccache
       ];
     })
     # JVM Development
