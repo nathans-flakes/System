@@ -18,7 +18,13 @@
   networking = {
     domain = "mccarty.io";
   };
-
   # Setup home manager
   home-manager.users.nathan = import ./home.nix;
+  # Setup WSL
+  wsl = {
+    enable = true;
+    automountPath = "/mnt";
+    defaultUser = "nathan";
+    startMenuLaunchers = true;
+  };
 }
