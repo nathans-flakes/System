@@ -60,6 +60,7 @@ with lib; {
           mbsync = {
             enable = true;
             create = "maildir";
+            remove = "both";
           };
           mu.enable = true;
           msmtp = {
@@ -81,7 +82,7 @@ with lib; {
       postExec =
         if config.nathan.programs.emacs.service
         then
-          ''${config.nathan.programs.emacs.package}/bin/emacsclient --eval "(mu4e-update-mail-and-index t)"''
+          "${../../scripts/update-mu4e.sh}"
         else
           "${pkgs.mu}/bin/mu index";
     };

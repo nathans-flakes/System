@@ -594,5 +594,10 @@ Tell it not to update the mail itself, we have a systemd unit for that
 (setq +mu4e-backend nil)
 (after! mu4e
         (setq mu4e-get-mail-command "true"
-              mu4e-update-interval 300))
+              mu4e-update-interval nil))
+#+end_src
+We need to tell mu4e to rename files when they are moved, or else mbsync will break, see [[https://github.com/djcb/mu/issues/613#issuecomment-166714305][issue]] and [[http://tiborsimko.org/mbsync-duplicate-uid.html][blog post]]
+#+begin_src emacs-lisp
+(after! mu4e
+  (setq mu4e-change-filenames-when-moving t))
 #+end_src

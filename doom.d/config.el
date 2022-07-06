@@ -377,4 +377,7 @@ work if it thinks it needs to."
 (setq +mu4e-backend nil)
 (after! mu4e
         (setq mu4e-get-mail-command "true"
-              mu4e-update-interval 300))
+              mu4e-update-interval nil))
+
+(after! mu4e
+  (setq mu4e-change-filenames-when-moving t))

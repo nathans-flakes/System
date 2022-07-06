@@ -17,6 +17,15 @@
       libnotify
       # For flash cards
       anki
+      # Desktop file for org-protocol
+      (makeDesktopItem {
+        name = "org-protocol";
+        exec = "emacsclient %u";
+        comment = "Org protocol";
+        desktopName = "org-protocol";
+        type = "Application";
+        mimeTypes = [ "x-scheme-handler/org-protocol" ];
+      })
     ];
     # Setup doom emacs
     programs.doom-emacs = {
