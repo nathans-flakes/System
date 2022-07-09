@@ -138,8 +138,8 @@
           hostPath = "/var/minecraft";
           isReadOnly = false;
         };
-        "/run/secrets" = {
-          hostPath = "/run/secrets";
+        "/run/secrets/friendpack-backblaze" = {
+          hostPath = "/run/secrets/friendpack-backblaze";
         };
       };
       forwardPorts = [
