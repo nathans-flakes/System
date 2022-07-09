@@ -173,6 +173,7 @@
         "/var/lib/docker"
         "/var/log"
         "/var/minecraft"
+        "/var/sharedstore"
       ];
       repo = "de1955@de1955.rsync.net:computers/oracles";
       encryption = {
