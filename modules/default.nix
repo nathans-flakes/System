@@ -78,7 +78,9 @@ in
           core = mkEnableOptionT "utils-core";
           # Enable multi system emulation
           # Enabled by default on desktop
-          binfmt = mkDefaultOption "utils-productivity" config.nathan.config.isDesktop;
+          binfmt = mkDefaultOption "binfmt" config.nathan.config.isDesktop;
+          # Development utilities that can't be installed through home manager due to collisions
+          devel = mkDefaultOption "devel" config.nathan.config.isDesktop;
         };
       };
       # Control enabling of hardware support

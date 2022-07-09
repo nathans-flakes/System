@@ -28,5 +28,11 @@ with lib;
         "aarch64-linux"
       ];
     })
+    (mkIf nathan.programs.utils.devel {
+      environment.systemPackages = with pkgs; [
+        gcc
+        binutils
+      ];
+    })
   ];
 }

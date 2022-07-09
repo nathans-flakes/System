@@ -27,8 +27,7 @@ with lib; with nLib; {
           ]
           # Linux specific packages
           [
-            gcc
-            binutils
+            clang
             unstable.mold
           ];
 
