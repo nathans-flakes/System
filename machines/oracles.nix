@@ -110,7 +110,7 @@
               minecraft = {
                 enable = true;
                 minecraft-version = "1.18.2";
-                quilt-version = "0.17.1-beta.4";
+                quilt-version = "0.17.1-beta.6";
                 ram = 6144;
                 properties = {
                   motd = "Nathan's Private Modded Minecraft";
