@@ -15,6 +15,13 @@ with lib;
         };
       })
     (mkIf config.nathan.config.harden (import "${inputs.nixpkgs}/nixos/modules/profiles/hardened.nix" attrs))
+    (mkIf config.nathan.config.harden {
+      boot.kernelPackages = pkgs.linuxPackages_5_18_hardened;
+      security = {
+        allowSimultaneousMultithreading = true;
+        unprivilegedUsernsClone = true;
+      };
+    })
     (mkIf ((! config.nathan.config.harden) && config.nathan.config.isDesktop) {
       # Use the zen kernel with muqss turned on
       boot.kernelPackages =
@@ -42,5 +49,11 @@ with lib;
           dates = "2:00";
         };
       })
+    # Systemd user service cludge
+    {
+      systemd.user.extraConfig = ''
+        DefaultEnvironment="PATH=/run/current-system/sw/bin:/etc/profiles/per-user/${config.nathan.config.user}/bin"
+      '';
+    }
   ];
 }
