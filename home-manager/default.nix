@@ -11,6 +11,7 @@ with lib; with nLib; {
     ./programs/emacs.nix
     ./programs/image-editing.nix
     ./programs/media.nix
+    ./programs/wine.nix
     ./services/syncthing.nix
     ./services/email.nix
   ];
@@ -48,6 +49,8 @@ with lib; with nLib; {
           json = mkEnableOptionT "json";
           # Productivity application
           productivity = mkDefaultOption "Productivity applications" config.nathan.config.isDesktop;
+          # Wine support, disabled by default
+          wine = mkEnableOption "wine";
         };
         # Swaywm and supoorting application configuration
         swaywm = {

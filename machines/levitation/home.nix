@@ -10,6 +10,11 @@
     config = {
       isDesktop = true;
     };
+    programs = {
+      util = {
+        wine = true;
+      };
+    };
   };
 
   # Sway outputs
