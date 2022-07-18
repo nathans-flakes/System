@@ -29,5 +29,7 @@ with lib;
         ];
       in
       stable-packages ++ unstable-packages;
+    # Install steam
+    programs.steam.enable = true;
   };
 }

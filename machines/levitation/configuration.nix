@@ -37,7 +37,7 @@
       isDesktop = true;
       setupGrub = true;
       nix.autoUpdate = false;
-      harden = true;
+      harden = false;
       windows = {
         enable = true;
         mount = {
