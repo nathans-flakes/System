@@ -149,6 +149,10 @@ with lib;
             # Mako, the notification daemon
             { command = "mako"; }
           ];
+          # Turn on numlock by default
+          input = {
+            "*" = { xkb_numlock = "enable"; };
+          };
         };
       };
       #########################
