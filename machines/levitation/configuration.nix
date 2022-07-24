@@ -63,4 +63,20 @@
 
   # Setup home manager
   home-manager.users.nathan = import ./home.nix;
+
+  # TPM setup
+  security = {
+    tpm2 = {
+      enable = true;
+    };
+  };
+  boot = {
+    initrd = {
+      kernelModules = [ "tpm_crb" ];
+      systemd = {
+        enable = true;
+      };
+    };
+    kernelParams = [ "crypt-pv.luks.options=tpm2-device=auto" ];
+  };
 }

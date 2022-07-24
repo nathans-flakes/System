@@ -15,7 +15,7 @@ with lib; {
         # Configure grub if configured
       })
     (mkIf nc.setupGrub {
-      ## Boot, drivers, and host name
+      # Boot, drivers, and host name
       # Use grub
       boot.loader = {
         grub = {
@@ -32,8 +32,8 @@ with lib; {
           canTouchEfiVariables = false;
         };
       };
-      # Configure audio
     })
+    # Configure audio
     (mkIf nc.audio {
       # Disable normal audio subsystem explicitly
       sound.enable = false;
