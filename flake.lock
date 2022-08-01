@@ -300,6 +300,47 @@
         "type": "github"
       }
     },
+    "gamescope": {
+      "inputs": {
+        "gamescope-src": "gamescope-src",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1658887125,
+        "narHash": "sha256-evUl+58qvhEYA/A55hd8Y/bQMwS7i1GuUlVeTHg9IDk=",
+        "owner": "nathans-flakes",
+        "repo": "gamescope",
+        "rev": "019dfcc926a31dd399940befe1ac67c17a442db8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nathans-flakes",
+        "repo": "gamescope",
+        "type": "github"
+      }
+    },
+    "gamescope-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1658761788,
+        "narHash": "sha256-tyzRnyB4MZ3e30pn/mPxE5E0VOBeKgcnFmhB8iM0IJA=",
+        "ref": "master",
+        "rev": "cce6a29a2494eaf8f99e299a39b957fda3fcdb2a",
+        "revCount": 1140,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Plagman/gamescope.git"
+      },
+      "original": {
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Plagman/gamescope.git"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -326,7 +367,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "utils": "utils"
+        "utils": "utils_2"
       },
       "locked": {
         "lastModified": 1656122108,
@@ -348,7 +389,7 @@
           "quilt-server",
           "nixpkgs"
         ],
-        "utils": "utils_2"
+        "utils": "utils_3"
       },
       "locked": {
         "lastModified": 1656122108,
@@ -527,6 +568,22 @@
       }
     },
     "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1658644204,
+        "narHash": "sha256-MWyfCH9K3eVTXJUxBi67OQSAh9jJAnvWklM6qm4j8w8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2f0c3be57c348f4cfd8820f2d189e29a685d9c41",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-unstable_2": {
       "locked": {
         "lastModified": 1658557357,
         "narHash": "sha256-0gqNef6skYQKJSS2vLojxrXOrc72zoX5VTDKUqEo6Gk=",
@@ -718,13 +775,14 @@
         "darwin": "darwin",
         "emacs": "emacs",
         "fenix": "fenix",
+        "gamescope": "gamescope",
         "home-manager": "home-manager",
         "java": "java",
         "mozilla": "mozilla",
         "nix-doom-emacs": "nix-doom-emacs",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-unstable": "nixpkgs-unstable_2",
         "polymc": "polymc",
         "quilt-server": "quilt-server",
         "sops-nix": "sops-nix",
@@ -819,6 +877,21 @@
     },
     "utils": {
       "locked": {
+        "lastModified": 1656928814,
+        "narHash": "sha256-RIFfgBuKz6Hp89yRr7+NR5tzIAbn52h8vT6vXkYjZoM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "7e2a3b3dfd9af950a856d66b0a7d01e3c18aa249",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "utils_2": {
+      "locked": {
         "lastModified": 1653893745,
         "narHash": "sha256-0jntwV3Z8//YwuOjzhV2sgJJPt+HY6KhU7VZUL0fKZQ=",
         "owner": "numtide",
@@ -832,7 +905,7 @@
         "type": "github"
       }
     },
-    "utils_2": {
+    "utils_3": {
       "locked": {
         "lastModified": 1653893745,
         "narHash": "sha256-0jntwV3Z8//YwuOjzhV2sgJJPt+HY6KhU7VZUL0fKZQ=",

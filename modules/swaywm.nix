@@ -28,15 +28,8 @@ with lib;
     hardware.opengl = {
       # Enable vulkan
       driSupport = true;
-      # Force vulkan drivers
-      extraPackages = [
-        pkgs.amdvlk
-      ];
       # Same as above, but enable 32 bit legacy support (for games)
       driSupport32Bit = true;
-      extraPackages32 = [
-        pkgs.driversi686Linux.amdvlk
-      ];
     };
     # Basic packages that are effectively required for a graphical system
     environment.systemPackages = with pkgs; [

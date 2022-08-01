@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   # Sops setup for this machine
@@ -78,5 +78,17 @@
       };
     };
     kernelParams = [ "crypt-pv.luks.options=tpm2-device=auto" ];
+  };
+
+  # Install gamescope
+  environment.systemPackages = [
+    inputs.gamescope.defaultPackage."x86_64-linux"
+  ];
+  nixpkgs.config.packageOverrides = pkgs: {
+    steam = pkgs.steam.override {
+      extraPkgs = pkgs: [
+        inputs.gamescope.defaultPackage."x86_64-linux"
+      ];
+    };
   };
 }

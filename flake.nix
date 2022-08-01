@@ -53,6 +53,10 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    gamescope = {
+      url = "github:nathans-flakes/gamescope";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -71,6 +75,7 @@
     , quilt-server
     , nixos-generators
     , wsl
+    , gamescope
     }@inputs:
     let
       makeNixosSystem = { system, hostName, extraModules ? [ ], ourNixpkgs ? nixpkgs }: ourNixpkgs.lib.nixosSystem {
