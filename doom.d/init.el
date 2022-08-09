@@ -73,6 +73,7 @@
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
+       (tty +osc)
 
        :lang
        data              ; config/data formats
