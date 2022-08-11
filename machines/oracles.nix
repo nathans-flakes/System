@@ -51,6 +51,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILRs6zVljIlQEZ8F+aEBqqbpeFJwCw3JdveZ8TQWfkev cardno:FF7F00"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOQmfnO7T6LVPKHrc5M0jL8FXDCR3twMwdR4fbLqlY/k 108620588+echo-delta@users.noreply.github.com"
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDgU6Tqx/+wAjL+nhvOp1QDgJVGevU6owErgVJ+rh6ZbxowSU5wxXEsp92vob4c0r996dTMzMDx7ShTys+XDByDX/N/EmbdR6EIbkv0mr7R/UBnZYp9dTlLQTlMrfu65QFZxl0/Mo4B8wMd81rChaZjavCxIqX4EQGykCmd8D57Gp0PvbkKVzxn6+XJgXb8Zj2x0RWXao+7IuZ2tkKN/8tzmiSgVaYlu+HuxJ8em6PuALm9DDBtImhKJSc99OhGUsEIw/e2TKPcDMrPQd72uN8KvBp83vp3nLXeSWLMKkyZDvTPMh/2S7WE+pWP5lrmPpwfEsCU/n7t2THLmz1Nc2jqJX1s2eeKBWI2KEszpQUzwjdToyINo7HTP3S+TbpbEB8LHdZ1/XFI/WM9mO/vOEfDO7onJz301NKu+337sTpv6WklRoBijLyWVZGvNI2c4bffoTQH10ZA2LbwatwCCwJg3YKbz5VHgcIkzkqOUC2md/BquoCFenOlLf0g6A3dV1k= victorkoenders@Victors-MacBook-Pro.local"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOeQJTq6EOGghRut9FWcFxzkYeJXXnOKnls3qfTnFdyl"
     ];
     shell = pkgs.fish;
   };
@@ -59,6 +60,7 @@
   environment.systemPackages = with pkgs; [
     java.packages.${system}.semeru-latest
     borgbackup
+    emacs28NativeComp
   ];
 
   # Setup sops
