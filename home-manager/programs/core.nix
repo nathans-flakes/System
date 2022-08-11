@@ -46,6 +46,8 @@ with lib;
         gping
         # Pandoc for documentation
         pandoc
+        # Tmate for pair programming
+        tmate
       ];
     })
     (mkIf config.nathan.programs.util.git.enable {
@@ -151,6 +153,8 @@ with lib;
         extraConfig = ''
           Ciphers aes128-gcm@openssh.com,aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
         '';
+        # Enable compression
+        compression = true;
         # enable session reuse
         controlMaster = "auto";
         controlPersist = "10m";
