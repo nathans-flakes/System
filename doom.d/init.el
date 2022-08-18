@@ -15,19 +15,17 @@
 ;;      directory (for easy access to its source code).
 
 (doom! :completion
-       company           ; the ultimate code completion backend
+       (company +childframe)           ; the ultimate code completion backend
        (ivy +fuzzy +precient +childframe +icons)
 
        :ui
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
-       (emoji +unicode +github)  ; 🙂
+       (emoji +unicode)  ; 🙂
        hl-todo           ; highlight todo-words
        indent-guides     ; highlighted indent columns
-       ;;(ligatures +fira)         ; ligatures and symbols to make your code pretty again
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink cursor line after big motions
-       ;; ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        tabs              ; a tab bar for Emacs
        (treemacs +lsp)          ; a project drawer, like neotree but cooler
@@ -40,7 +38,7 @@
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
        (format +onsave)  ; automated prettiness
-       ;; multiple-cursors  ; editing in many places at once
+       multiple-cursors  ; editing in many places at once
        rotate-text       ; cycle region at point between text candidates
        snippets          ; my elves. They type so I don't have to
        word-wrap         ; soft wrapping with language-aware indent
@@ -91,18 +89,12 @@
        (kotlin +lsp)
        (java +lsp +meghanada)
        (javascript +lsp)
+
        :email
        (mu4e +org)
-       ;;notmuch
-       ;;(wanderlust +gmail)
 
        :app
-       ;;calendar
-       ;; emms
-       ;;everywhere        ; *leave* Emacs!? You must be joking
-       ;;irc               ; how neckbeards socialize
        (rss +org)        ; emacs as an RSS reader
-       ;;twitter           ; twitter client https://twitter.com/vnought
 
        :config
        literate

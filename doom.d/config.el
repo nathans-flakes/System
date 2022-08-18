@@ -113,6 +113,9 @@
   ;; TODO: Make this conditional so we can make the correct choice on macos
   (setq alert-default-style 'libnotify))
 
+(after! dired
+  (setq dired-omit-files "\\`[.]?#\\|\\`[.]?\\'\\|^\\.DS_Store\\'\\|^\\.project\\(?:ile\\)?\\'\\|^\\.\\(?:svn\\|git\\)\\'\\|^\\.ccls-cache\\'\\|\\(?:\\.js\\)?\\.meta\\'\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"))
+
 (setq-default fill-column 100)
 
 (after! avy
@@ -147,6 +150,9 @@
 
 (use-package! deadgrep
   :bind ("C-c s r" . deadgrep))
+
+(after! flyspell
+  (add-hook 'prog-mode-hook #'flyspell-prog-mode))
 
 (setq org-hide-emphasis-markers t
       org-pretty-entities t)

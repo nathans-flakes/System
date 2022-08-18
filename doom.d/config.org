@@ -5,7 +5,6 @@
 My doom emacs configuration
 
 * Basic Doom stuff
-
 The provided default ~config.el~
 
 #+begin_src emacs-lisp
@@ -150,6 +149,12 @@ Configure notifications that originate from within emacs
   ;; TODO: Make this conditional so we can make the correct choice on macos
   (setq alert-default-style 'libnotify))
 #+end_src
+** Dired
+Modify the ~dired-omit-files~ regex to exclude the current working directory (~.~), but not the parent directory(~..~).
+#+begin_src emacs-lisp
+(after! dired
+  (setq dired-omit-files "\\`[.]?#\\|\\`[.]?\\'\\|^\\.DS_Store\\'\\|^\\.project\\(?:ile\\)?\\'\\|^\\.\\(?:svn\\|git\\)\\'\\|^\\.ccls-cache\\'\\|\\(?:\\.js\\)?\\.meta\\'\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"))
+#+end_src
 * Basic Editing
 ** Fill Column
 Set the default fill column to 100
@@ -217,7 +222,12 @@ Ripgrep, but from within emacs
 (use-package! deadgrep
   :bind ("C-c s r" . deadgrep))
 #+end_src
-
+** Spell Checking
+Hook ~flyspell-prog-mode~ into ~prog-mode~
+#+begin_src emacs-lisp
+(after! flyspell
+  (add-hook 'prog-mode-hook #'flyspell-prog-mode))
+#+end_src
 * Org Mode
 Improvements to the best mode in emacs
 
