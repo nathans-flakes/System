@@ -21,3 +21,8 @@ creation_rules:
       - age:
           - *nathan
           - *levitation
+  - path_regex: secrets/oracles
+    key_groups:
+      - age:
+          - *nathan
+          - *oracles

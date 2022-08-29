@@ -17,6 +17,8 @@ in
     ./services/ssh.nix
     ./services/tailscale.nix
     ./services/borg.nix
+    ./services/nginx.nix
+    ./services/matrix.nix
     ./linux/base.nix
   ];
 
@@ -63,6 +65,22 @@ in
             default = "hourly";
           };
         };
+        # Nginx
+        nginx = {
+          enable = mkEnableOption "nginx";
+          acme = mkEnableOption "ACME Integration";
+        };
+        # Matrix
+        matrix = {
+          enable = mkEnableOption "matrix";
+          baseDomain = mkOption {
+            description = "Base domain to use for the matrix services";
+            example = "mccarty.io";
+            type = lib.types.str;
+          };
+          element = mkDefaultOption "element" config.nathan.services.matrix.enable;
+          enableRegistration = mkEnableOption "synapse registration";
+        };
       };
       # Control enabling/configuratin of services
       programs = {
@@ -103,6 +121,13 @@ in
           default = "nathan";
           example = "nathan";
           description = "Username to use for common configuration";
+          type = lib.types.str;
+        };
+        # Name of the user to install
+        email = mkOption {
+          default = "nathan@mccarty.io";
+          example = "nathan@mccarty.io";
+          description = "Email to use for common configuration";
           type = lib.types.str;
         };
         # Is this system a desktop?

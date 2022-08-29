@@ -127,6 +127,15 @@
           ];
         };
 
+        oracles = makeNixosSystem {
+          system = "x86_64-linux";
+          hostName = "oracles";
+          extraModules = [
+            ./hardware/oracles.nix
+            ./machines/oracles/configuration.nix
+          ];
+        };
+
         x86vm = makeNixosSystem {
           system = "x86_64-linux";
           hostName = "x86vm";
