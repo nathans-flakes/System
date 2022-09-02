@@ -55,7 +55,7 @@
 
        :checkers
        (syntax +childframe)              ; tasing you for every semicolon you forget
-       (spell +flyspell +hunspell +everywhere) ; tasing you for misspelling mispelling
+       (spell +aspell +everywhere) ; tasing you for misspelling mispelling
 
        :tools
        (debugger +lsp)          ; stepping through code, to help you add bugs

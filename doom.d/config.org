@@ -223,10 +223,15 @@ Ripgrep, but from within emacs
   :bind ("C-c s r" . deadgrep))
 #+end_src
 ** Spell Checking
-Hook ~flyspell-prog-mode~ into ~prog-mode~
+Add in all of our dictionaries
 #+begin_src emacs-lisp
-(after! flyspell
-  (add-hook 'prog-mode-hook #'flyspell-prog-mode))
+(after! spell-fu
+  (add-hook 'spell-fu-mode
+            (lambda ()
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en-science"))
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en-computers"))))
+  (bind-key "C-." #'+spell/correct))
 #+end_src
 * Org Mode
 Improvements to the best mode in emacs
@@ -499,7 +504,9 @@ Most of these are defaults, but I like having them explicit for my sanity
         lsp-rust-analyzer-experimental-proc-attr-macros t
         lsp-rust-analyzer-proc-macro-enable t
         lsp-rust-analyzer-use-rustc-wrapper-for-build-scripts t
-        lsp-rust-analyzer-import-enforce-granularity t))
+        lsp-rust-analyzer-import-enforce-granularity t
+        lsp-rust-analyzer-diagnostics-enable-experimental t
+        lsp-rust-analyzer-display-chaining-hints t))
 #+end_src
 * Composition
 Modes for handling plain text and prose

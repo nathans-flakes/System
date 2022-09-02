@@ -17,6 +17,11 @@
       libnotify
       # For flash cards
       anki
+      # For spelling
+      aspell
+      aspellDicts.en
+      aspellDicts.en-science
+      aspellDicts.en-computers
       # Desktop file for org-protocol
       (makeDesktopItem {
         name = "org-protocol";

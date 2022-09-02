@@ -151,8 +151,13 @@
 (use-package! deadgrep
   :bind ("C-c s r" . deadgrep))
 
-(after! flyspell
-  (add-hook 'prog-mode-hook #'flyspell-prog-mode))
+(after! spell-fu
+  (add-hook 'spell-fu-mode
+            (lambda ()
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en-science"))
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en-computers"))))
+  (bind-key "C-." #'+spell/correct))
 
 (setq org-hide-emphasis-markers t
       org-pretty-entities t)
@@ -319,7 +324,9 @@ work if it thinks it needs to."
         lsp-rust-analyzer-experimental-proc-attr-macros t
         lsp-rust-analyzer-proc-macro-enable t
         lsp-rust-analyzer-use-rustc-wrapper-for-build-scripts t
-        lsp-rust-analyzer-import-enforce-granularity t))
+        lsp-rust-analyzer-import-enforce-granularity t
+        lsp-rust-analyzer-diagnostics-enable-experimental t
+        lsp-rust-analyzer-display-chaining-hints t))
 
 (use-package! markdown-mode
   :mode ("README\\.md" . gfm-mode)
