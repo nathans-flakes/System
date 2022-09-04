@@ -169,6 +169,9 @@
         tablet = nix-on-droid.lib.nixOnDroidConfiguration {
           config = ./machines/tablet/configuration.nix;
           system = "aarch64-linux";
+          extraModules = [
+            ./modules/nix-on-droid/default.nix
+          ];
         };
       };
       packages = {
