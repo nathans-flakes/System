@@ -23,6 +23,8 @@ with lib;
           mosh
           # PV for viewing pipes
           pv
+          # Openssh
+          openssh
         ];
       })
     (mkIf nathan.programs.utils.devel {
