@@ -21,6 +21,6 @@ in
     '';
 
     # Set login shell
-    user.shell = "#{pkgs.fish}/bin/fish";
+    user.shell = "${pkgs.fish}/bin/fish";
   };
 }
