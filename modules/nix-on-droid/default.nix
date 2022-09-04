@@ -25,5 +25,7 @@ in
 
     # Set login shell
     user.shell = "${pkgs.fish}/bin/fish";
+
+    nathan.config.user = "nix-on-droid";
   };
 }

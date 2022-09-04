@@ -112,23 +112,6 @@ in
           description = "Whether to install the 'nathan' user";
           type = lib.types.bool;
         };
-        # Name of the user to install
-        user = mkOption {
-          default = "nathan";
-          example = "nathan";
-          description = "Username to use for common configuration";
-          type = lib.types.str;
-        };
-        # Name of the user to install
-        email = mkOption {
-          default = "nathan@mccarty.io";
-          example = "nathan@mccarty.io";
-          description = "Email to use for common configuration";
-          type = lib.types.str;
-        };
-        # Is this system a desktop?
-        # Off by default
-        isDesktop = mkEnableOption "Desktop specific settings";
         # Should we harden this system?
         # On by default
         harden = mkEnableOptionT "Apply system hardening";
