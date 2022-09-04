@@ -23,8 +23,8 @@ with lib;{
         serviceConfig = {
           Type = "forking";
           ExecStart =
-            "${../scripts/windows/mount.sh} ${mount.device} ${mount.mountPoint} ${mount.keyFile}";
-          ExecStop = "${../scripts/windows/unmount.sh} ${mount.device} ${mount.mountPoint}";
+            "${../../scripts/windows/mount.sh} ${mount.device} ${mount.mountPoint} ${mount.keyFile}";
+          ExecStop = "${../../scripts/windows/unmount.sh} ${mount.device} ${mount.mountPoint}";
         };
       };
   };

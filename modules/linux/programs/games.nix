@@ -10,8 +10,8 @@ with lib;
         # https://github.com/Admicos/minecraft-wayland
         glfw-patched = pkgs.glfw-wayland.overrideAttrs (attrs: {
           patches = attrs.patches ++ [
-            ../../patches/minecraft/0003-Don-t-crash-on-calls-to-focus-or-icon.patch
-            ../../patches/minecraft/0004-wayland-fix-broken-opengl-screenshots-on-mutter.patch
+            ../../../patches/minecraft/0003-Don-t-crash-on-calls-to-focus-or-icon.patch
+            ../../../patches/minecraft/0004-wayland-fix-broken-opengl-screenshots-on-mutter.patch
           ];
         });
         stable-packages = with pkgs; [

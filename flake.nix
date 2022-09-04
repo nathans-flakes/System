@@ -86,7 +86,7 @@
         modules = [
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
-          ./modules/default.nix
+          ./modules/linux/default.nix
           ({ pkgs, lib, config, ... }: {
             # Configure hostname
             networking = {
