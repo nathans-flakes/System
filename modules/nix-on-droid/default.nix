@@ -5,6 +5,7 @@ in
 {
   imports = [
     ../options.nix
+    ./programs/util.nix
   ];
 
   options = with lib; with nLib; { };
