@@ -7,6 +7,15 @@ in
 
 with lib; with nLib; {
   config = mkMerge [
+    # Core development utilites
+    (mkIf devel.core {
+      home.packages = with pkgs;
+        # Linux specific packages
+        [
+          clang
+          unstable.mold
+        ];
+    })
     # JVM Development
     (mkIf devel.jvm {
       home.packages = with unstable; [

@@ -10,26 +10,19 @@ with lib; with nLib; {
     # Core development utilites
     (mkIf devel.core {
       home.packages = with pkgs;
-        appendIf
-          pkgs.stdenv.isLinux
-          # General packages
-          [
-            # Git addons
-            git-secret
-            delta
-            # General development requirements
-            cmake
-            libtool
-            gnumake
-            nixpkgs-fmt
-            # sops for secrets management
-            sops
-          ]
-          # Linux specific packages
-          [
-            clang
-            unstable.mold
-          ];
+        # General packages
+        [
+          # Git addons
+          git-secret
+          delta
+          # General development requirements
+          cmake
+          libtool
+          gnumake
+          nixpkgs-fmt
+          # sops for secrets management
+          sops
+        ];
 
       programs = {
         direnv = {
