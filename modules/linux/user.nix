@@ -36,6 +36,11 @@ with lib; {
     };
     # If we install the user, enable sudo
     security.sudo.enable = mkDefault nc.installUser;
+    # If we isntall the user, make them trusted
+    nix.settings.trusted-users =
+      if nc.installUser then [
+        "nathan"
+      ] else [ ];
     # If we setup the user, install the shell as well
     environment.systemPackages =
       if nc.installUser then [
