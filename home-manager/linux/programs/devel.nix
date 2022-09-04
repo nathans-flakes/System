@@ -16,6 +16,12 @@ with lib; with nLib; {
           unstable.mold
         ];
     })
+    # Rust development
+    (mkIf devel.rust {
+      home.packages = with pkgs; [
+        unstable.cargo-tarpaulin # Code coverage
+      ];
+    })
     # JVM Development
     (mkIf devel.jvm {
       home.packages = with unstable; [

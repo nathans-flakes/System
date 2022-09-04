@@ -53,7 +53,6 @@ with lib; with nLib; {
         cargo-bloat # Find out what's taking up space in the executable
         cargo-udeps # Find unused dependencies
         cargo-expand # Dump expanded macros
-        unstable.cargo-tarpaulin # Code coverage
         cargo-play # Quickly execute code outside of a crate
         # For building stuff that uses protocol buffers
         protobuf
