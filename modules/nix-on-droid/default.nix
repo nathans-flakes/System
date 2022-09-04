@@ -10,6 +10,9 @@ in
   options = with lib; with nLib; { };
 
   config = {
+    environment.packages = with pkgs; [
+      nettools
+    ];
 
     # Set system state version
     system.stateVersion = "22.05";
