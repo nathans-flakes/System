@@ -171,6 +171,20 @@
           system = "aarch64-linux";
           extraModules = [
             ./modules/nix-on-droid/default.nix
+            ({ pkgs, lib, config, ... }: {
+              # Home manager configuration
+              home-manager = {
+                useUserPackages = true;
+                useGlobalPkgs = true;
+                extraSpecialArgs = {
+                  inputs = inputs;
+                  nixosConfig = config;
+                };
+                sharedModules = [
+                  ./home-manager/linux/default.nix
+                ];
+              };
+            })
           ];
         };
       };
