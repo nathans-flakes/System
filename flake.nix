@@ -181,7 +181,7 @@
                   nixosConfig = config;
                 };
                 sharedModules = [
-                  ./home-manager/linux/default.nix
+                  ./home-manager/nix-on-droid/default.nix
                 ];
               };
             })
