@@ -120,14 +120,14 @@
 
 (after! avy
   (define-key!
-    "C-:" 'avy-goto-char
-    "C-'" 'avy-goto-char-2
+    "M-g c" 'avy-goto-char
+    "M-g x" 'avy-goto-char-2
     "M-g f" 'avy-goto-line
     "M-g w" 'avy-goto-word-1
     "M-g e" 'avy-goto-word-0)
   (cheatsheet-add-group 'Avy
-                        '(:key "C-:" :description "Goto Char")
-                        '(:key "C-'" :description "Goto Char (2)")
+                        '(:key "M-g c" :description "Goto Char")
+                        '(:key "M-g x" :description "Goto Char (2)")
                         '(:key "M-g f" :description "Goto line")
                         '(:key "M-g w" :description "Goto word")
                         '(:key "M-g e" :description "Goto word (0)")))
