@@ -15,7 +15,7 @@
             '';
           }
         );
-        discordWayland = pkgs.callPackage ../../packages/discord/default.nix rec {
+        discordWayland = pkgs.callPackage ../../../packages/discord/default.nix rec {
           pname = "discord-electron";
           binaryName = "Discord";
           desktopName = "Discord (Wayland)";

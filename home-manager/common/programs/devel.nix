@@ -2,7 +2,7 @@
 let
   devel = config.nathan.programs.devel;
   unstable = inputs.nixpkgs-unstable.legacyPackages."${pkgs.system}";
-  inherit (import ../../modules/lib.nix { inherit lib; inherit pkgs; }) nLib;
+  inherit (import ../../../modules/lib.nix { inherit lib; inherit pkgs; }) nLib;
 in
 
 with lib; with nLib; {

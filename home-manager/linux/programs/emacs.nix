@@ -35,7 +35,7 @@
     # Setup doom emacs
     programs.doom-emacs = {
       enable = true;
-      doomPrivateDir = ../../doom.d;
+      doomPrivateDir = ../../../doom.d;
       emacsPackage = config.nathan.programs.emacs.package;
       emacsPackagesOverlay = self: super: {
         org-protocol-capture-html = self.trivialBuild {

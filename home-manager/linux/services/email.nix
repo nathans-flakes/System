@@ -46,7 +46,7 @@ with lib; {
             port = 1143;
             tls = {
               useStartTls = true;
-              certificatesFile = ../../certificates/protonmail-${nixosConfig.networking.hostName}.pem;
+              certificatesFile = ../../../certificates/protonmail-${nixosConfig.networking.hostName}.pem;
             };
           };
           smtp = {
@@ -54,7 +54,7 @@ with lib; {
             port = 1025;
             tls = {
               useStartTls = true;
-              certificatesFile = ../../certificates/protonmail-${nixosConfig.networking.hostName}.pem;
+              certificatesFile = ../../../certificates/protonmail-${nixosConfig.networking.hostName}.pem;
             };
           };
           mbsync = {
@@ -82,7 +82,7 @@ with lib; {
       postExec =
         if config.nathan.programs.emacs.service
         then
-          "${../../scripts/update-mu4e.sh}"
+          "${../../../scripts/update-mu4e.sh}"
         else
           "${pkgs.mu}/bin/mu index";
     };

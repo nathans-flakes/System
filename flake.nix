@@ -116,7 +116,7 @@
                 nixosConfig = config;
               };
               sharedModules = [
-                ./home-manager/default.nix
+                ./home-manager/linux/default.nix
               ];
             };
           })
