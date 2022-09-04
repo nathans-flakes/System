@@ -30,7 +30,6 @@ with lib; with nLib;
         devel = {
           core = mkDefaultOption "Core Development Utilites" config.nathan.config.isDesktop;
           rust = mkDefaultOption "Rust Development Utilites" config.nathan.config.isDesktop;
-          jvm = mkDefaultOption "JVM Development Utilites" config.nathan.config.isDesktop;
           python = mkDefaultOption "Python Development Utilites" config.nathan.config.isDesktop;
           js = mkDefaultOption "JavaScript/TypeScript Development Utilites" config.nathan.config.isDesktop;
           raku = mkDefaultOption "Raku Development Utilites" config.nathan.config.isDesktop;

@@ -68,17 +68,6 @@ with lib; with nLib; {
         sccache
       ];
     })
-    # JVM Development
-    (mkIf devel.jvm {
-      home.packages = with unstable; [
-        inputs.java.packages."${pkgs.system}".semeru-stable
-        gradle
-        kotlin
-        kotlin-native
-        kotlin-language-server
-        ktlint
-      ];
-    })
     # Python Development
     (mkIf devel.python {
       home.packages = with pkgs; [
