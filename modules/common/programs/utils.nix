@@ -4,9 +4,6 @@ let
 in
 with lib;
 {
-  imports = [
-    ../../common/programs/utils.nix
-  ];
   config = mkMerge [
     (mkIf nathan.programs.utils.core
       {

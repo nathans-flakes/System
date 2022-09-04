@@ -57,6 +57,13 @@
       url = "github:nathans-flakes/gamescope";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-on-droid = {
+      url = "github:t184256/nix-on-droid";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
   };
 
   outputs =
@@ -76,6 +83,7 @@
     , nixos-generators
     , wsl
     , gamescope
+    , nix-on-droid
     }@inputs:
     let
       makeNixosSystem = { system, hostName, extraModules ? [ ], ourNixpkgs ? nixpkgs }: ourNixpkgs.lib.nixosSystem {
@@ -154,6 +162,13 @@
             wsl.nixosModules.wsl
             ./machines/wsl/configuration.nix
           ];
+        };
+      };
+      # Android systems
+      nixOnDroidConfigurations = {
+        tablet = nix-on-droid.lib.nixOnDroidConfiguration {
+          config = ./machines/tablet/configuration.nix;
+          system = "aarch64-linux";
         };
       };
       packages = {
