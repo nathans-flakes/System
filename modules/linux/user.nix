@@ -29,7 +29,7 @@ with lib; {
             # Phone key
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILY7KmG/eFm3hgTx7GBB5jNrV/yryg5C6xcgCxFQhn+o JuiceSSH"
             # Tablet key
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKQYdgfDWhvbJnLvgTN/AVT733rz8G9+ck800py9r8r u0_a33@localhost"
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKltqneJjfdLjOvnWQC2iP7hP7aTYkURPiR8LFjB7z87 nix-on-droid@localhost"
           ];
         })
       ];
