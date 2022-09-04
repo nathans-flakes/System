@@ -7,6 +7,7 @@ with lib; with nLib; {
     ../options.nix
     ../common/programs/core.nix
     ../common/programs/devel.nix
+    ../common/programs/emacs.nix
   ];
 
   options = { };

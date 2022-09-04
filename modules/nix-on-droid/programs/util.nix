@@ -15,6 +15,7 @@ with lib;
           unzip
           any-nix-shell
           htop
+          which
           # For being able to update the flake
           gitFull
           # For nslookup
