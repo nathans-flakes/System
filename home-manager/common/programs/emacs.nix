@@ -73,5 +73,9 @@
       EDITOR = "emacsclient";
       VISUAL = "emacsclient";
     };
+    systemd.user.sessionVariables = {
+      EDITOR = "emacsclient";
+      VISUAL = "emacsclient";
+    };
   };
 }

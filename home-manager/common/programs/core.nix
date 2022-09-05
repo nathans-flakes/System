@@ -23,6 +23,15 @@ with lib;
         # rsync for _The Cloud_ :tm:
         rclone
       ];
+      # Configure tmux
+      programs.tmux = {
+        enable = true;
+        aggressiveResize = true;
+        extraConfig = ''
+          set -g default-terminal "tmux-256color"
+          set -ag terminal-overrides ",xterm-256color:RGB"
+        '';
+      };
     })
     (mkIf config.nathan.programs.util.productivity {
       home.packages = with pkgs; [
