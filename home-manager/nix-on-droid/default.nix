@@ -15,11 +15,6 @@ with lib; with nLib; {
   config = {
     home.stateVersion = "22.05";
     programs.home-manager.enable = true;
-    nathan.programs.emacs.package = inputs.emacs.packages."${pkgs.system}".emacsNativeComp.override {
-      withNS = false;
-      withX = false;
-      withGTK2 = false;
-      withGTK3 = false;
-    };
+    nathan.programs.emacs.package = pkgs.emacs28NativeComp;
   };
 }
