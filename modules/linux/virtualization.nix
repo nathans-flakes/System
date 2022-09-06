@@ -23,6 +23,8 @@ with lib;
         # Automatically prune to keep things lean
         autoPrune.enable = true;
       };
+      # Make sure our containers can reach the network
+      boot.kernel.sysctl."net.ipv4.ip_forward" = true;
     })
     (mkIf nc.virtualization.lxc {
       virtualisation.lxd = {

@@ -17,12 +17,17 @@
       owner = config.users.users.nathan.name;
       group = config.users.users.nathan.group;
     };
+    "nix-asuran" = {
+      format = "yaml";
+      sopsFile = ../../secrets/oracles/gitlab.yaml;
+    };
   };
   # Setup system configuration
   nathan = {
     programs = {
       utils = {
         devel = true;
+        binfmt = true;
       };
     };
     services = {
@@ -55,6 +60,9 @@
       setupGrub = true;
       nix.autoUpdate = true;
       harden = false;
+      virtualization = {
+        docker = true;
+      };
     };
   };
   # Configure networking
@@ -169,18 +177,58 @@
         }
       ];
     };
+
+  # Setup vhost for pack website
   services.nginx.virtualHosts."pack.forward-progress.net" = {
     enableACME = true;
     forceSSL = true;
     locations."/".root = "/var/www/pack.forward-progress.net";
     root = "/var/www/pack.forward-progress.net";
   };
-  # Backup postgres
+
+  # Backup postgres, as used by matrix
   services.postgresqlBackup = {
     #enable = true;
     compression = "none";
     backupAll = true;
     startAt = "OnCalendar=00/2:00";
   };
+
+  # Setup the gitlab runners
+  services.gitlab-runner =
+    let
+      nix-shared = with lib; {
+        dockerImage = "nixpkgs/nix-flakes";
+        dockerVolumes = [
+          "/var/sharedstore:/sharedstore"
+        ];
+        dockerDisableCache = true;
+        dockerPrivileged = true;
+      };
+    in
+    {
+      enable = true;
+      concurrent = 4;
+      checkInterval = 1;
+      services = {
+        # default-asuran = {
+        #   registrationConfigFile = "/var/lib/secret/gitlab-runner/asuran-default";
+        #   dockerImage = "debian:stable";
+        #   dockerVolumes = [
+        #     "/var/run/docker.sock:/var/run/docker.sock"
+        #   ];
+        #   dockerPrivileged = true;
+        #   tagList = [ "linux-own" ];
+        # };
+
+        nix-asuran = nix-shared // {
+          registrationConfigFile = config.sops.secrets.nix-asuran.path;
+          tagList = [ "nix" ];
+          requestConcurrency = 8;
+          limit = 4;
+          runUntagged = true;
+        };
+      };
+    };
 
 }
