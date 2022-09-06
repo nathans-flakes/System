@@ -593,6 +593,10 @@ Setup our bookmarks, resetting the list of bookmarks first so we can go complete
                  :key ?a
                  :query "NOT flag:trashed"))
   (add-to-list 'mu4e-bookmarks
+               '(:name "Unread Notifications - nathan@mccarty.io"
+                 :key ?n
+                 :query "maildir:\"/nathan@mccarty.io/Folders/Notifications*\" AND NOT flag:trashed AND flag:unread"))
+  (add-to-list 'mu4e-bookmarks
                '(:name "Inbox - nathan@mccarty.io"
                  :key ?m
                  :query "maildir:\"/nathan@mccarty.io/Inbox\" AND NOT flag:trashed"))
@@ -600,6 +604,14 @@ Setup our bookmarks, resetting the list of bookmarks first so we can go complete
                '(:name "Unread"
                  :key ?u
                  :query "flag:unread AND NOT flag:trashed")))
+#+end_src
+Setup the maildirs we want to see, we'll show our notifications
+#+begin_src emacs-lisp
+(after! mu4e
+  (setq mu4e-maildir-shortcuts
+        '((:maildir "/nathan@mccarty.io/Folders/Notifications/Github" :key ?h)
+          (:maildir "/nathan@mccarty.io/Folders/Notifications/Gitlab" :key ?l)
+          (:maildir "/nathan@mccarty.io/Folders/Notifications/SourceHut" :key ?s))))
 #+end_src
 Tell it to enable the modeline display
 #+begin_src emacs-lisp
@@ -610,7 +622,7 @@ Tell it not to update the mail itself, we have a systemd unit for that
 #+begin_src emacs-lisp
 (setq +mu4e-backend nil)
 (after! mu4e
-        (setq mu4e-get-mail-command "true"
+        (setq mu4e-get-mail-command "systemctl start --user mbsync.service"
               mu4e-update-interval nil))
 #+end_src
 We need to tell mu4e to rename files when they are moved, or else mbsync will break, see [[https://github.com/djcb/mu/issues/613#issuecomment-166714305][issue]] and [[http://tiborsimko.org/mbsync-duplicate-uid.html][blog post]]

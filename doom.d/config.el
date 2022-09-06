@@ -376,6 +376,10 @@ work if it thinks it needs to."
                  :key ?a
                  :query "NOT flag:trashed"))
   (add-to-list 'mu4e-bookmarks
+               '(:name "Unread Notifications - nathan@mccarty.io"
+                 :key ?n
+                 :query "maildir:\"/nathan@mccarty.io/Folders/Notifications*\" AND NOT flag:trashed AND flag:unread"))
+  (add-to-list 'mu4e-bookmarks
                '(:name "Inbox - nathan@mccarty.io"
                  :key ?m
                  :query "maildir:\"/nathan@mccarty.io/Inbox\" AND NOT flag:trashed"))
@@ -385,11 +389,17 @@ work if it thinks it needs to."
                  :query "flag:unread AND NOT flag:trashed")))
 
 (after! mu4e
+  (setq mu4e-maildir-shortcuts
+        '((:maildir "/nathan@mccarty.io/Folders/Notifications/Github" :key ?h)
+          (:maildir "/nathan@mccarty.io/Folders/Notifications/Gitlab" :key ?l)
+          (:maildir "/nathan@mccarty.io/Folders/Notifications/SourceHut" :key ?s))))
+
+(after! mu4e
   (mu4e-alert-enable-mode-line-display))
 
 (setq +mu4e-backend nil)
 (after! mu4e
-        (setq mu4e-get-mail-command "true"
+        (setq mu4e-get-mail-command "systemctl start --user mbsync.service"
               mu4e-update-interval nil))
 
 (after! mu4e
