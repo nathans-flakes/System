@@ -77,6 +77,7 @@ with lib; {
     };
     services.mbsync = {
       enable = true;
+      frequency = "*:0/1";
       # Index manually with mu if we don't have emacs setup, but if we have the emacs service setup,
       # run through emacsclient, as it will have the lock
       postExec =
