@@ -48,6 +48,13 @@
           exec = "${pkgs.chromium}/bin/chromium --enable-features=UseOzonePlatform -ozone-platform=wayland \"--app=https://teams.microsoft.com\"";
           terminal = false;
         };
+        # Cinny
+        cinnyItem = pkgs.makeDesktopItem {
+          name = "cinny";
+          desktopName = "Cinny";
+          exec = "${pkgs.chromium}/bin/chromium --enable-features=UseOzonePlatform -ozone-platform=wayland \"--app=https://app.cinny.in\"";
+          terminal = false;
+        };
       in
       [
         # Discord
@@ -68,6 +75,8 @@
         unstable.zoom-us
         # Teams (also for work)
         unstable.teams
+        # Cinny for pretty matrix
+        cinnyItem
         # chromium
         (enableWayland chromium "chromium")
         # Wayland workaround packages

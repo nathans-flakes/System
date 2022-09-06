@@ -58,7 +58,10 @@
     };
     config = {
       setupGrub = true;
-      nix.autoUpdate = true;
+      nix = {
+        autoUpdate = true;
+        autoGC = true;
+      };
       harden = false;
       virtualization = {
         docker = true;
