@@ -44,7 +44,7 @@ with lib;
           enable = true;
           allowReboot = true;
           # Update from the flake
-          flake = "github:nathans-flakes/System/rewrite";
+          flake = "github:nathans-flakes/System";
           # Attempt to update daily at 2AM
           dates = "2:00";
         };
