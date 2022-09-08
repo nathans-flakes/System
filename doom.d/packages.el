@@ -62,3 +62,5 @@
 (package! grip-mode)
 (package! org-protocol-capture-html)
 (package! org-superstar)
+(package! alert)
+(package! anki-editor)

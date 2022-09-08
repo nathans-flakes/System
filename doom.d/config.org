@@ -5,7 +5,6 @@
 My doom emacs configuration
 
 * Basic Doom stuff
-
 The provided default ~config.el~
 
 #+begin_src emacs-lisp
@@ -33,6 +32,7 @@ The provided default ~config.el~
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 11 :weight 'semi-light)
+      doom-unicode-font (font-spec :family "FiraCode Nerd Font" :size 11 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -122,9 +122,12 @@ This tweak applies to:
 
 Setting ~mixed-pitch-set-height~ is required to get ~mixed-pitch-mode~ to render fonts with the correct size in doom emacs, apparently.
 ** Modeline configuration
-Configure the modeline to truncate with project (so that ~~/Projects/Asuran/replicator/src/lib.rs~ becomes ~replicator/s/lib.rs~)
+Configure the modeline to:
+ + truncate with project (so that ~~/Projects/Asuran/replicator/src/lib.rs~ becomes ~replicator/s/lib.rs~)
+ + Show the mu4e alert
 #+begin_src emacs-lisp
-(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+(setq doom-modeline-buffer-file-name-style 'truncate-with-project
+      doom-modeline-mu4e t)
 #+end_src
 
 Display the current time in the modeline
@@ -137,6 +140,20 @@ Configure treemacs, doing the following:
 #+begin_src emacs-lisp
 (after! treemacs
   (setq treemacs-width 25))
+#+end_src
+** Alert
+Configure notifications that originate from within emacs
+#+begin_src emacs-lisp
+(use-package! alert
+  :config
+  ;; TODO: Make this conditional so we can make the correct choice on macos
+  (setq alert-default-style 'libnotify))
+#+end_src
+** Dired
+Modify the ~dired-omit-files~ regex to exclude the current working directory (~.~), but not the parent directory(~..~).
+#+begin_src emacs-lisp
+(after! dired
+  (setq dired-omit-files "\\`[.]?#\\|\\`[.]?\\'\\|^\\.DS_Store\\'\\|^\\.project\\(?:ile\\)?\\'\\|^\\.\\(?:svn\\|git\\)\\'\\|^\\.ccls-cache\\'\\|\\(?:\\.js\\)?\\.meta\\'\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"))
 #+end_src
 * Basic Editing
 ** Fill Column
@@ -152,14 +169,14 @@ Set up our key bindings
 #+begin_src emacs-lisp
 (after! avy
   (define-key!
-    "C-:" 'avy-goto-char
-    "C-'" 'avy-goto-char-2
+    "M-g c" 'avy-goto-char
+    "M-g x" 'avy-goto-char-2
     "M-g f" 'avy-goto-line
     "M-g w" 'avy-goto-word-1
     "M-g e" 'avy-goto-word-0)
   (cheatsheet-add-group 'Avy
-                        '(:key "C-:" :description "Goto Char")
-                        '(:key "C-'" :description "Goto Char (2)")
+                        '(:key "M-g c" :description "Goto Char")
+                        '(:key "M-g x" :description "Goto Char (2)")
                         '(:key "M-g f" :description "Goto line")
                         '(:key "M-g w" :description "Goto word")
                         '(:key "M-g e" :description "Goto word (0)")))
@@ -205,7 +222,17 @@ Ripgrep, but from within emacs
 (use-package! deadgrep
   :bind ("C-c s r" . deadgrep))
 #+end_src
-
+** Spell Checking
+Add in all of our dictionaries
+#+begin_src emacs-lisp
+(after! spell-fu
+  (add-hook 'spell-fu-mode
+            (lambda ()
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en-science"))
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en-computers"))))
+  (bind-key "C-." #'+spell/correct))
+#+end_src
 * Org Mode
 Improvements to the best mode in emacs
 
@@ -366,6 +393,11 @@ The default template for org-protocol-capture-html
      "* %a :website:\n\n%U %?\n\n%:initial")
    org-capture-templates))
 #+end_src
+** anki-editor
+Flash cards from within emacs.
+#+begin_src emacs-lisp
+(use-package! anki-editor)
+#+end_src
 * General Modes
 ** Magit
 Further configuration for magit
@@ -472,7 +504,9 @@ Most of these are defaults, but I like having them explicit for my sanity
         lsp-rust-analyzer-experimental-proc-attr-macros t
         lsp-rust-analyzer-proc-macro-enable t
         lsp-rust-analyzer-use-rustc-wrapper-for-build-scripts t
-        lsp-rust-analyzer-import-enforce-granularity t))
+        lsp-rust-analyzer-import-enforce-granularity t
+        lsp-rust-analyzer-diagnostics-enable-experimental t
+        lsp-rust-analyzer-display-chaining-hints t))
 #+end_src
 * Composition
 Modes for handling plain text and prose
@@ -527,4 +561,72 @@ Use ~elfeed~ for RSS. Doom provides most of the configuration, but we'll make a 
         elfeed-enclosure-default-dir (concat org-directory "elfeed/enclosures/")
         shr-max-width nil)
   (make-directory elfeed-db-directory t))
+#+end_src
+** Email
+Use ~mu4e~ for email. Most of the bootstrap is provided by doom emacs.
+First, tell mu4e to use msmtp
+#+begin_src emacs-lisp
+(after! mu4e
+  (setq sendmail-program (executable-find "msmtp")
+        send-mail-function #'smtpmail-send-it
+        message-sendmail-f-is-evil t
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-send-mail-function #'message-send-mail-with-sendmail))
+#+end_src
+Tell it where our account's stuff is
+#+begin_src emacs-lisp
+(after! mu4e
+  (set-email-account! "mccarty.io"
+                      '((mu4e-sent-folder . "/nathan@mccarty.io/Sent")
+                        (mu4e-drafts-folder . "/nathan@mccarty.io/Drafts")
+                        (mu4e-trash-folder . "/nathan@mccarty.io/Trash")
+                        (mu4e-refile-folder . "/nathan@mccarty.io/Archive")
+                        (smtpmail-smtp-user . "nathan@mccarty.io"))
+                      t))
+#+end_src
+Setup our bookmarks, resetting the list of bookmarks first so we can go completely custom
+#+begin_src emacs-lisp
+(after! mu4e
+  (setq mu4e-bookmarks '())
+  (add-to-list 'mu4e-bookmarks
+               '(:name "All Mail"
+                 :key ?a
+                 :query "NOT flag:trashed"))
+  (add-to-list 'mu4e-bookmarks
+               '(:name "Unread Notifications - nathan@mccarty.io"
+                 :key ?n
+                 :query "maildir:\"/nathan@mccarty.io/Folders/Notifications*\" AND NOT flag:trashed AND flag:unread"))
+  (add-to-list 'mu4e-bookmarks
+               '(:name "Inbox - nathan@mccarty.io"
+                 :key ?m
+                 :query "maildir:\"/nathan@mccarty.io/Inbox\" AND NOT flag:trashed"))
+  (add-to-list 'mu4e-bookmarks
+               '(:name "Unread"
+                 :key ?u
+                 :query "flag:unread AND NOT flag:trashed")))
+#+end_src
+Setup the maildirs we want to see, we'll show our notifications
+#+begin_src emacs-lisp
+(after! mu4e
+  (setq mu4e-maildir-shortcuts
+        '((:maildir "/nathan@mccarty.io/Folders/Notifications/Github" :key ?h)
+          (:maildir "/nathan@mccarty.io/Folders/Notifications/Gitlab" :key ?l)
+          (:maildir "/nathan@mccarty.io/Folders/Notifications/SourceHut" :key ?s))))
+#+end_src
+Tell it to enable the modeline display
+#+begin_src emacs-lisp
+(after! mu4e
+  (mu4e-alert-enable-mode-line-display))
+#+end_src
+Tell it not to update the mail itself, we have a systemd unit for that
+#+begin_src emacs-lisp
+(setq +mu4e-backend nil)
+(after! mu4e
+        (setq mu4e-get-mail-command "systemctl start --user mbsync.service"
+              mu4e-update-interval nil))
+#+end_src
+We need to tell mu4e to rename files when they are moved, or else mbsync will break, see [[https://github.com/djcb/mu/issues/613#issuecomment-166714305][issue]] and [[http://tiborsimko.org/mbsync-duplicate-uid.html][blog post]]
+#+begin_src emacs-lisp
+(after! mu4e
+  (setq mu4e-change-filenames-when-moving t))
 #+end_src

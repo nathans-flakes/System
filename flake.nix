@@ -9,7 +9,7 @@
       inputs.nixpgks.follows = "nixpkgs";
     };
     emacs = {
-      url = "github:nix-community/emacs-overlay/29dcfbc1b29ae7281e95367e0f2358b44224a46e";
+      url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mozilla = {
@@ -21,7 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-22.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
@@ -45,6 +45,25 @@
       url = "github:forward-progress/quilt-server-nix-container";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    gamescope = {
+      url = "github:nathans-flakes/gamescope";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-on-droid = {
+      url = "github:t184256/nix-on-droid";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
   };
 
   outputs =
@@ -61,245 +80,125 @@
     , nix-doom-emacs
     , java
     , quilt-server
-    }@attrs:
+    , nixos-generators
+    , wsl
+    , gamescope
+    , nix-on-droid
+    }@inputs:
     let
-      baseModules = [
-        ./applications/utils-core.nix
-        ## Setup binary caches and other common nix config
-        ({ pkgs, ... }: {
-          # Allow unfree packages
-          nixpkgs.config.allowUnfree = true;
-          # First install cachix, so we can discover new ones
-          environment.systemPackages = [ pkgs.cachix ];
-          # Then configure up the nix community cache
-          nix = {
-            binaryCaches = [
-              "https://nix-community.cachix.org"
-            ];
-            binaryCachePublicKeys = [
-              "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-            ];
-            # Turn on flakes support (from within a flake, lamo)
-            package = pkgs.nixFlakes;
-            extraOptions = ''
-              experimental-features = nix-command flakes
-            '';
-          };
-          # Setup overlays
-          nixpkgs.overlays = [ emacs.overlay polymc.overlay ];
-        })
-      ];
-      sopsModules = [
-        sops-nix.nixosModules.sops
-        ## Setup sops
-        ({ pkgs, config, ... }: {
-          # Add default secrets
-          sops.defaultSopsFile = ./secrets/nathan.yaml;
-          # Use system ssh key as an age key
-          sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-        })
-      ];
-      coreModules = baseModules ++ sopsModules ++ [
-        ./modules/common.nix
-        ./modules/ssh.nix
-        home-manager.nixosModules.home-manager
-        # Configure system state version for linux
-        ({ pkgs, ... }: {
-          # System state version for compat
-          system.stateVersion = "21.11";
-        })
-      ];
-      setHomeManagerVersions = ({ pkgs, config, unstable, ... }: {
-        home-manager.users.nathan.programs = {
-          starship.package = unstable.starship;
-          git.package = unstable.gitFull;
-          fish.package = unstable.fish;
+      makeNixosSystem = { system, hostName, extraModules ? [ ], ourNixpkgs ? nixpkgs }: ourNixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inputs = inputs;
         };
-      });
-      baseHomeModules = [
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.nathan = import ./home-manager/common.nix;
-          };
-        }
-        setHomeManagerVersions
-        ./home.nix
-      ];
-      desktopModules = baseHomeModules ++ coreModules ++ [
-        ./modules/audio.nix
-        ./modules/sway.nix
-        ./modules/fonts.nix
-        ./modules/gpg.nix
-        ./modules/logitech.nix
-        ./modules/qemu.nix
-        ./modules/docker.nix
-        ./modules/printing.nix
-        ./modules/zt.nix
-        ./modules/lxc.nix
-        ./modules/tailscale.nix
-        ./modules/protonmail.nix
-        ./applications/communications.nix
-        ./applications/devel-core.nix
-        ./applications/devel-core-linux.nix
-        ./applications/devel-rust.nix
-        ./applications/devel-raku.nix
-        ./applications/devel-kotlin.nix
-        ./applications/devel-js.nix
-        ./applications/emacs.nix
-        ./applications/image-editing.nix
-        ./applications/media.nix
-        ./applications/syncthing.nix
-        ./desktop.nix
-      ];
-      serverModules = baseHomeModules ++ coreModules ++ [
-        ./home-linux.nix
-        ./modules/zt.nix
-        ./modules/autoupdate.nix
-        ./modules/tailscale.nix
-        ./applications/devel-core.nix
-        ./applications/devel-core-linux.nix
-      ];
-      mozillaOverlay = import "${mozilla}";
-    in
-    {
-      nixosConfigurations = {
-        levitation = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            unstable = import nixpkgs-unstable {
-              config = { allowUnfree = true; };
-              overlays = [ mozillaOverlay ];
-              system = "x86_64-linux";
+        modules = [
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+          ./modules/linux/default.nix
+          ({ pkgs, lib, config, ... }: {
+            # Configure hostname
+            networking = {
+              hostName = hostName;
             };
-            doomEmacs = nix-doom-emacs.hmModule;
-          } // attrs;
-          modules = [
-            ./hardware/levitation.nix
-            ./machines/levitation.nix
-            ./modules/games.nix
-            ./home-linux.nix
-          ] ++ desktopModules;
-        };
-
-        oracles = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            unstable = import nixpkgs-unstable {
-              config = { allowUnfree = true; };
-              overlays = [ ];
-              system = "x86_64-linux";
+            # Setup sops
+            # Add default secrets
+            sops = {
+              age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
             };
-          } // attrs;
-          modules = [
-            ./hardware/oracles.nix
-            ./machines/oracles.nix
-            ./applications/devel-rust.nix
-            ./modules/docker.nix
-            ./system-specific/oracles/matrix.nix
-            ./system-specific/oracles/gitlab-runner.nix
-            ./system-specific/oracles/gitea.nix
-            ./system-specific/oracles/minecraft.nix
-          ] ++ serverModules;
-        };
-
-        perception = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            unstable = import nixpkgs-unstable {
-              config = { allowUnfree = true; };
-              overlays = [ ];
-              system = "x86_64-linux";
+            nixpkgs.config.allowUnfree = true;
+            nixpkgs.config.allowUnfreePredicate = (pkg: true);
+            # Home manager configuration
+            home-manager = {
+              useUserPackages = true;
+              useGlobalPkgs = true;
+              extraSpecialArgs = {
+                inputs = inputs;
+                nixosConfig = config;
+              };
+              sharedModules = [
+                ./home-manager/linux/default.nix
+              ];
             };
-          } // attrs;
-          modules = [
-            ./hardware/perception.nix
-            ./machines/perception.nix
-            ./applications/devel-rust.nix
-            ./modules/docker.nix
-            ./system-specific/perception/plex.nix
-          ] ++ serverModules;
-        };
-
-        shadowchild = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            unstable = import nixpkgs-unstable {
-              config = { allowUnfree = true; };
-              overlays = [ ];
-              system = "x86_64-linux";
-            };
-          } // attrs;
-          modules = [
-            ./hardware/shadowchild.nix
-            ./machines/shadowchild.nix
-            ./modules/docker.nix
-          ] ++ serverModules;
-        };
-
-        matrix = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            unstable = import nixpkgs-unstable {
-              config = { allowUnfree = true; };
-              overlays = [ ];
-              system = "x86_64-linux";
-            };
-          } // attrs;
-          modules = [
-            ./hardware/matrix.nix
-            ./machines/matrix.nix
-            ./modules/docker.nix
-            ./system-specific/matrix/matrix.nix
-            ./system-specific/matrix/gitea.nix
-          ] ++ serverModules;
-        };
-
-        x86vm = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            unstable = import nixpkgs-unstable {
-              config = { allowUnfree = true; };
-              overlays = [ ];
-              system = "x86_64-linux";
-            };
-          } // attrs;
-          modules = [ ./home-linux.nix ] ++ desktopModules;
-        };
+          })
+        ] ++ extraModules;
       };
-      darwinConfigurations = {
-        "Nathans-MacBook-Pro" = darwin.lib.darwinSystem {
-          system = "x86_64-darwin";
-          specialArgs = {
-            unstable = import nixpkgs-unstable {
-              config = { allowUnfree = true; };
-              overlays = [ ];
-              system = "x86_64-darwin";
-            };
-            doomEmacs = nix-doom-emacs.hmModule;
-          } // attrs;
-          modules = baseModules ++ baseHomeModules ++ [
-            ./darwin-modules/base.nix
-            home-manager.darwinModules.home-manager
-            ./modules/fonts.nix
-            ./darwin-modules/gpg.nix
-            ./applications/devel-core.nix
-            ./applications/devel-rust.nix
-            ./applications/emacs.nix
+    in
+    rec {
+      # Real systems
+      nixosConfigurations = {
+        levitation = makeNixosSystem {
+          system = "x86_64-linux";
+          hostName = "levitation";
+          extraModules = [
+            ./hardware/levitation.nix
+            ./machines/levitation/configuration.nix
+          ];
+        };
+
+        oracles = makeNixosSystem {
+          system = "x86_64-linux";
+          hostName = "oracles";
+          extraModules = [
+            ./hardware/oracles.nix
+            ./machines/oracles/configuration.nix
+          ];
+        };
+
+        x86vm = makeNixosSystem {
+          system = "x86_64-linux";
+          hostName = "x86vm";
+          extraModules = [
+            "${nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
+            "${nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix"
+            ./machines/x86vm/configuration.nix
+          ];
+        };
+
+        # WSL sytem
+        wsl = makeNixosSystem {
+          system = "x86_64-linux";
+          hostName = "wsl";
+          extraModules = [
+            wsl.nixosModules.wsl
+            ./machines/wsl/configuration.nix
           ];
         };
       };
-      homeConfigurations.linux =
-        let
-          system = "x86_64-linux";
-        in
-        home-manager.lib.homeManagerConfiguration {
-          configuration = import ./home-manager/linux.nix;
-          inherit system;
-          username = "nathan";
-          homeDirectory = "/home/nathan";
-          stateVersion = "21.11";
+      # Android systems
+      nixOnDroidConfigurations = {
+        tablet = nix-on-droid.lib.nixOnDroidConfiguration {
+          config = ./machines/tablet/configuration.nix;
+          system = "aarch64-linux";
+          extraModules = [
+            ./modules/nix-on-droid/default.nix
+            ({ pkgs, lib, config, ... }: {
+              # Home manager configuration
+              home-manager = {
+                useUserPackages = true;
+                useGlobalPkgs = true;
+                extraSpecialArgs = {
+                  inputs = inputs;
+                  nixosConfig = config;
+                };
+                sharedModules = [
+                  ./home-manager/nix-on-droid/default.nix
+                ];
+              };
+            })
+          ];
         };
+      };
+      packages = {
+        x86_64-linux = {
+          # Hyper-V image
+          hyperv = nixos-generators.nixosGenerate {
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            modules = [
+              ./machines/hyperv/configuration.nix
+            ];
+            format = "hyperv";
+          };
+        };
+      };
     };
 }

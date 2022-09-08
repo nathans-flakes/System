@@ -22,6 +22,7 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 11 :weight 'semi-light)
+      doom-unicode-font (font-spec :family "FiraCode Nerd Font" :size 11 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -99,25 +100,34 @@
   :config
   (setq mixed-pitch-set-height t))
 
-(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+(setq doom-modeline-buffer-file-name-style 'truncate-with-project
+      doom-modeline-mu4e t)
 
 (display-time-mode 1)
 
 (after! treemacs
   (setq treemacs-width 25))
 
+(use-package! alert
+  :config
+  ;; TODO: Make this conditional so we can make the correct choice on macos
+  (setq alert-default-style 'libnotify))
+
+(after! dired
+  (setq dired-omit-files "\\`[.]?#\\|\\`[.]?\\'\\|^\\.DS_Store\\'\\|^\\.project\\(?:ile\\)?\\'\\|^\\.\\(?:svn\\|git\\)\\'\\|^\\.ccls-cache\\'\\|\\(?:\\.js\\)?\\.meta\\'\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"))
+
 (setq-default fill-column 100)
 
 (after! avy
   (define-key!
-    "C-:" 'avy-goto-char
-    "C-'" 'avy-goto-char-2
+    "M-g c" 'avy-goto-char
+    "M-g x" 'avy-goto-char-2
     "M-g f" 'avy-goto-line
     "M-g w" 'avy-goto-word-1
     "M-g e" 'avy-goto-word-0)
   (cheatsheet-add-group 'Avy
-                        '(:key "C-:" :description "Goto Char")
-                        '(:key "C-'" :description "Goto Char (2)")
+                        '(:key "M-g c" :description "Goto Char")
+                        '(:key "M-g x" :description "Goto Char (2)")
                         '(:key "M-g f" :description "Goto line")
                         '(:key "M-g w" :description "Goto word")
                         '(:key "M-g e" :description "Goto word (0)")))
@@ -140,6 +150,14 @@
 
 (use-package! deadgrep
   :bind ("C-c s r" . deadgrep))
+
+(after! spell-fu
+  (add-hook 'spell-fu-mode
+            (lambda ()
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en-science"))
+              (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en-computers"))))
+  (bind-key "C-." #'+spell/correct))
 
 (setq org-hide-emphasis-markers t
       org-pretty-entities t)
@@ -259,6 +277,8 @@ work if it thinks it needs to."
      "* %a :website:\n\n%U %?\n\n%:initial")
    org-capture-templates))
 
+(use-package! anki-editor)
+
 (use-package! magit-todos
   :hook (magit-mode . magit-todos-mode))
 
@@ -304,7 +324,9 @@ work if it thinks it needs to."
         lsp-rust-analyzer-experimental-proc-attr-macros t
         lsp-rust-analyzer-proc-macro-enable t
         lsp-rust-analyzer-use-rustc-wrapper-for-build-scripts t
-        lsp-rust-analyzer-import-enforce-granularity t))
+        lsp-rust-analyzer-import-enforce-granularity t
+        lsp-rust-analyzer-diagnostics-enable-experimental t
+        lsp-rust-analyzer-display-chaining-hints t))
 
 (use-package! markdown-mode
   :mode ("README\\.md" . gfm-mode)
@@ -330,3 +352,55 @@ work if it thinks it needs to."
         elfeed-enclosure-default-dir (concat org-directory "elfeed/enclosures/")
         shr-max-width nil)
   (make-directory elfeed-db-directory t))
+
+(after! mu4e
+  (setq sendmail-program (executable-find "msmtp")
+        send-mail-function #'smtpmail-send-it
+        message-sendmail-f-is-evil t
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-send-mail-function #'message-send-mail-with-sendmail))
+
+(after! mu4e
+  (set-email-account! "mccarty.io"
+                      '((mu4e-sent-folder . "/nathan@mccarty.io/Sent")
+                        (mu4e-drafts-folder . "/nathan@mccarty.io/Drafts")
+                        (mu4e-trash-folder . "/nathan@mccarty.io/Trash")
+                        (mu4e-refile-folder . "/nathan@mccarty.io/Archive")
+                        (smtpmail-smtp-user . "nathan@mccarty.io"))
+                      t))
+
+(after! mu4e
+  (setq mu4e-bookmarks '())
+  (add-to-list 'mu4e-bookmarks
+               '(:name "All Mail"
+                 :key ?a
+                 :query "NOT flag:trashed"))
+  (add-to-list 'mu4e-bookmarks
+               '(:name "Unread Notifications - nathan@mccarty.io"
+                 :key ?n
+                 :query "maildir:\"/nathan@mccarty.io/Folders/Notifications*\" AND NOT flag:trashed AND flag:unread"))
+  (add-to-list 'mu4e-bookmarks
+               '(:name "Inbox - nathan@mccarty.io"
+                 :key ?m
+                 :query "maildir:\"/nathan@mccarty.io/Inbox\" AND NOT flag:trashed"))
+  (add-to-list 'mu4e-bookmarks
+               '(:name "Unread"
+                 :key ?u
+                 :query "flag:unread AND NOT flag:trashed")))
+
+(after! mu4e
+  (setq mu4e-maildir-shortcuts
+        '((:maildir "/nathan@mccarty.io/Folders/Notifications/Github" :key ?h)
+          (:maildir "/nathan@mccarty.io/Folders/Notifications/Gitlab" :key ?l)
+          (:maildir "/nathan@mccarty.io/Folders/Notifications/SourceHut" :key ?s))))
+
+(after! mu4e
+  (mu4e-alert-enable-mode-line-display))
+
+(setq +mu4e-backend nil)
+(after! mu4e
+        (setq mu4e-get-mail-command "systemctl start --user mbsync.service"
+              mu4e-update-interval nil))
+
+(after! mu4e
+  (setq mu4e-change-filenames-when-moving t))
