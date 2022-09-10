@@ -190,11 +190,18 @@ in
     ];
     # Set system state version
     system.stateVersion = "22.05";
-    # Enable flakes
-    # Enable nix flakes
-    nix.package = pkgs.nixFlakes;
-    nix.extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+
+    nix = {
+      # Enable flakes
+      package = pkgs.nixFlakes;
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+      # Setup my binary cache
+      settings = {
+        substituters = [ "https://thatonelutenist-nix-cache.s3.us-west-002.backblazeb2.com/" ];
+        trusted-public-keys = [ "nathan-nix-cache:R5/0GiItBM64sNgoFC/aSWuAopOAsObLcb/mwDf335A=" ];
+      };
+    };
   };
 }
