@@ -22,6 +22,10 @@
       aspellDicts.en
       aspellDicts.en-science
       aspellDicts.en-computers
+      # For nix
+      rnix-lsp
+      manix
+      nix-doc
       # Desktop file for org-protocol
       (makeDesktopItem {
         name = "org-protocol";

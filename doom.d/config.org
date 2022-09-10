@@ -514,6 +514,16 @@ Most of these are defaults, but I like having them explicit for my sanity
         lsp-rust-analyzer-diagnostics-enable-experimental t
         lsp-rust-analyzer-display-chaining-hints t))
 #+end_src
+** Nix
+Use rnix-lsp
+#+begin_src emacs-lisp
+(after! lsp-mode
+  (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
+                    :major-modes '(nix-mode)
+                    :server-id 'nix)))
+#+end_src
 * Composition
 Modes for handling plain text and prose
 ** Markdown

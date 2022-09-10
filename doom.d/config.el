@@ -332,6 +332,13 @@ work if it thinks it needs to."
         lsp-rust-analyzer-diagnostics-enable-experimental t
         lsp-rust-analyzer-display-chaining-hints t))
 
+(after! lsp-mode
+  (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
+                    :major-modes '(nix-mode)
+                    :server-id 'nix)))
+
 (use-package! markdown-mode
   :mode ("README\\.md" . gfm-mode)
   :hook (markdown-mode . variable-pitch-mode)
