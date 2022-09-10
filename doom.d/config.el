@@ -302,6 +302,10 @@ work if it thinks it needs to."
 (use-package! rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+(after! lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\result\\")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\result-doc\\"))
+
 (after! lsp-ui
   (setq lsp-ui-sideline-show-diagnostics t
       lsp-ui-sideline-show-hover t

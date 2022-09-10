@@ -465,6 +465,12 @@ Makes pairs of delimiters into pretty colors. Hook this into prog-mode
 #+end_src
 ** LSP Mode
 Custom configuration for lsp-mode
+*** Exclude nix directories from file watchers
+#+begin_src emacs-lisp
+(after! lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\result\\")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\result-doc\\"))
+#+end_src
 *** LSP UI
 Turn on the UI features we want
 **** Sideline
