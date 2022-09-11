@@ -234,4 +234,17 @@
       };
     };
 
+  # Setup searx-ng docker
+  virtualisation.oci-containers.containers."searx-ng" = {
+    image = "searxng/searxng";
+    autoStart = true;
+    ports = [ "8091:8080" ];
+  };
+  services.nginx.virtualHosts."searx-ng.mccarty.io" = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://localhost:8091";
+    };
+  };
 }
