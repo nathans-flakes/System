@@ -57,7 +57,7 @@
       };
     };
     config = {
-      setupGrub = true;
+      setupGrub = false;
       nix = {
         autoUpdate = true;
         autoGC = true;
@@ -68,6 +68,9 @@
       };
     };
   };
+  # Configure bootloader
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
   # Configure networking
   networking = {
     domain = "mccarty.io";
