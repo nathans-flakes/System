@@ -593,6 +593,13 @@ Makes pairs of delimiters into pretty colors. Hook this into prog-mode
 (use-package! rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
+*** YASnippet
+Set the snippets directory to inside our org dir, since this gets synced
+#+begin_src emacs-lisp :tangle yes
+(after! yasnippet
+  (setq yas-snippet-dirs
+        '("~/Org/snippets")))
+#+end_src
 ** LSP Mode
 Custom configuration for lsp-mode
 *** Exclude nix directories from file watchers

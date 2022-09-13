@@ -417,6 +417,10 @@ independent key tables."
 (use-package! rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+(after! yasnippet
+  (setq yas-snippet-dirs
+        '("~/Org/snippets")))
+
 (after! lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\result\\")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\result-doc\\"))
