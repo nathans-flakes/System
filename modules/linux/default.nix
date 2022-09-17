@@ -199,8 +199,14 @@ in
       '';
       # Setup my binary cache
       settings = {
-        substituters = [ "https://thatonelutenist-nix-cache.s3.us-west-002.backblazeb2.com/" ];
-        trusted-public-keys = [ "nathan-nix-cache:R5/0GiItBM64sNgoFC/aSWuAopOAsObLcb/mwDf335A=" ];
+        substituters = [
+          "https://nix-cache.mccarty.io/"
+          "https://nix-community.cachix.org"
+        ];
+        trusted-public-keys = [
+          "nathan-nix-cache:R5/0GiItBM64sNgoFC/aSWuAopOAsObLcb/mwDf335A="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
       };
     };
   };
