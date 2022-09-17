@@ -431,6 +431,22 @@ independent key tables."
 (after! org
   (setq org-tag-alist '(("proj" . ?p))))
 
+(after! org
+  (add-to-list 'org-modules 'org-habit))
+
+(require 'ansi-color)
+
+(after! org
+  (defun nm/babel-ansi ()
+    (when-let ((beg (org-babel-where-is-src-block-result nil nil)))
+      (save-excursion
+        (goto-char beg)
+        (when (looking-at org-babel-result-regexp)
+          (let ((end (org-babel-result-end))
+                (ansi-color-context-region nil))
+            (ansi-color-apply-on-region beg end))))))
+  (add-hook 'org-babel-after-execute-hook 'nm/babel-ansi))
+
 (use-package! magit-todos
   :hook (magit-mode . magit-todos-mode))
 

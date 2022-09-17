@@ -567,6 +567,32 @@ Not only does this feature have performance issues, its not useful with how I us
 (after! org
   (setq org-tag-alist '(("proj" . ?p))))
 #+end_src
+** Modules configuration
+*** org habits
+Enable the module
+#+begin_src emacs-lisp
+(after! org
+  (add-to-list 'org-modules 'org-habit))
+#+end_src
+** Babel config
+*** Ansi colors
+First, bring in ~ansi-color~
+#+begin_src emacs-lisp
+(require 'ansi-color)
+#+end_src
+Then, hook into babel and apply those colors
+#+begin_src emacs-lisp
+(after! org
+  (defun nm/babel-ansi ()
+    (when-let ((beg (org-babel-where-is-src-block-result nil nil)))
+      (save-excursion
+        (goto-char beg)
+        (when (looking-at org-babel-result-regexp)
+          (let ((end (org-babel-result-end))
+                (ansi-color-context-region nil))
+            (ansi-color-apply-on-region beg end))))))
+  (add-hook 'org-babel-after-execute-hook 'nm/babel-ansi))
+#+end_src
 * General Modes
 ** Magit
 Further configuration for magit
