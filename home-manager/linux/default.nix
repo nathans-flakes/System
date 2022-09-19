@@ -78,7 +78,14 @@ with lib; with nLib; {
       enable = true;
       # Manage mime associations
       mime.enable = true;
-      mimeApps.enable = true;
+      mimeApps = {
+        enable = true;
+        # Set firefox as the default browser
+        defaultApplications = {
+          "x-scheme-handler/https" = [ "firefox.desktop" ];
+          "x-scheme-handler/http" = [ "firefox.desktop" ];
+        };
+      };
     };
   };
 }
