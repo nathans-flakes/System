@@ -95,18 +95,12 @@ The provided default ~config.el~
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 #+end_src
-* Appearance and UI
-** Centaur tabs
+** Garbage collector configuration
 #+begin_src emacs-lisp
-(use-package! centaur-tabs
-  :config
-  (setq centaur-tabs-set-icons t
-        centaur-tabs-set-bar 'underflow
-        centaur-tabs-style "wave"
-        centaur-tabs-enable-key-bindings t)
-  (centaur-tabs-headline-match)
-  (centaur-tabs-group-by-projectile-project))
+(after! gcmh
+  (setq gcmh-high-cons-threshold (* 64 1024 1024)))
 #+end_src
+* Appearance and UI
 ** Mixed Pitch Mode
 Use mixed pitch mode in prose writing modes, to make the writing experience a bit more pleasant.
 This tweak applies to:

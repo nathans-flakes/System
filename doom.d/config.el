@@ -84,14 +84,8 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(use-package! centaur-tabs
-  :config
-  (setq centaur-tabs-set-icons t
-        centaur-tabs-set-bar 'underflow
-        centaur-tabs-style "wave"
-        centaur-tabs-enable-key-bindings t)
-  (centaur-tabs-headline-match)
-  (centaur-tabs-group-by-projectile-project))
+(after! gcmh
+  (setq gcmh-high-cons-threshold (* 64 1024 1024)))
 
 (use-package! mixed-pitch
   :hook
