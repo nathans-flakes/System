@@ -35,8 +35,6 @@ with lib;
     })
     (mkIf config.nathan.programs.util.productivity {
       home.packages = with pkgs; [
-        # Feh image viewer
-        feh
         tokei
         # Spell check
         hunspell

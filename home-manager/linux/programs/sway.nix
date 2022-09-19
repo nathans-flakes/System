@@ -7,6 +7,7 @@ with lib;
   config = mkIf nathan.programs.swaywm.enable (
     let
       swaylock-command = "${pkgs.swaylock-effects}/bin/swaylock --screenshots --grace 30 --indicator --clock --timestr \"%-I:%M:%S %p\" --datestr \"%A %Y-%M-%d\" --effect-blur 20x3";
+      swayimg = pkgs.callPackage ../../../packages/swayimg/default.nix { };
     in
     {
       home.packages = with pkgs; [
@@ -36,6 +37,8 @@ with lib;
         sway-contrib.grimshot
         # fuzzel for launcher
         fuzzel
+        # for image viewing
+        swayimg
       ];
       #########################
       ## Sway
@@ -63,17 +66,25 @@ with lib;
             border = 2;
             # Application specific configuration
             commands = [
+              # Make pinentry float
               {
                 command = "floating enable";
                 criteria = {
                   app_id = "pinentry-qt";
                 };
               }
+              # Make swayimg float, this is required to make it work
+              {
+                command = "floating enable";
+                criteria = {
+                  app_id = "^swayimg.*";
+                };
+              }
               # Work around for chrome ui bug
               {
                 command = "shortcuts_inhibitor disable";
                 criteria = {
-                  app_id = "^chrome-.*__-.*$";
+                  app_id = "^chrome-.*_-.*$";
                 };
               }
             ];
@@ -594,6 +605,20 @@ with lib;
           Requires = [ "graphical-session-pre.target" "waybar.service" ];
           After = [ "waybar.service" ];
         };
+      };
+      #########################
+      ## Default applications
+      #########################
+      xdg.mimeApps.defaultApplications = {
+        # Make all supported images open in swayimg
+        "image/jpeg" = [ "swayimg.desktop" ];
+        "image/png" = [ "swayimg.desktop" ];
+        "image/gif" = [ "swayimg.desktop" ];
+        "image/svg+xml" = [ "swayimg.desktop" ];
+        "image/webp" = [ "swayimg.desktop" ];
+        "image/avif" = [ "swayimg.desktop" ];
+        "image/tiff" = [ "swayimg.desktop" ];
+        "image/bmp" = [ "swayimg.desktop" ];
       };
     }
   );

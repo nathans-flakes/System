@@ -73,5 +73,12 @@ with lib; with nLib; {
       package = pkgs.firefox-beta-bin;
     };
     nathan.programs.emacs.package = lib.mkDefault inputs.emacs.packages."${pkgs.system}".emacsPgtkNativeComp;
+    # We should be managing xdg stuff
+    xdg = {
+      enable = true;
+      # Manage mime associations
+      mime.enable = true;
+      mimeApps.enable = true;
+    };
   };
 }
