@@ -561,7 +561,11 @@ independent key tables."
   (add-to-list 'mu4e-bookmarks
                '(:name "Unread Notifications - nathan@mccarty.io"
                  :key ?n
-                 :query "maildir:\"/nathan@mccarty.io/Folders/Notifications*\" AND NOT flag:trashed AND flag:unread"))
+                 :query "maildir:\"/nathan@mccarty.io/Folders/Notifications/\" AND NOT flag:trashed AND flag:unread"))
+  (add-to-list 'mu4e-bookmarks
+               '(:name "Unread Mailing Lists - nathan@mccarty.io"
+                 :key ?n
+                 :query "maildir:\"/nathan@mccarty.io/Folders/Mailing Lists/\" AND NOT flag:trashed AND flag:unread"))
   (add-to-list 'mu4e-bookmarks
                '(:name "Inbox - nathan@mccarty.io"
                  :key ?m
@@ -569,7 +573,7 @@ independent key tables."
   (add-to-list 'mu4e-bookmarks
                '(:name "Unread"
                  :key ?u
-                 :query "flag:unread AND NOT flag:trashed")))
+                 :query "flag:unread AND NOT flag:trashed AND NOT maildir:\"/nathan@mccarty.io/Folders/Notifications/\" AND NOT maildir:\"/nathan@mccarty.io/Folders/Mailing Lists/\"")))
 
 (after! mu4e
   (setq mu4e-maildir-shortcuts
