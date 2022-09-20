@@ -558,7 +558,7 @@ independent key tables."
                  :query "maildir:\"/nathan@mccarty.io/Folders/Notifications/\" AND NOT flag:trashed AND flag:unread"))
   (add-to-list 'mu4e-bookmarks
                '(:name "Unread Mailing Lists - nathan@mccarty.io"
-                 :key ?n
+                 :key ?m
                  :query "maildir:\"/nathan@mccarty.io/Folders/Mailing Lists/\" AND NOT flag:trashed AND flag:unread"))
   (add-to-list 'mu4e-bookmarks
                '(:name "Inbox - nathan@mccarty.io"
