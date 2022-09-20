@@ -91,4 +91,10 @@
       ];
     };
   };
+
+  # Configure nix build
+  nix.settings = {
+    cores = 6;
+    max-jobs = 6;
+  };
 }
