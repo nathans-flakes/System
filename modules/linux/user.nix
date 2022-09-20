@@ -27,7 +27,7 @@ with lib; {
             # Macbook pro key
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBfkO7kq37RQMT8UE8zQt/vP4Ub7kizLw6niToJwAIe nathan@Nathans-MacBook-Pro.local"
             # Phone key
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILY7KmG/eFm3hgTx7GBB5jNrV/yryg5C6xcgCxFQhn+o JuiceSSH"
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFR0zpmBCb0iEOeeI6SBwgucddNzccfQ5Zmdgib5iSmF nix-on-droid@localhost"
             # Tablet key
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKltqneJjfdLjOvnWQC2iP7hP7aTYkURPiR8LFjB7z87 nix-on-droid@localhost"
           ];
