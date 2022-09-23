@@ -100,7 +100,8 @@
 (display-time-mode 1)
 
 (after! treemacs
-  (setq treemacs-width 25))
+  (setq treemacs-width 28)
+  (bind-key "M-0" #'treemacs-select-window))
 
 (use-package! alert
   :config

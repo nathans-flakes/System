@@ -131,10 +131,12 @@ Display the current time in the modeline
 #+end_src
 ** Treemacs
 Configure treemacs, doing the following:
-
++ Set the width of the buffer to 28 characters
++ Bind the select window function to ~M-0~
 #+begin_src emacs-lisp
 (after! treemacs
-  (setq treemacs-width 25))
+  (setq treemacs-width 28)
+  (bind-key "M-0" #'treemacs-select-window))
 #+end_src
 ** Alert
 Configure notifications that originate from within emacs
