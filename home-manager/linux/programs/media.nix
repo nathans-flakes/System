@@ -19,6 +19,7 @@ in
       nicotine-plus
       irisDesktopItem
       picard
+      mpc-cli
     ];
     # Mopidy service
     # TODO: Add scrobbling

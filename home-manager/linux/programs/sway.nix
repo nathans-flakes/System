@@ -154,6 +154,14 @@ with lib;
               "${modifer}+Ctrl+x" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy window";
               # Clpy entire output to clipboard
               "${modifer}+Alt+x" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy output";
+              # Make the mute key work
+              "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
+              # Make the volume keys work
+              "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
+              "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
+              # Play/pause and next song
+              "XF86AudioPlay" = "exec mpc toggle";
+              "XF86AudioNext" = "exec mpc next";
             };
           # Startup applications
           startup = [
