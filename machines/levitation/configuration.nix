@@ -94,7 +94,7 @@
 
   # Configure nix build
   nix.settings = {
-    cores = 6;
-    max-jobs = 6;
+    cores = 8;
+    max-jobs = 4;
   };
 }
