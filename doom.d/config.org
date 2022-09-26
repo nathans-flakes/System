@@ -658,8 +658,8 @@ Makes pairs of delimiters into pretty colors. Hook this into prog-mode
 Set the snippets directory to inside our org dir, since this gets synced
 #+begin_src emacs-lisp :tangle yes
 (after! yasnippet
-  (setq yas-snippet-dirs
-        '("~/Org/snippets")))
+  (add-to-list 'yas-snippet-dirs "~/Org/snippets")
+  (yas-reload-all))
 #+end_src
 ** LSP Mode
 Custom configuration for lsp-mode
