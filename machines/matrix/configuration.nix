@@ -124,7 +124,8 @@
     enable = true;
     compression = "none";
     backupAll = true;
-    startAt = "OnCalendar=00/4:00";
+    # Every monring at 4 AM
+    startAt = "*-*-* 4:00:00";
   };
 
   # Setup a task to cleanup the database
@@ -136,8 +137,17 @@
     };
     path = with pkgs; [ matrix-synapse-tools.rust-synapse-compress-state ];
     script = ''
-      synapse_auto_compressor -p "host=localhost user=postgres" -c 500 -n 100
+      synapse_auto_compressor -p "user=matrix-synapse password=synapse dbname=synapse host=localhost" -c 500 -n 100
     '';
+  };
+  systemd.timers.synapse-db-cleanup = {
+    wantedBy = [ "timers.target" ];
+    partOf = [ "synapse-db-cleanup.service" ];
+    timerConfig = {
+      # Weekly on sunday mornings
+      OnCalendar = "Sun, 5:00";
+      Unit = "synapse-db-cleanup.service";
+    };
   };
 
   # Configure the vhost for the domain
