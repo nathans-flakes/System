@@ -106,16 +106,16 @@
   };
 
   # Configure matrix registration
-  services.matrix-synapse.settings = {
-    enable_registration_captcha = true;
-    allow_guest_access = false;
-    extraConfig = ''
-      allow_public_rooms_over_federation: true
-      experimental_features: { spaces_enabled: true }
-      auto_join_rooms: [ "#space:community.rs" , #rules:community.rs" , "#info:community.rs" ]
-    '';
-    turn_uris = [ "turn:turn.community.rs:3478?transport=udp" "turn:turn.community.rs:3478?transport=tcp" ];
-    turn_user_lifetime = "1h";
+  services.matrix-synapse = {
+    settings = {
+      enable_registration_captcha = true;
+      allow_guest_access = false;
+      allow_public_rooms_over_federation = true;
+      experimental_features = { spaces_enabled = true; };
+      auto_join_rooms = [ "#space:community.rs" "#rules:community.rs" "#info:community.rs" ];
+      turn_uris = [ "turn:turn.community.rs:3478?transport=udp" "turn:turn.community.rs:3478?transport=tcp" ];
+      turn_user_lifetime = "1h";
+    };
     extraConfigFiles = [ config.sops.secrets."matrix-secrets.yaml".path ];
   };
 
@@ -124,7 +124,20 @@
     enable = true;
     compression = "none";
     backupAll = true;
-    startAt = "OnCalendar=00/2:00";
+    startAt = "OnCalendar=00/4:00";
+  };
+
+  # Setup a task to cleanup the database
+  systemd.services.synapse-db-cleanup = {
+    serviceConfig = {
+      Type = "oneshot";
+      User = "postgres";
+      Group = "postgres";
+    };
+    path = with pkgs; [ matrix-synapse-tools.rust-synapse-compress-state ];
+    script = ''
+      synapse_auto_compressor -p "host=localhost user=postgres" -c 500 -n 100
+    '';
   };
 
   # Configure the vhost for the domain
