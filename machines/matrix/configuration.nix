@@ -119,6 +119,14 @@
     extraConfigFiles = [ config.sops.secrets."matrix-secrets.yaml".path ];
   };
 
+  # Backup postgres
+  services.postgresqlBackup = {
+    enable = true;
+    compression = "none";
+    backupAll = true;
+    startAt = "OnCalendar=00/2:00";
+  };
+
   # Configure the vhost for the domain
   services.nginx.virtualHosts =
     let
