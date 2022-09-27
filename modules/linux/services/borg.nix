@@ -23,7 +23,8 @@ with lib; {
           "/home/${config.nathan.config.user}/*/Cache"
           "/home/*/Downloads"
           "/var/dislocker"
-        ];
+          "/var/cache"
+        ] ++ config.nathan.services.borg.extraExcludes;
         repo = "${config.nathan.services.borg.location}/${config.networking.hostName}";
         encryption = {
           mode = "repokey-blake2";
