@@ -26,3 +26,8 @@ creation_rules:
       - age:
           - *nathan
           - *oracles
+  - path_regex: secrets/matrix
+    key_groups:
+      - age:
+          - *nathan
+          - *matrix

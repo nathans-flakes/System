@@ -25,7 +25,7 @@ with lib;
           matrix-synapse = {
             enable = true;
             settings = {
-              enable_registration = false;
+              enable_registration = nathan.services.matrix.enableRegistration;
               server_name = nathan.services.matrix.baseDomain;
 
               listeners = [

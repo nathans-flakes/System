@@ -144,6 +144,15 @@
           ];
         };
 
+        matrix = makeNixosSystem {
+          system = "x86_64-linux";
+          hostName = "matrix";
+          extraModules = [
+            ./hardware/matrix.nix
+            ./machines/matrix/configuration.nix
+          ];
+        };
+
         x86vm = makeNixosSystem {
           system = "x86_64-linux";
           hostName = "x86vm";
