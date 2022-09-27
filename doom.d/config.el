@@ -424,7 +424,9 @@ independent key tables."
   (setq org-agenda-dim-blocked-tasks nil))
 
 (after! org
-  (setq org-tag-alist '(("proj" . ?p))))
+  (setq org-tag-alist '(("proj" . ?p)
+                        ("complaint" . ?c)
+                        ("work" . ?w))))
 
 (after! org
   (add-to-list 'org-modules 'org-habit))

@@ -561,7 +561,9 @@ Not only does this feature have performance issues, its not useful with how I us
 ** Set tags alist
 #+begin_src emacs-lisp
 (after! org
-  (setq org-tag-alist '(("proj" . ?p))))
+  (setq org-tag-alist '(("proj" . ?p)
+                        ("complaint" . ?c)
+                        ("work" . ?w))))
 #+end_src
 ** Modules configuration
 *** org habits
