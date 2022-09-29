@@ -194,7 +194,7 @@
 
   # Backup postgres, as used by matrix
   services.postgresqlBackup = {
-    #enable = true;
+    enable = true;
     compression = "none";
     backupAll = true;
     startAt = "OnCalendar=00/2:00";
