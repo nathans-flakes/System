@@ -7,7 +7,6 @@
     # Setup service
     services.emacs = {
       enable = config.nathan.programs.emacs.service;
-      package = config.nathan.programs.emacs.package;
       client.enable = true;
       defaultEditor = true;
     };

@@ -36,5 +36,12 @@
         mimeTypes = [ "x-scheme-handler/org-protocol" ];
       })
     ];
+    programs.emacs = {
+      enable = true;
+      package = config.nathan.programs.emacs.package;
+      extraPackages = epkgs: [
+        pkgs.mu
+      ];
+    };
   };
 }
