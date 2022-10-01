@@ -10,7 +10,12 @@
     };
     emacs = {
       url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    nix-doom-emacs = {
+      url = "github:nix-community/nix-doom-emacs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.emacs-overlay.follows = "emacs";
     };
     mozilla = {
       url = "github:mozilla/nixpkgs-mozilla";
@@ -31,11 +36,6 @@
     polymc = {
       url = "github:PolyMC/PolyMC";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-doom-emacs = {
-      url = "github:nix-community/nix-doom-emacs";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.emacs-overlay.follows = "emacs";
     };
     java = {
       url = "github:nathans-flakes/java";
