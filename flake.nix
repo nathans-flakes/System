@@ -12,11 +12,6 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    nix-doom-emacs = {
-      url = "github:nix-community/nix-doom-emacs";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.emacs-overlay.follows = "emacs";
-    };
     mozilla = {
       url = "github:mozilla/nixpkgs-mozilla";
       flake = false;
@@ -77,7 +72,6 @@
     , home-manager
     , darwin
     , polymc
-    , nix-doom-emacs
     , java
     , quilt-server
     , nixos-generators
