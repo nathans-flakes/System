@@ -242,6 +242,9 @@
     image = "searxng/searxng";
     autoStart = true;
     ports = [ "8091:8080" ];
+    volumes = [
+      "/var/searxng:/etc/searxng"
+    ];
   };
   services.nginx.virtualHosts."searx-ng.mccarty.io" = {
     enableACME = true;
