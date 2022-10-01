@@ -69,21 +69,6 @@
             hash = "sha256-3R9bEu982a9Tq+hXy+ALFF/N2NwK9MsqDELFVGHV09I=";
           };
         };
-        separedit = self.trivialBuild {
-          pname = "separedit";
-          ename = "separedit";
-          version = "20220715.2343";
-          packageRequires = with self; [
-            dash
-            edit-indirect
-          ];
-          src = pkgs.fetchFromGitHub {
-            owner = "nmccarty";
-            repo = "separedit.el";
-            rev = "229dd7751c16b0c4115f0981b56408a144509095";
-            hash = "sha256-vfnTHIN/4c98mR/UnK66Qaq1awLTizARzXaDuco1W5U=";
-          };
-        };
       };
       extraPackages = [ pkgs.mu ];
     };
