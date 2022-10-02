@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 with lib;
 {
   config = mkMerge [
@@ -58,6 +58,10 @@ with lib;
       ];
     })
     (mkIf config.nathan.programs.util.git.enable {
+      # Git adjacent packages
+      home.packages = [
+        inputs.nixpkgs-unstable.legacyPackages."${pkgs.system}".git-branchless
+      ];
       #########################
       ## Git configuration
       #########################
