@@ -6,6 +6,7 @@ keys:
   - &perception age1r0aszjkyp4zlcw2w2vrk8hmcyvntshr8rew4ehlu5zad4eh6mspsatuczd
   - &shadowchild age10zd0y2zpty2z39sh2qe66yuu9jd6hrcd3ag2wqtjp8tc579nmphsymhdla
   - &matrix age1pm647k04hhwm2dmqh07hnzflkurfevefcyf8xlhmc83a07n77e3sltyt0d
+  - &tounge age15vjvppw2gzjwmtlptefhrhqtjyu0a07v488a9s25a3k2vtpqc9uqvw6vl6
 creation_rules:
   - path_regex: secrets/all/.*
     key_groups:
@@ -16,6 +17,7 @@ creation_rules:
           - *perception
           - *shadowchild
           - *matrix
+          - *tounge
   - path_regex: secrets/levitation
     key_groups:
       - age:
@@ -31,3 +33,8 @@ creation_rules:
       - age:
           - *nathan
           - *matrix
+  - path_regex: secrets/tounge
+    key_groups:
+      - age:
+          - *nathan
+          - *tounge

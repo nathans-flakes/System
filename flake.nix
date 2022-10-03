@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpgks.follows = "nixpkgs";
@@ -65,6 +66,7 @@
     { self
     , nixpkgs
     , nixpkgs-unstable
+    , nixos-hardware
     , fenix
     , emacs
     , mozilla
@@ -144,6 +146,14 @@
           extraModules = [
             ./hardware/matrix.nix
             ./machines/matrix/configuration.nix
+          ];
+        };
+
+        tounge = makeNixosSystem {
+          system = "aarch64-linux";
+          hostName = "tounge";
+          extraModules = [
+            ./machines/tounge/configuration.nix
           ];
         };
 
