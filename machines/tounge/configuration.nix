@@ -64,7 +64,7 @@
         prefixLength = 21;
       }];
     };
-
+    defaultGateway = "10.0.4.1";
     nameservers = [ "1.1.1.1" "1.0.0.1" ];
     # Open ports in firewall
     firewall = {
