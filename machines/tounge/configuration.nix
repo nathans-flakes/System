@@ -112,18 +112,7 @@
         locations."/" = {
           proxyPass = "http://localhost:3080";
           extraConfig = ''
-            allow 172.23.0.0/16;
-            deny all;
-          '';
-        };
-      };
-      "hub.mccarty.io" = {
-        forceSSL = true;
-        useACMEHost = "mccarty.io";
-        locations."/" = {
-          proxyPass = "http://localhost:3081";
-          extraConfig = ''
-            allow 172.23.0.0/16;
+            allow 100.64.0.0/10;
             deny all;
           '';
         };
@@ -132,9 +121,9 @@
         forceSSL = true;
         useACMEHost = "mccarty.io";
         locations."/" = {
-          proxyPass = "http://10.0.3.10:8989";
+          proxyPass = "http://100.67.146.101:8989";
           extraConfig = ''
-            allow 172.23.0.0/16;
+            allow 100.64.0.0/10;
             deny all;
           '';
         };
@@ -143,9 +132,9 @@
         forceSSL = true;
         useACMEHost = "mccarty.io";
         locations."/" = {
-          proxyPass = "http://10.0.3.10:7878";
+          proxyPass = "http://100.67.146.101:7878";
           extraConfig = ''
-            allow 172.23.0.0/16;
+            allow 100.64.0.0/10;
             deny all;
           '';
         };
@@ -154,9 +143,9 @@
         forceSSL = true;
         useACMEHost = "mccarty.io";
         locations."/" = {
-          proxyPass = "http://10.0.3.10:8080";
+          proxyPass = "http://100.67.146.101:8080";
           extraConfig = ''
-            allow 172.23.0.0/16;
+            allow 100.64.0.0/10;
             deny all;
           '';
         };
