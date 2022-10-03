@@ -14,6 +14,7 @@ with lib; with nLib; {
     ./programs/image-editing.nix
     ./programs/media.nix
     ./programs/wine.nix
+    ./programs/gpg.nix
     ./services/syncthing.nix
     ./services/email.nix
   ];
@@ -36,6 +37,8 @@ with lib; with nLib; {
         util = {
           # Wine support, disabled by default
           wine = mkEnableOption "wine";
+          # GPG support, enabled by default on desktop
+          gpg = mkEnableOptionT "gpg";
         };
         devel = {
           jvm = mkDefaultOption "JVM Development Utilites" config.nathan.config.isDesktop;
