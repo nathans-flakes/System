@@ -51,12 +51,5 @@ with lib;
       checkReversePath = "loose";
       trustedInterfaces = [ "tailscale0" ];
     };
-
-    # Also enable zerotierone for now
-    # TODO: Get completely migrated away from this
-    services.zerotierone = {
-      enable = true;
-      joinNetworks = [ "c7c8172af15d643d" ];
-    };
   };
 }

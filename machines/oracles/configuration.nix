@@ -85,7 +85,6 @@
     firewall = {
       allowedTCPPorts = [ 25565 ];
       allowedUDPPorts = [ 25565 ];
-      trustedInterfaces = [ "zt5u4uutwm" ];
     };
   };
 

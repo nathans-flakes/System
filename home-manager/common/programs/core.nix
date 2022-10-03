@@ -189,7 +189,7 @@ with lib;
           "tounge" = {
             forwardAgent = true;
             user = "nathan";
-            hostname = "172.23.98.121";
+            hostname = "100.75.37.98";
           };
           "shadowchild" = {
             forwardAgent = true;
