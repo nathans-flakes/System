@@ -32,11 +32,6 @@
         enable = true;
         acme = true;
       };
-      matrix = {
-        enable = true;
-        baseDomain = "community.rs";
-        enableRegistration = true;
-      };
       borg = {
         enable = true;
         extraExcludes = [
