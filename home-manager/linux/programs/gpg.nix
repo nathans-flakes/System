@@ -9,6 +9,7 @@
       enable = true;
       enableSshSupport = true;
       enableExtraSocket = true;
+      pinentryFlavor = "qt";
       extraConfig = ''
         allow-emacs-pinentry
       '';
