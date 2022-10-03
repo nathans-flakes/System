@@ -22,6 +22,7 @@ with lib; {
           ${pkgs.protonmail-bridge}/bin/protonmail-bridge --noninteractive
         '';
       };
+      Install = { WantedBy = [ "graphical-session.target" ]; };
     };
     # Setup accounts
     accounts.email = {

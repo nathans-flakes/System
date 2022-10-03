@@ -11,5 +11,11 @@ in
         package = stray;
       };
     };
+    # Add a delay to the service so it will start up after the bar
+    systemd.user.services.syncthingtray = {
+      Service = {
+        ExecStartPre = "/run/current-system/sw/bin/sleep 5";
+      };
+    };
   };
 }
