@@ -102,6 +102,8 @@ in
         # Logitech hardware support
         # On by default if the system is a desktop
         logitech = mkDefaultOption "logitech" config.nathan.config.isDesktop;
+        # AMD Single gpu passthrough
+        amdPassthrough = mkEnableOption "logitech";
       };
       # Linux specific configuration
       config = {

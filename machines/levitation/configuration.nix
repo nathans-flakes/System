@@ -33,6 +33,9 @@
         sshKey = config.sops.secrets."borg-ssh-key".path;
       };
     };
+    hardware = {
+      amdPassthrough = true;
+    };
     config = {
       isDesktop = true;
       setupGrub = true;
