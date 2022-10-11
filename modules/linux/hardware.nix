@@ -26,8 +26,8 @@ with lib;
           ovmf = {
             enable = true;
             package = pkgs.OVMFFull;
-            runAsRoot = true;
           };
+          runAsRoot = true;
           swtpm.enable = true;
         };
       };

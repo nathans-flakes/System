@@ -50,7 +50,7 @@ with lib; {
       # Configure the timezone
       time.timeZone = "America/New_York";
     }
-    (mkIf config.nathan.config.hardware.amdPassthrough {
+    (mkIf config.nathan.hardware.amdPassthrough {
       users.users."${nc.user}".extraGroups = [ "libvirtd" ];
     })
   ];
