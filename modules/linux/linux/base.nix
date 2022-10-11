@@ -44,7 +44,7 @@ with lib;
           enable = true;
           allowReboot = true;
           # Update from the flake
-          flake = "github:nathans-flakes/System";
+          flake = "git+https://git.sr.ht/~thatonelutenist/system-flake?ref=trunk";
           # Attempt to update daily at 2AM
           dates = "2:00";
         };
